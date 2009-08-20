@@ -1509,7 +1509,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			visualiseVector_file_chk = path+'/src/visualiseVector.py'
 			getEigenVectors_file_chk = path+'/src/getEigenVectors'
 			ANM_file_chk = path+'/src/ANM'
-			print ANM_file_chk
+			#print ANM_file_chk
 			file_name_list = [pca_file_chk, intPca_file_chk, mds_file_chk, tsne_file_chk, pca_file_chk,\
 								ac_file_chk, cg_file_chk, com_mod_file_chk, conf_mod_file_chk, msf_file_chk,\
 								visualiseVector_file_chk, getEigenVectors_file_chk, ANM_file_chk]
@@ -1715,7 +1715,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			out_pdb = self.cg_out_pdb.getvalue()
 			#print out_loc
 			start_atm = self.cg_start_atm.getvalue()
-			print type(start_atm)
+			#print type(start_atm)
 			atm_type = 'CB'
 			if pdb_loc == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No PDB location given!")
