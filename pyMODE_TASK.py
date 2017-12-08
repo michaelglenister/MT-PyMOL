@@ -154,6 +154,7 @@ class App:
 
 
         # build pages
+		self.configuration_page = self.notebook.add('Configuration')
 		self.pca_page = self.notebook.add('PCA')
 		self.ipca_page = self.notebook.add('Internal PCA')
 		self.mds_page = self.notebook.add('MDS/t-SNE')
@@ -163,9 +164,56 @@ class App:
 		self.help_page = self.notebook.add('Help and Credit')
 		
 		#---------------------------------------------------------------
-        # 							PCA PAGE
+        # 							configuration PAGE
 		#---------------------------------------------------------------
 		self.balloon = Pmw.Balloon(master)
+		about_pca = """MODE-TASK- is Copyright (C) 2017 by Bilal Nizami, RUBi, Rhodes University. 
+
+Perform the Principal component analysis (PCA) on a protein MD trajectory."""		
+		self.conf_top_group = Pmw.Group(self.configuration_page,tag_text='About')
+		self.conf_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 2)
+        
+		myfont = Pmw.logicalfont(name='Helvetica',size=14)
+		self.text_field = Pmw.ScrolledText(self.conf_top_group.interior(),
+			borderframe=5,
+			vscrollmode='dynamic',
+			hscrollmode='dynamic',
+			labelpos='n',
+			text_width=150, text_height=4,
+			text_wrap='word',
+			text_background='skyblue4',
+			text_foreground='white',
+			text_font = myfont)
+			
+		self.text_field.pack(expand = 0, fill = 'both', padx = 4, pady = 4)
+		self.text_field.insert('end',about_pca)
+		self.text_field.configure(text_state=DISABLED)
+		
+		# MODE-TASK location tab
+		
+		self.mode_task_location = Pmw.Group(self.configuration_page, tag_text='Locate MODE-TASK directory')
+		self.mode_task_location.pack(side = TOP,expand=1, fill='both', padx = 4, pady = 4)
+		
+		# MODE-TASK location files
+		self.mode_task_location1 = Pmw.EntryField(self.mode_task_location.interior(),
+												labelpos = 'w',
+												label_pyclass = FileDialogButtonClassFactory.get(self.pca_set_trj_filename,mode='r',filter=[("Gromacs",".xtc"), ("DCD",".dcd"), ("Amber",".mdcrd"), ("All","*.*")]),                                                
+												label_text = 'MODE-TASK directory:',
+												)
+		self.balloon.bind(self.mode_task_location1, 'Locate MODE-TASK directory',
+                'Locate MODE-TASK directory')
+				
+		self.mode_task_location1.pack(side=TOP, fill = 'x', expand = 1, padx = 10, pady = 2)
+		
+		# Exit button
+		
+		self.exit_pca = Pmw.ButtonBox(self.mode_task_location.interior(),orient='horizontal', padx=0,pady=0)
+		self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
+		self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
+		#---------------------------------------------------------------
+        # 							PCA PAGE
+		#---------------------------------------------------------------
+		
 		# about section
 		
 		about_pca = """MODE-TASK- is Copyright (C) 2017 by Bilal Nizami, RUBi, Rhodes University. 
