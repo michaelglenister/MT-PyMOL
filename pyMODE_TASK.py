@@ -169,19 +169,20 @@ class App:
 		self.balloon = Pmw.Balloon(master)
 		about_pca = """MODE-TASK- is Copyright (C) 2017 by Bilal Nizami, RUBi, Rhodes University. 
 
-Perform the Principal component analysis (PCA) on a protein MD trajectory."""		
+MODE-TASK is a collection of tools for analysing normal modes and performing principal component analysis.		
+pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MODE-TASK can be found at https://github.com/RUBi-ZA/MODE-TASK."""		
 		self.conf_top_group = Pmw.Group(self.configuration_page,tag_text='About')
 		self.conf_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 2)
         
-		myfont = Pmw.logicalfont(name='Helvetica',size=14)
+		myfont = Pmw.logicalfont(name='Times',size=14)
 		self.text_field = Pmw.ScrolledText(self.conf_top_group.interior(),
 			borderframe=5,
 			vscrollmode='dynamic',
 			hscrollmode='dynamic',
 			labelpos='n',
-			text_width=150, text_height=4,
+			text_width=150, text_height=7,
 			text_wrap='word',
-			text_background='skyblue4',
+			text_background='black',
 			text_foreground='white',
 			text_font = myfont)
 			
@@ -199,7 +200,7 @@ Perform the Principal component analysis (PCA) on a protein MD trajectory."""
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.pca_set_trj_filename,mode='r',filter=[("Gromacs",".xtc"), ("DCD",".dcd"), ("Amber",".mdcrd"), ("All","*.*")]),                                                
 												label_text = 'MODE-TASK directory:',
-												)
+												value = os.getcwd())
 		self.balloon.bind(self.mode_task_location1, 'Locate MODE-TASK directory',
                 'Locate MODE-TASK directory')
 				
@@ -213,30 +214,6 @@ Perform the Principal component analysis (PCA) on a protein MD trajectory."""
 		#---------------------------------------------------------------
         # 							PCA PAGE
 		#---------------------------------------------------------------
-		
-		# about section
-		
-		about_pca = """MODE-TASK- is Copyright (C) 2017 by Bilal Nizami, RUBi, Rhodes University. 
-
-Perform the Principal component analysis (PCA) on a protein MD trajectory."""		
-		#self.pca_top_group = Pmw.Group(self.pca_page,tag_text='About')
-		#self.pca_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 2)
-        #
-		#myfont = Pmw.logicalfont(name='Helvetica',size=14)
-		#self.text_field = Pmw.ScrolledText(self.pca_top_group.interior(),
-		#	borderframe=5,
-		#	vscrollmode='dynamic',
-		#	hscrollmode='dynamic',
-		#	labelpos='n',
-		#	text_width=150, text_height=4,
-		#	text_wrap='word',
-		#	text_background='skyblue4',
-		#	text_foreground='white',
-		#	text_font = myfont)
-		#	
-		#self.text_field.pack(expand = 0, fill = 'both', padx = 4, pady = 4)
-		#self.text_field.insert('end',about_pca)
-		#self.text_field.configure(text_state=DISABLED)
 		
 		# input files
 		
@@ -405,28 +382,6 @@ Perform the Principal component analysis (PCA) on a protein MD trajectory."""
 		#	internal PCA page
 		#===========================================================
 		
-		# about section
-		
-		about_ipca = """Internal PCA allows user to perform the PCA on the internal cordinates of a protein MD trajectory."""
-		#self.ipca_top_group = Pmw.Group(self.ipca_page,tag_text='About')
-		#self.ipca_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 2)
-
-		myfont = Pmw.logicalfont(name='Helvetica',size=14)
-		#self.text_field = Pmw.ScrolledText(self.ipca_top_group.interior(),
-		#	borderframe=5,
-		#	vscrollmode='dynamic',
-		#	hscrollmode='dynamic',
-		#	labelpos='n',
-		#	text_width=150, text_height=4,
-		#	text_wrap='word',
-		#	text_background='skyblue4',
-		#	text_foreground='white',
-		#	text_font = myfont)
-		#	
-		#self.text_field.pack(expand = 1, fill = 'both', padx = 4, pady = 4)
-		#self.text_field.insert('end',about_ipca)
-		#self.text_field.configure(text_state=DISABLED)
-		
 		# input files
 		
 		self.icpca_trj_file_io = Pmw.Group(self.ipca_page, tag_text='MODE-TASK Input/Output')
@@ -544,53 +499,12 @@ Perform the Principal component analysis (PCA) on a protein MD trajectory."""
 		self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
 		self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		
-		## status bar
-		#pca_output='test'
-		#self.pca_output_group = Pmw.Group(self.ipca_page, tag_text='Results')
-		#self.pca_output_group.pack(fill = 'both', expand = 0, padx=2, pady=2)
-		#self.status_feild = Pmw.ScrolledText(self.pca_output_group.interior(),
-        #                     borderframe=5,
-        #                     vscrollmode='dynamic',
-        #                     hscrollmode='dynamic',
-        #                     labelpos='n',
-        #                     text_width=150, text_height=4,
-        #                     text_wrap='word',
-        #                     text_background='#000000',
-        #                     text_foreground='white',
-        #                     text_font = myfont
-        #                     )
-		#self.status_feild.pack(expand = 0, fill = 'both', padx = 4, pady = 4)
-		#self.status_feild.insert('end',pca_output)
-		#self.text_field.configure(text_state=DISABLED)
-		#sys.stdout = StdoutRedirector(self.status_feild)
-		
 		
 		##============================================================
 		# MDS/ t-SNE page
 		#
 		#==============================================================
 		
-		about_mds = """Perform the Multi Dimentional Scaling (PCA) and t-SNE on a protein MD trajectory.
-		
-MDS and t-SNE are dimentionality reduction techniques."""		
-		#self.mds_top_group = Pmw.Group(self.mds_page,tag_text='About')
-		#self.mds_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 2)
-        
-		myfont = Pmw.logicalfont(name='Helvetica',size=14)
-		#self.text_field = Pmw.ScrolledText(self.mds_top_group.interior(),
-		#	borderframe=5,
-		#	vscrollmode='dynamic',
-		#	hscrollmode='dynamic',
-		#	labelpos='n',
-		#	text_width=150, text_height=3,
-		#	text_wrap='word',
-		#	text_background='skyblue4',
-		#	text_foreground='white',
-		#	text_font = myfont)
-		#	
-		#self.text_field.pack(expand = 0, fill = 'both', padx = 4, pady = 1)
-		#self.text_field.insert('end',about_mds)
-		#self.text_field.configure(text_state=DISABLED)
 		
 		# input files
 		
@@ -870,29 +784,6 @@ MDS and t-SNE are dimentionality reduction techniques."""
         # NMA PAGE
 		#==============================================================
 		
-		about_nma = """NMA analyses the oscillations of a structure. For proteins, it is useful for studying
-the large amplitude motions for a selected conformation. The main assumption is that the motions are harmonic.
-Thus, each normal mode, which is a concerted motion of many atoms, acts as a simple harmonic oscillator, and 
-it is independent of all the other normal modes."""
-
-		#self.nma_top_group = Pmw.Group(self.nma_page,tag_text='About')
-		#self.nma_top_group.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
-				
-		myfont = Pmw.logicalfont(name='Helvetica',size=14)
-		#self.text_field = Pmw.ScrolledText(self.nma_top_group.interior(),
-		#	borderframe=5,
-		#	vscrollmode='dynamic',
-		#	hscrollmode='dynamic',
-		#	labelpos='n',
-		#	text_width=250, text_height=4,
-		#	text_wrap='word',
-		#	text_background='skyblue4',
-		#	text_foreground='white',
-		#	text_font = myfont)
-		#	
-		#self.text_field.pack(expand = 1, fill = 'both', padx = 2, pady = 2)
-		#self.text_field.insert('end',about_nma)
-		#self.text_field.configure(text_state=DISABLED)
 		
 		# input files
 		self.nma_top_group1 = Pmw.Group(self.nma_page, tag_pyclass = None)
