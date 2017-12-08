@@ -100,7 +100,7 @@ class PyMODETASK:
 			title = 'pyMODE-TASK',
 			message_text = 'A pymol plugin for MODE-TASK\n\n'+
 				'Version %s\n\n' %__version__ +
-				'MODE-TASK is a open source collection of tools to perform the\n'+
+				'MODE-TASK and pyMODE-TASK is a open source collection of tools to perform the\n'+
 				'Principal component analysis (PCA), MDS and t-SNE on a protein MD trajectory,\n' +
 				'and Normal mode analysis (NMA) on protein 3D structure.\n'+
 				'pyMODE-TASK- is Copyright (C) 2017 by Bilal Nizami, RUBi, Rhodes University.\n',
@@ -147,6 +147,15 @@ class PyMODETASK:
 		
 		page=MyHelpPage("file:///home/bilal/work/pyMODE-TASK/src/docs/build/html/theory.html")		
 		self.menuBar.addmenuitem('Help', 'command', label='NMA Theory', 
+			command=page.openpage)
+		
+		self.menuBar.addmenuitem('Help', 'separator')
+		page=MyHelpPage("file:///home/bilal/work/pyMODE-TASK/src/docs/build/html/pca_use.html")		
+		self.menuBar.addmenuitem('Help', 'command', label='PCA Usage',
+			command=page.openpage)
+		
+		page=MyHelpPage("file:///home/bilal/work/pyMODE-TASK/src/docs/build/html/nma_use.html")		
+		self.menuBar.addmenuitem('Help', 'command', label='NMA Usage', 
 			command=page.openpage)
 		
 		page=MyHelpPage("file:///home/bilal/work/pyMODE-TASK/src/docs/build/html/pca_tut.html")			
@@ -224,9 +233,9 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.mode_task_location1 = Pmw.EntryField(self.mode_task_location.interior(),
 												labelpos = 'w',
 												label_pyclass = DirDialogButtonClassFactory.get(self.set_mode_task_dir),                                                
-												label_text = 'MODE-TASK directory:')
-		self.balloon.bind(self.mode_task_location1, 'Kindly give the path of MODE-TASK directory',
-                'Locate MODE-TASK directory')
+												label_text = 'pyMODE-TASK directory:')
+		self.balloon.bind(self.mode_task_location1, 'Kindly give the path of pyMODE-TASK directory.',
+                'Locate pyMODE-TASK directory')
 				
 		self.mode_task_location1.pack(side=TOP, fill = 'x', expand = 0, padx = 2, pady = 2)
 		
@@ -928,36 +937,36 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.nma_conf_mode.pack(expand=1, fill='both', side=LEFT)
 		
 		## Unaligned PDB file
-		self.conf_mode_Unalgn_pdb = Pmw.EntryField(self.nma_conf_mode.interior(),
+		self.conf_mode_Unalgn_pdb1 = Pmw.EntryField(self.nma_conf_mode.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_conf_mode_Unalgn_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'Unaligned PDB file:',
 												)
-		self.conf_mode_Unalgn_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.conf_mode_Unalgn_pdb1.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		## PDB file
-		self.conf_mode_Unalgn_pdb = Pmw.EntryField(self.nma_conf_mode.interior(),
+		self.conf_mode_pdb = Pmw.EntryField(self.nma_conf_mode.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_conf_mode_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'PDB file:',
 												)
-		self.conf_mode_Unalgn_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.conf_mode_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		## VT Matrix file
-		self.conf_mode_Unalgn_pdb = Pmw.EntryField(self.nma_conf_mode.interior(),
+		self.conf_mode_vtfile = Pmw.EntryField(self.nma_conf_mode.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_conf_mode_vtfile_location,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'VT Matrix file:',
 												)
-		self.conf_mode_Unalgn_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.conf_mode_vtfile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		## Output file
-		self.conf_mode_Unalgn_pdb = Pmw.EntryField(self.nma_conf_mode.interior(),
+		self.conf_mode_out = Pmw.EntryField(self.nma_conf_mode.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_pyclass = DirDialogButtonClassFactory.get(self.set_conf_mode_out),                                                
 												label_text = 'Output file:',
-												)
-		self.conf_mode_Unalgn_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+												value = os.getcwd())
+		self.conf_mode_out.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		# Get conformation mode
 		self.run_msf_button = Pmw.ButtonBox(self.nma_conf_mode.interior(),
@@ -972,7 +981,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 			orient='horizontal',
 			padx=0,
 			pady=0)
-		self.run_msf_button.add('Get comb. modes',fg='blue', command = self.run_ipca)
+		self.run_msf_button.add('Get comb. modes',fg='blue', command = self.run_comb_mode)
 		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
 		
@@ -1041,11 +1050,11 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 												)
 		self.msf_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
-		# read conformation PDB
+		# read Comparable PDB
 		self.msf_conf_pdb = Pmw.EntryField(self.nma_msf.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'Conformation PDB file:',
+												label_text = 'Comparable PDB file:',
 												)
 		self.msf_conf_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
@@ -1057,11 +1066,11 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 												command = self.get_pc_selection)
 		self.nma_first_mode.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
-		# second mode
+		# Last mode
 		
 		self.nma_second_mode = Pmw.EntryField(self.nma_msf.interior(),
                                                 labelpos = 'w',
-                                                label_text = 'Second mode:',
+                                                label_text = 'Last mode:',
 												command = self.get_pc_selection)
 		self.nma_second_mode.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
@@ -1319,7 +1328,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			result = 1
 		else:
 			result = 0
-			tkMessageBox.showinfo("pyMODE-TASK Error!", "Location of MODE-TASK directory not given. Please specify the location of MODE-TASK directory in configuration page of the plugin!")
+			tkMessageBox.showinfo("pyMODE-TASK Error!", "Location of pyMODE-TASK directory not given. Please specify the location of pyMODE-TASK directory in configuration page of the plugin!")
 		return result
 		
 	def run_pca(self):
@@ -1551,12 +1560,37 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 	
 	def run_conf_mode(self):
 		status = self.check_conf_status()
+		unal_pdb = self.conf_mode_Unalgn_pdb1.getvalue()
+		pdb = self.conf_mode_pdb.getvalue()
+		vtfile = self.conf_mode_vtfile.getvalue()
+		out_loc = self.conf_mode_out.getvalue()
+		atm_type = 'CB'
+		if status:
+			# core scripts are located at src directory under pyMODE-TASK directory
+			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
+			
+			if unal_pdb == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No unaligned PDB location given!")
+			if pdb == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No PDB location given!")
+			if vtfile == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No VT File location given!")
+			else:
+				cmd = cmd_dir+'conformationMode.py --pdbConf ' + unal_pdb + ' --pdbANM ' + pdb + ' --vtMatrix ' +  vtfile + ' --outdir ' + out_loc + ' --atomType ' + atm_type
+				out = `os.system(cmd)`
+			if out == '0':
+					tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run successful!\nResults are written in \n" + out_loc)
+			else:
+				tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run failed. See terminal for details!")
+	
+	def run_comb_mode(self):
+		status = self.check_conf_status()
 		if status:
 			# core scripts are located at src directory under pyMODE-TASK directory
 			#cmd_dir = './src'
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
 			unaligned_pdb=9
-	
+			
 	def run_get_eigen(self):
 		status = self.check_conf_status()
 		if status:
@@ -1566,7 +1600,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			nma_vt_file=self.nma_vtfile_location.getvalue()
 			mode_idx = self.nma_mode_idx.getvalue()
 			direction = self.nma_direction.getvalue()
-			out_loc = out_loc = self.gi_out_dir_location.getvalue()
+			out_loc = self.gi_out_dir_location.getvalue()
 			print nma_vt_file
 			if nma_vt_file == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No VT Matrix file given!")
@@ -1596,6 +1630,22 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		
 	def set_pdb_filename(self, filename):
 		n = self.pdb_location.setvalue(filename)
+		return n
+	
+	def set_conf_mode_Unalgn_pdb(self, filename):
+		n = self.conf_mode_Unalgn_pdb1.setvalue(filename)
+		return n
+		
+	def set_conf_mode_pdb(self, filename):
+		n = self.conf_mode_pdb.setvalue(filename)
+		return n	
+		
+	def set_conf_mode_vtfile_location(self, filename):
+		n = self.conf_mode_vtfile.setvalue(filename)
+		return n
+		
+	def set_conf_mode_out(self, filename):
+		n = self.conf_mode_out.setvalue(filename)
 		return n
 		
 	def get_pc_method_selection(self, sele_option):
