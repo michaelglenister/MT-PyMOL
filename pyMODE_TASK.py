@@ -48,7 +48,11 @@ from ttk import Separator, Style
 import ttk
 import Pmw
 import tkMessageBox, tkFileDialog
+import os
+import pymol
+from pymol import cmd
 import webbrowser
+
 
 __version__ = "1.0.0"
 
@@ -56,22 +60,43 @@ __version__ = "1.0.0"
 pyMODE-TASK
 
 """
+#=============================================================================
+#
+#     INITIALISE PLUGIN
+#
 
-class App:
+
+# define variables
+#mode_task_dir = StringVar(Tk())
+#mode_task_dir.set("")
+
+def __init__(self):
+	self.menuBar.addmenuitem('Plugin', 'command',
+		'Launch pyMODE-TASK',
+		label='pyMODE-TASK',
+		command = lambda s=self: PyMODETASK(s))
+		
+class PyMODETASK:
 	'Main class of pyMODE-TASK.'
-	def __init__(self, master):
+	def __init__(self, app):
 		
-		
-		adplugin_font = ("Courier", 14)
-		self.frame = Frame(master, width=4, height=4, bg="red3", colormap="new")
+		self.master = app.root
+		adplugin_font = ("Courier", 12)
+		self.frame = Frame(self.master, width=4, height=4, bg="red3", colormap="new")
 		self.frame.pack()
 		
+		# build main window
+		adplugin_font = ("Courier", 10)
+		self.dialog = Pmw.Dialog(self.master,title = 'pyMODE-TASK',
+									buttons = ('Exit pyMODE-TASK',))
+		self.dialog.withdraw()
+		self.dialog.geometry('1000x800')
 		#================================================
 		#
 		# Menu bar
 		#===============================================
 		# Create about dialog.
-		self.dialog1 = Pmw.MessageDialog(master,
+		self.dialog1 = Pmw.MessageDialog(self.dialog.interior(),
 			title = 'pyMODE-TASK',
 			message_text = 'A pymol plugin for MODE-TASK\n\n'+
 				'Version %s\n\n' %__version__ +
@@ -88,10 +113,10 @@ class App:
 		self.dialog1.withdraw()
 		
 		# Create the Balloon.
-		self.balloon = Pmw.Balloon(master)
+		self.balloon = Pmw.Balloon(self.master)
 
 		# Create and pack the MenuBar.
-		self.menuBar = Pmw.MenuBar(master,
+		self.menuBar = Pmw.MenuBar(self.master,
 				hotkeys=0,
 				hull_relief = 'raised',
 				hull_borderwidth = 2,
@@ -107,7 +132,7 @@ class App:
 		self.menuBar.addmenuitem('File', 'separator')
 		self.menuBar.addmenuitem('File', 'command', 'Exit the application',
 				label = 'Exit',
-				command=self.frame.quit)
+				command=self.dialog.interior().quit)
 	
 		# Add Help menu bar.
 		page=MyHelpPage("file:///home/bilal/work/pyMODE-TASK/src/docs/build/html/index.html")
@@ -136,7 +161,7 @@ class App:
 		
 		# the title
 	
-		self.title_label = Label(self.frame, text = 'pyMODE-TASK: A MODE-TASK Plugin for pymol -- Copyright (C) 2017, Bilal Nizami, RUBi, Rhodes University',
+		self.title_label = Label(self.dialog.interior(), text = 'pyMODE-TASK: A MODE-TASK Plugin for pymol -- Copyright (C) 2017, Bilal Nizami, RUBi, Rhodes University',
 				background = 'brown4',
 				foreground = 'white', 
 				height=1, 
@@ -146,8 +171,8 @@ class App:
 		
 		# the notebook layout
 
-		self.notebook = Pmw.NoteBook(master)
-		Pmw.Color.changecolor(master, background='gray70', foreground='black')
+		self.notebook = Pmw.NoteBook(self.dialog.interior())
+		Pmw.Color.changecolor(self.dialog.interior(), background='gray70', foreground='black')
 		self.notebook.recolorborders()
 		self.notebook.pack(fill='both',expand=1,padx=13,pady=13)
 
@@ -166,7 +191,7 @@ class App:
 		#---------------------------------------------------------------
         # 							configuration PAGE
 		#---------------------------------------------------------------
-		self.balloon = Pmw.Balloon(master)
+		self.balloon = Pmw.Balloon(self.master)
 		about_pca = """MODE-TASK- is Copyright (C) 2017 by Bilal Nizami, RUBi, Rhodes University. 
 
 MODE-TASK is a collection of tools for analysing normal modes and performing principal component analysis.		
@@ -174,7 +199,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.conf_top_group = Pmw.Group(self.configuration_page,tag_text='About')
 		self.conf_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 2)
         
-		myfont = Pmw.logicalfont(name='Times',size=14)
+		myfont = Pmw.logicalfont(name='Courier',size=12)
 		self.text_field = Pmw.ScrolledText(self.conf_top_group.interior(),
 			borderframe=5,
 			vscrollmode='dynamic',
@@ -193,24 +218,23 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		# MODE-TASK location tab
 		
 		self.mode_task_location = Pmw.Group(self.configuration_page, tag_text='Locate MODE-TASK directory')
-		self.mode_task_location.pack(side = TOP,expand=1, fill='both', padx = 4, pady = 4)
+		self.mode_task_location.pack(side = TOP,expand=0, fill='x', padx = 4, pady = 4)
 		
 		# MODE-TASK location files
 		self.mode_task_location1 = Pmw.EntryField(self.mode_task_location.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.pca_set_trj_filename,mode='r',filter=[("Gromacs",".xtc"), ("DCD",".dcd"), ("Amber",".mdcrd"), ("All","*.*")]),                                                
-												label_text = 'MODE-TASK directory:',
-												value = os.getcwd())
+												label_pyclass = DirDialogButtonClassFactory.get(self.set_mode_task_dir),                                                
+												label_text = 'MODE-TASK directory:')
 		self.balloon.bind(self.mode_task_location1, 'Locate MODE-TASK directory',
                 'Locate MODE-TASK directory')
 				
-		self.mode_task_location1.pack(side=TOP, fill = 'x', expand = 1, padx = 10, pady = 2)
+		self.mode_task_location1.pack(side=TOP, fill = 'x', expand = 0, padx = 2, pady = 2)
 		
-		# Exit button
-		
-		self.exit_pca = Pmw.ButtonBox(self.mode_task_location.interior(),orient='horizontal', padx=0,pady=0)
-		self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
+		## Exit button
+		#
+		#self.exit_pca = Pmw.ButtonBox(self.mode_task_location.interior(),orient='horizontal', padx=0,pady=0)
+		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
+		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		#---------------------------------------------------------------
         # 							PCA PAGE
 		#---------------------------------------------------------------
@@ -371,11 +395,11 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.run_pca_button.add('Run PCA',fg='blue', command = self.run_pca)
 		self.run_pca_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
-		# Exit button
-		
-		self.exit_pca = Pmw.ButtonBox(self.pca_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
-		self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
+		## Exit button
+		#
+		#self.exit_pca = Pmw.ButtonBox(self.pca_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
+		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
+		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		
 		##============================================================
 		#
@@ -493,11 +517,11 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.run_pca_button.add('Run Internal PCA',fg='blue', command = self.run_ipca)
 		self.run_pca_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
-		# Exit button
-		
-		self.exit_pca = Pmw.ButtonBox(self.ipca_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
-		self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
+		## Exit button
+		#
+		#self.exit_pca = Pmw.ButtonBox(self.ipca_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
+		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
+		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		
 		
 		##============================================================
@@ -675,11 +699,11 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 			command = self.run_mds)
 		self.run_mds_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
-		# Exit button
-		
-		self.exit_mds = Pmw.ButtonBox(self.mds_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
-		self.exit_mds.add('EXIT', fg='red', command = self.frame.quit)
-		self.exit_mds.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
+		## Exit button
+		#
+		#self.exit_mds = Pmw.ButtonBox(self.mds_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
+		#self.exit_mds.add('EXIT', fg='red', command = self.frame.quit)
+		#self.exit_mds.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		
 		##=========================================
 		# t-SNE options
@@ -772,11 +796,11 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.run_mds_button.add('Run t-SNE',fg='blue', command = self.run_tsne)
 		self.run_mds_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
-		# Exit button
-		
-		self.exit_mds = Pmw.ButtonBox(self.tsne_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
-		self.exit_mds.add('EXIT', fg='red', command = self.frame.quit)
-		self.exit_mds.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
+		## Exit button
+		#
+		#self.exit_mds = Pmw.ButtonBox(self.tsne_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
+		#self.exit_mds.add('EXIT', fg='red', command = self.frame.quit)
+		#self.exit_mds.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		
 		
 		
@@ -1105,11 +1129,11 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.run_msf_button.add('Get modes Vis',fg='blue', command = self.run_ipca)
 		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
-		# Exit button
-		
-		self.exit_pca = Pmw.ButtonBox(self.nma_page,orient='horizontal', padx=0,pady=0)
-		self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
+		## Exit button
+		#
+		#self.exit_pca = Pmw.ButtonBox(self.nma_page,orient='horizontal', padx=0,pady=0)
+		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
+		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		
 		
 		
@@ -1157,11 +1181,11 @@ email: nizamibilal1064@gmail.com"""
 		self.text_field.insert('end',about_pca)
 		self.text_field.configure(text_state=DISABLED)
 		
-		# Exit button
-		
-		self.exit_pca = Pmw.ButtonBox(self.about_top_group.interior(),orient='horizontal', padx=0,pady=0)
-		self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
+		## Exit button
+		#
+		#self.exit_pca = Pmw.ButtonBox(self.about_top_group.interior(),orient='horizontal', padx=0,pady=0)
+		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
+		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		
 		#---------------------------------------------------------------
         # CITATION PAGE
@@ -1194,7 +1218,7 @@ email: nizamibilal1064@gmail.com"""
 		self.citation_top_group = Pmw.Group(self.citation_page,tag_text='Citation')
 		self.citation_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 2)
 
-		myfont = Pmw.logicalfont(name='Times',size=14, spacing='2')
+		myfont = Pmw.logicalfont(name='Courier',size=14, spacing='2')
 		self.text_field = Pmw.ScrolledText(self.citation_top_group.interior(),
                              borderframe=5,
                              vscrollmode='dynamic',
@@ -1210,11 +1234,11 @@ email: nizamibilal1064@gmail.com"""
 		self.text_field.insert('end',citation)
 		self.text_field.configure(text_state=DISABLED)
 		
-		# Exit button
-		
-		self.exit_pca = Pmw.ButtonBox(self.citation_top_group.interior(),orient='horizontal', padx=0,pady=0)
-		self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
+		## Exit button
+		#
+		#self.exit_pca = Pmw.ButtonBox(self.citation_top_group.interior(),orient='horizontal', padx=0,pady=0)
+		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
+		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		
 		#---------------------------------------------------------------
         # HELP PAGE
@@ -1273,12 +1297,14 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		w.pack(padx = 8, pady = 8)
 		
 		
-		# Exit button
-		
-		self.exit_pca = Pmw.ButtonBox(self.help_top_group.interior(),orient='horizontal', padx=0,pady=0)
-		self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
+		## Exit button
+		#
+		#self.exit_pca = Pmw.ButtonBox(self.help_top_group.interior(),orient='horizontal', padx=0,pady=0)
+		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
+		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 	
+		self.notebook.setnaturalsize()
+		self.dialog.show()
 		
 	def execute(self):
 		self.about.show()
@@ -1522,6 +1548,10 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				tkMessageBox.showinfo("pyMODE-TASK!", "NMA run successful!\nResults are written in \n" + out_loc)
 			else:
 				tkMessageBox.showinfo("pyMODE-TASK!", "NMA run failed. See terminal for details!")
+	
+	def set_mode_task_dir(self, dirname):
+		n = self.mode_task_location1.setvalue(dirname)
+		return n
 	
 	def pca_set_trj_filename(self, filename):
 		n = self.pca_trj_location.setvalue(filename)
@@ -2129,9 +2159,9 @@ class MyHelpPage:
 		#print self.url
 		webbrowser.open_new(self.url)
 		
-root = Tk()
-app = App(root)
-root.title("pyMODE-TASK")
-root.geometry("1000x700")
-#root.iconbitmap('icons.ico')
-root.mainloop()
+#root = Tk()
+#app = App(root)
+#root.title("pyMODE-TASK")
+#root.geometry("1000x700")
+##root.iconbitmap('icons.ico')
+#root.mainloop()
