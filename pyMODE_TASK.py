@@ -37,11 +37,15 @@ import matplotlib
 matplotlib.use('Agg')
 import os, sys
 if sys.version_info[0] < 3:
-    import Tkinter
-    from Tkinter import *
+	import Tkinter
+	from Tkinter import *
+	from os.path import expanduser
+	home = expanduser("~")
 else:
-    import tkinter as Tkinter
-    from tkinter import *
+	import tkinter as Tkinter
+	from tkinter import *
+	from pathlib import Path
+	home = str(Path.home())
 	
 import subprocess
 from ttk import Separator, Style
@@ -52,6 +56,7 @@ import os
 import pymol
 from pymol import cmd
 import webbrowser
+
 
 
 __version__ = "1.0.0"
@@ -230,11 +235,13 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.mode_task_location.pack(side = TOP,expand=0, fill='x', padx = 4, pady = 4)
 		
 		# MODE-TASK location files
+		#home = expanduser("~")
 		self.mode_task_location1 = Pmw.EntryField(self.mode_task_location.interior(),
 												labelpos = 'w',
 												label_pyclass = DirDialogButtonClassFactory.get(self.set_mode_task_dir),                                                
-												label_text = 'pyMODE-TASK directory:')
-		self.balloon.bind(self.mode_task_location1, 'Kindly give the path of pyMODE-TASK directory.',
+												label_text = 'pyMODE-TASK directory:',
+												value=home)
+		self.balloon.bind(self.mode_task_location1, 'Kindly give the path of pyMODE-TASK directory.\nAll the MODE-TASK core script must be placed\n inside the src directory within the pyMODE-TASK directory.',
                 'Locate pyMODE-TASK directory')
 				
 		self.mode_task_location1.pack(side=TOP, fill = 'x', expand = 0, padx = 2, pady = 2)
@@ -1578,18 +1585,37 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			else:
 				cmd = cmd_dir+'conformationMode.py --pdbConf ' + unal_pdb + ' --pdbANM ' + pdb + ' --vtMatrix ' +  vtfile + ' --outdir ' + out_loc + ' --atomType ' + atm_type
 				out = `os.system(cmd)`
+				if out == '0':
+						tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run successful!\nResults are written in \n" + out_loc)
+				else:
+					tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run failed. See terminal for details!")
+	
+	def run_comb_mode(self):
+		status = self.check_conf_status()
+		unal_pdb = self.conf_mode_Unalgn_pdb1.getvalue()
+		pdb = self.conf_mode_pdb.getvalue()
+		vtfile = self.conf_mode_vtfile.getvalue()
+		out_loc = self.conf_mode_out.getvalue()
+		atm_type = 'CB'
+		if status:
+			# core scripts are located at src directory under pyMODE-TASK directory
+			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
+			
+			if unal_pdb == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No unaligned PDB location given!")
+			if pdb == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No PDB location given!")
+			if vtfile == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No VT File location given!")
+			else:
+				cmd = cmd_dir+'conformationMode.py --pdbConf ' + unal_pdb + ' --pdbANM ' + pdb + ' --vtMatrix ' +  vtfile + ' --outdir ' + out_loc + ' --atomType ' + atm_type
+				out = `os.system(cmd)`
 			if out == '0':
 					tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run successful!\nResults are written in \n" + out_loc)
 			else:
 				tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run failed. See terminal for details!")
 	
-	def run_comb_mode(self):
-		status = self.check_conf_status()
-		if status:
-			# core scripts are located at src directory under pyMODE-TASK directory
-			#cmd_dir = './src'
-			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
-			unaligned_pdb=9
+			
 			
 	def run_get_eigen(self):
 		status = self.check_conf_status()
