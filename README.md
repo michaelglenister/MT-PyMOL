@@ -5,6 +5,12 @@ MODE-TASK plugin for PyMOL
 
 ## Installation
 
+*Download the project:*
+```bash
+git clone https://github.com/RUBi-ZA/pyMODE-TASK.git
+cd pyMODE-TASK
+```
+
 *Requirements:*
 ```
 python
@@ -28,6 +34,10 @@ sudo pip install -r requirements.txt
 pyMODE-TASK requires Tkinter and Pmw.1.3. Tkinter comes prepackaged with most standard python. Pmw could be installed by following the instruction from:
 
 http://pmw.sourceforge.net/doc/starting.html
+
+## Usage
+
+For more detailed documentation on installation and usage of the tool suite please see our [ReadTheDocs](http://pymode-task.readthedocs.io/en/latest/index.html) site
 
 
 
