@@ -3,7 +3,7 @@
 # MT-PyMOL
 MODE-TASK plugin for PyMOL
 
-##Installation
+## Installation
 
 *Requirements:*
 ```
