@@ -981,8 +981,10 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.conf_mode_pdb = Pmw.EntryField(self.nma_conf_mode.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_conf_mode_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'PDB\n(Conformational change):',
+												label_text = 'PDB(Conf. change):',
 												)
+		self.balloon.bind(self.conf_mode_pdb, 'PDB file of conformation change',
+                'PDB file of conformation change')
 		self.conf_mode_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		# Atom Type
@@ -1047,7 +1049,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		# read first PDB
 		self.msf_pdb = Pmw.EntryField(self.nma_msf.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_msf_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'PDB file:',
 												)
 		self.balloon.bind(self.msf_pdb, 'First PDB file to compare',
@@ -1057,7 +1059,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		#W matrix file
 		self.msf_WMatrixFile = Pmw.EntryField(self.nma_msf.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_msf_WMatrixFile,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'W Matrix File:',
 												)
 		self.balloon.bind(self.msf_WMatrixFile, 'W matrix file for first PDB',
@@ -1067,7 +1069,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		#VT matrix file
 		self.msf_VTMatrixFile = Pmw.EntryField(self.nma_msf.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_msf_VTMatrixFile,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'VT Matrix File:',
 												)
 		self.balloon.bind(self.msf_VTMatrixFile, 'VT matrix file for first PDB',
@@ -1077,7 +1079,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		# read comparison PDB
 		self.msf_conf_pdb = Pmw.EntryField(self.nma_msf.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_msf_conf_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'comparison PDB:',
 												)
 		self.balloon.bind(self.msf_conf_pdb, 'VT matrix file for comparison PDB',
@@ -1088,7 +1090,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		#W matrix file
 		self.msf_WMatrixFile1 = Pmw.EntryField(self.nma_msf.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_msf_WMatrixFile1,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'W Matrix File:',
 												)
 		self.balloon.bind(self.msf_WMatrixFile1, 'W matrix file for comparison PDB',
@@ -1098,7 +1100,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		#VT matrix file
 		self.msf_VTMatrixFile1 = Pmw.EntryField(self.nma_msf.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_msf_VTMatrixFile1,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'VT Matrix File:',
 												)
 		self.balloon.bind(self.msf_VTMatrixFile1, 'VT matrix file for comparison PDB',
@@ -1119,21 +1121,21 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		
 		# modes
 		
-		self.nma_first_mode = Pmw.EntryField(self.nma_msf.interior(),
+		self.msf_mode = Pmw.EntryField(self.nma_msf.interior(),
                                                 labelpos = 'w',
                                                 label_text = 'Modes:',
-												command = self.get_pc_selection)
+												value = '7:27')
 												
-		self.balloon.bind(self.nma_first_mode, 'Comma separated list of Modes',
-                'List of Modes')
-		self.nma_first_mode.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.balloon.bind(self.msf_mode, 'List of modes: string OR comma separated String OR colon separated string ',
+                'List of modes')
+		self.msf_mode.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		# Run MSF
 		self.run_msf_button = Pmw.ButtonBox(self.nma_msf.interior(),
 			orient='horizontal',
 			padx=0,
 			pady=0)
-		self.run_msf_button.add('Run MSF',fg='blue', command = self.run_ipca)
+		self.run_msf_button.add('Run MSF',fg='blue', command = self.run_msf)
 		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
 		
@@ -1777,7 +1779,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		pdb = self.conf_mode_pdb.getvalue()
 		vtfile = self.conf_mode_vtfile.getvalue()
 		out_loc = self.conf_mode_out.getvalue()
-		atm_type = 'CB'
+		atm_type = self.conf_atm_type.getvalue()
 		if status:
 			# core scripts are located at src directory under pyMODE-TASK directory
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
@@ -1802,7 +1804,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		pdb = self.conf_mode_pdb.getvalue()
 		vtfile = self.conf_mode_vtfile.getvalue()
 		out_loc = self.conf_mode_out.getvalue()
-		atm_type = 'CB'
+		atm_type = self.conf_atm_type.getvalue()
 		if status:
 			# core scripts are located at src directory under pyMODE-TASK directory
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
@@ -1821,7 +1823,36 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			else:
 				tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run failed. See terminal for details!")
 	
-			
+	def run_msf(self):
+		status = self.check_conf_status()
+		pdb = self.msf_pdb.getvalue()
+		pdb_conf = self.msf_conf_pdb.getvalue()
+		wMatrix1 = self.msf_WMatrixFile.getvalue()
+		vtMatrix1 = self.msf_VTMatrixFile.getvalue()
+		wMatrix2 = self.msf_WMatrixFile1.getvalue()
+		vtMatrix2 = self.msf_VTMatrixFile1.getvalue()
+		at_type = self.msf_atm_type.getvalue()
+		modes = self.msf_mode.getvalue()
+		if status:
+			# core scripts are located at src directory under pyMODE-TASK directory
+			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
+			if pdb == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No PDB given!")
+			if wMatrix1 == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No WMatrix file given!")
+			if vtMatrix1 == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No VT Matrix file given!")
+			elif pdb_conf == '':
+				cmd = cmd_dir+'meanSquareFluctuations.py --pdb ' + pdb + ' --vtMatrix ' +  vtMatrix1  + ' --atomType ' + at_type + ' --wMatrix ' + wMatrix1 + ' --modes ' + modes
+				out = `os.system(cmd)`
+			else:
+				cmd = cmd_dir+'meanSquareFluctuations.py --pdb ' + pdb + ' --pdbC ' + pdb_conf + ' --vtMatrix ' +  vtMatrix1  + ' --vtMatrixC ' +  vtMatrix2  + ' --atomType ' + at_type + ' --wMatrix ' + wMatrix1 + ' --wMatrixC ' + wMatrix2 + ' --modes ' + modes
+				out = `os.system(cmd)`
+			if out == '0':
+				tkMessageBox.showinfo("pyMODE-TASK!", "MSF run successful!\nResults are written in \n" + out_loc)
+			else:
+				tkMessageBox.showinfo("pyMODE-TASK!", "MSF run failed. See terminal for details!")
+		
 			
 	def run_get_eigen(self):
 		status = self.check_conf_status()
@@ -1847,6 +1878,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 					tkMessageBox.showinfo("pyMODE-TASK!", "NMA run successful!\nResults are written in \n" + out_loc)
 				else:
 					tkMessageBox.showinfo("pyMODE-TASK!", "NMA run failed. See terminal for details!")
+	
 	
 	def set_mode_task_dir(self, dirname):
 		n = self.mode_task_location1.setvalue(dirname)
@@ -1878,6 +1910,30 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		
 	def set_conf_mode_out(self, filename):
 		n = self.conf_mode_out.setvalue(filename)
+		return n
+		
+	def set_msf_pdb(self, filename):
+		n = self.msf_pdb.setvalue(filename)
+		return n
+	
+	def set_msf_WMatrixFile(self, filename):
+		n = self.msf_WMatrixFile.setvalue(filename)
+		return n
+		
+	def set_msf_VTMatrixFile(self, filename):
+		n = self.msf_VTMatrixFile.setvalue(filename)
+		return n
+	
+	def set_msf_conf_pdb(self, filename):
+		n = self.msf_conf_pdb.setvalue(filename)
+		return n
+		
+	def set_msf_WMatrixFile1(self, filename):
+		n = self.msf_WMatrixFile1.setvalue(filename)
+		return n
+		
+	def set_msf_VTMatrixFile1(self, filename):
+		n = self.msf_VTMatrixFile1.setvalue(filename)
 		return n
 		
 	def get_pc_method_selection(self, sele_option):
