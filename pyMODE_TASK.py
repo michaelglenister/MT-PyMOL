@@ -829,43 +829,57 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.nma_top_group1 = Pmw.Group(self.nma_page, tag_pyclass = None)
 		self.nma_top_group1.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 
-		self.trj_file_io = Pmw.Group(self.nma_top_group1.interior(), tag_text='Coarse Graining (1)')
-		self.trj_file_io.pack(expand=1, fill='both', side=LEFT)
+		self.nma_trj_file_io = Pmw.Group(self.nma_top_group1.interior(), tag_text='Coarse Graining (1)')
+		self.nma_trj_file_io.pack(expand=1, fill='both', side=LEFT)
 		
 		
 		# Read PDB file 
-		self.cg_pdb_location = Pmw.EntryField(self.trj_file_io.interior(),
+		self.cg_pdb_location = Pmw.EntryField(self.nma_trj_file_io.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_cg_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'PDB File:',
 												)
 		# coarse grain level
-		self.var = StringVar()
-		self.var.set('4')
-		self.cg_level = Pmw.OptionMenu(self.trj_file_io.interior(),
+		#self.var = StringVar()
+		#self.var.set('4')
+		#self.cg_level = Pmw.OptionMenu(self.nma_trj_file_io.interior(),
+		#		labelpos = 'w',
+		#		label_text = 'CG Level:',
+		#		menubutton_textvariable = self.var,
+		#		items = ['1', '2', '3', '4', '5', '6'],
+		#		menubutton_width = 5,
+		#)
+		self.cg_level = Pmw.EntryField(self.nma_trj_file_io.interior(),
+                                                labelpos = 'w',
+                                                label_text = 'CG Level:')
+		self.cg_level.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		# Atom Type
+		self.cg_at_var = StringVar()
+		self.cg_at_var.set('CB')
+		self.cg_atm_type = Pmw.OptionMenu(self.nma_trj_file_io.interior(),
 				labelpos = 'w',
-				label_text = 'CG Level:',
-				menubutton_textvariable = self.var,
-				items = ['1', '2', '3', '4', '5', '6'],
+				label_text = 'Atom Type:',
+				menubutton_textvariable = self.cg_at_var,
+				items = ['CB', 'CA'],
 				menubutton_width = 5,
 		)
 		
 		# Starting atom
-		self.cg_start_atm = Pmw.EntryField(self.trj_file_io.interior(),
+		self.cg_start_atm = Pmw.EntryField(self.nma_trj_file_io.interior(),
 			labelpos = 'w',
 			label_text = 'Starting atom:',
 			value='1')
 		
 		# output directory
 		
-		self.cg_out_dir_location = Pmw.EntryField(self.trj_file_io.interior(),
+		self.cg_out_dir_location = Pmw.EntryField(self.nma_trj_file_io.interior(),
 												labelpos = 'w',
 												label_pyclass = DirDialogButtonClassFactory.get(self.set_cg_out_location),                                                
 												label_text = 'Output Directory:',
 												value  = os.getcwd())
 		
 		# out pdb file name
-		self.cg_out_pdb = Pmw.EntryField(self.trj_file_io.interior(),
+		self.cg_out_pdb = Pmw.EntryField(self.nma_trj_file_io.interior(),
 			labelpos = 'w',
 			label_text = 'Output PDB:',
 			value='ComplexCG.pdb')
@@ -873,6 +887,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		entries=(self.cg_pdb_location,
 					self.cg_level,
 					self.cg_start_atm,
+					self.cg_atm_type,
 					self.cg_out_dir_location,
 					self.cg_out_pdb)
 					
@@ -880,7 +895,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 			x.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 			
 		# Run coarse garining
-		self.run_cg_button = Pmw.ButtonBox(self.trj_file_io.interior(),
+		self.run_cg_button = Pmw.ButtonBox(self.nma_trj_file_io.interior(),
 			orient='horizontal',
 			padx=0,
 			pady=0)
@@ -912,7 +927,17 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 												command = self.get_pc_selection)
 		self.nma_cut.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
-		
+		# Atom Type
+		self.nma_at_var = StringVar()
+		self.nma_at_var.set('CB')
+		self.nma_atm_type = Pmw.OptionMenu(self.nma_group.interior(),
+				labelpos = 'w',
+				label_text = 'Atom Type:',
+				menubutton_textvariable = self.nma_at_var,
+				items = ['CB', 'CA'],
+				menubutton_width = 5,
+		)
+		self.nma_atm_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		# output directory
 		
 		self.nma_out_dir_location = Pmw.EntryField(self.nma_group.interior(),
@@ -923,7 +948,8 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.nma_out_dir_location.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 												
 		pca_options_buttons=(self.nma_pdb_location, 
-			self.nma_cut, 
+			self.nma_cut,
+			self.nma_atm_type,
 			self.nma_out_dir_location)
 		Pmw.alignlabels(pca_options_buttons)
 		
@@ -943,21 +969,33 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 			tag_text='Conformation/Combination mode (3)')
 		self.nma_conf_mode.pack(expand=1, fill='both', side=LEFT)
 		
-		## Unaligned PDB file
+		## PDB file
 		self.conf_mode_Unalgn_pdb1 = Pmw.EntryField(self.nma_conf_mode.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_conf_mode_Unalgn_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'Unaligned PDB file:',
+												label_text = 'PDB File:',
 												)
 		self.conf_mode_Unalgn_pdb1.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
-		## PDB file
+		## PDB file (Conformational change)
 		self.conf_mode_pdb = Pmw.EntryField(self.nma_conf_mode.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_conf_mode_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'PDB file:',
+												label_text = 'PDB\n(Conformational change):',
 												)
 		self.conf_mode_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		# Atom Type
+		self.conf_at_var = StringVar()
+		self.conf_at_var.set('CB')
+		self.conf_atm_type = Pmw.OptionMenu(self.nma_conf_mode.interior(),
+				labelpos = 'w',
+				label_text = 'Atom Type:',
+				menubutton_textvariable = self.conf_at_var,
+				items = ['CB', 'CA'],
+				menubutton_width = 5,
+		)
+		self.conf_atm_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		## VT Matrix file
 		self.conf_mode_vtfile = Pmw.EntryField(self.nma_conf_mode.interior(),
@@ -998,9 +1036,228 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.nma_second_group = Pmw.Group(self.nma_page,  tag_pyclass = None)
 		self.nma_second_group.pack(expand=1, fill='both')
 		
-		# Get eigenvectors
-		self.get_eig_group = Pmw.Group(self.nma_second_group.interior(), tag_text='Get Eigenvectors (4)')
-		self.get_eig_group.pack(expand=1, fill='both', side=LEFT)
+		
+		#==========================================
+		## Mean square fluctuation
+		#============================================
+		
+		self.nma_msf = Pmw.Group(self.nma_second_group.interior(), tag_text='Mean square fluctuation (4)')
+		self.nma_msf.pack(expand=1, fill='both', side=LEFT)
+		
+		# read first PDB
+		self.msf_pdb = Pmw.EntryField(self.nma_msf.interior(),
+												labelpos = 'w',
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_text = 'PDB file:',
+												)
+		self.balloon.bind(self.msf_pdb, 'First PDB file to compare',
+                'First PDB file to compare')
+		self.msf_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		#W matrix file
+		self.msf_WMatrixFile = Pmw.EntryField(self.nma_msf.interior(),
+												labelpos = 'w',
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_text = 'W Matrix File:',
+												)
+		self.balloon.bind(self.msf_WMatrixFile, 'W matrix file for first PDB',
+                'W matrix file for first PDB')
+		self.msf_WMatrixFile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		#VT matrix file
+		self.msf_VTMatrixFile = Pmw.EntryField(self.nma_msf.interior(),
+												labelpos = 'w',
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_text = 'VT Matrix File:',
+												)
+		self.balloon.bind(self.msf_VTMatrixFile, 'VT matrix file for first PDB',
+                'VT matrix file for first PDB')
+		self.msf_VTMatrixFile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		# read comparison PDB
+		self.msf_conf_pdb = Pmw.EntryField(self.nma_msf.interior(),
+												labelpos = 'w',
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_text = 'comparison PDB:',
+												)
+		self.balloon.bind(self.msf_conf_pdb, 'VT matrix file for comparison PDB',
+                'VT matrix file for comparison PDB')
+				
+		self.msf_conf_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		#W matrix file
+		self.msf_WMatrixFile1 = Pmw.EntryField(self.nma_msf.interior(),
+												labelpos = 'w',
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_text = 'W Matrix File:',
+												)
+		self.balloon.bind(self.msf_WMatrixFile1, 'W matrix file for comparison PDB',
+                'W matrix file for comparison PDB')
+		self.msf_WMatrixFile1.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		#VT matrix file
+		self.msf_VTMatrixFile1 = Pmw.EntryField(self.nma_msf.interior(),
+												labelpos = 'w',
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_text = 'VT Matrix File:',
+												)
+		self.balloon.bind(self.msf_VTMatrixFile1, 'VT matrix file for comparison PDB',
+                'VT matrix file for comparison PDB')
+		self.msf_VTMatrixFile1.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+
+		# Atom Type
+		self.msf_at_var = StringVar()
+		self.msf_at_var.set('CB')
+		self.msf_atm_type = Pmw.OptionMenu(self.nma_msf.interior(),
+				labelpos = 'w',
+				label_text = 'Atom Type:',
+				menubutton_textvariable = self.msf_at_var,
+				items = ['CB', 'CA'],
+				menubutton_width = 5,
+		)
+		self.msf_atm_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		# modes
+		
+		self.nma_first_mode = Pmw.EntryField(self.nma_msf.interior(),
+                                                labelpos = 'w',
+                                                label_text = 'Modes:',
+												command = self.get_pc_selection)
+												
+		self.balloon.bind(self.nma_first_mode, 'Comma separated list of Modes',
+                'List of Modes')
+		self.nma_first_mode.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		# Run MSF
+		self.run_msf_button = Pmw.ButtonBox(self.nma_msf.interior(),
+			orient='horizontal',
+			padx=0,
+			pady=0)
+		self.run_msf_button.add('Run MSF',fg='blue', command = self.run_ipca)
+		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		
+		
+		#==========================================
+		##  Assembly Covariance
+		#============================================
+		
+		self.assem_cov = Pmw.Group(self.nma_second_group.interior(), tag_text='Assembly Covariance (5)')
+		self.assem_cov.pack(expand=1, fill='both', side=LEFT)
+		
+		# read PDB
+		self.ac_pdb = Pmw.EntryField(self.assem_cov.interior(),
+												labelpos = 'w',
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_text = 'PDB file:',
+												)
+		self.balloon.bind(self.ac_pdb, 'Give a PDB file',
+                'Give a PDB file')
+		self.ac_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		#W matrix file
+		self.ac_WMatrixFile = Pmw.EntryField(self.assem_cov.interior(),
+												labelpos = 'w',
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_text = 'W Matrix File:',
+												)
+		self.balloon.bind(self.ac_WMatrixFile, 'W matrix file',
+                'W matrix file')
+		self.ac_WMatrixFile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		#VT matrix file
+		self.ac_VTMatrixFile = Pmw.EntryField(self.assem_cov.interior(),
+												labelpos = 'w',
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_text = 'VT Matrix File:',
+												)
+		self.balloon.bind(self.ac_VTMatrixFile, 'VT matrix file',
+                'VT matrix file')
+		self.ac_VTMatrixFile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		# Modes
+		self.ac_modes = Pmw.EntryField(self.assem_cov.interior(),
+												labelpos = 'w',
+												label_text = 'Modes:',
+												value='all'
+												)
+		self.balloon.bind(self.ac_modes, 'Modes: String OR Colon Separated String OR Comma Separated String',
+                'Modes')
+				
+		self.ac_modes.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		# Assymetric Unit
+		self.ac_assym_unit = Pmw.EntryField(self.assem_cov.interior(),
+												labelpos = 'w',
+												label_text = 'Assymetric Unit:'
+												)
+		self.balloon.bind(self.ac_assym_unit, 'Assymetric Unit: String OR Colon Separated String OR Comma Separated String',
+				'Assymetric Unit')
+				
+		self.ac_assym_unit.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		# Zoom
+		self.ac_zoom = Pmw.EntryField(self.assem_cov.interior(),
+												labelpos = 'w',
+												label_text = 'Zoom:',
+												value='1,2'
+												)
+		self.balloon.bind(self.ac_zoom, 'Zoom: Comma Separated String The format is: [Unit,Chain]',
+				'Zoom')
+				
+		self.ac_zoom.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		# Vmin
+		self.ac_Vmin = Pmw.EntryField(self.assem_cov.interior(),
+												labelpos = 'w',
+												label_text = 'Vmin:',
+												value='-0.5'
+												)
+		self.balloon.bind(self.ac_Vmin, 'Minimum axes value for plot',
+				'Minimum axes value for plot')
+				
+		self.ac_Vmin.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		# Vmin
+		self.ac_Vmax = Pmw.EntryField(self.assem_cov.interior(),
+												labelpos = 'w',
+												label_text = 'Vmax:',
+												value=0.5
+												)
+		self.balloon.bind(self.ac_Vmax, 'Maximum axes value for plot',
+				'Maximum axes value for plot')
+				
+		self.ac_Vmax.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		# Atom Type
+		self.ac_at_var = StringVar()
+		self.ac_at_var.set('CB')
+		self.ac_atm_type = Pmw.OptionMenu(self.assem_cov.interior(),
+				labelpos = 'w',
+				label_text = 'Atom Type:',
+				menubutton_textvariable = self.ac_at_var,
+				items = ['CB', 'CA'],
+				menubutton_width = 5,
+		)
+		self.ac_atm_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		# Run Assembly Covariance
+		self.run_ac_button = Pmw.ButtonBox(self.assem_cov.interior(),
+			orient='horizontal',
+			padx=0,
+			pady=0)
+		self.run_ac_button.add('Run',fg='blue', command = self.run_ipca)
+		self.run_ac_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		
+		#=============================================
+		# Get eigenvectors and mode visualization
+		#=============================================
+		
+		self.gi_mv_group = Pmw.Group(self.nma_second_group.interior(), tag_pyclass = None)
+		self.gi_mv_group.pack(expand=1, fill='x', side=LEFT)
+		
+		##Sub window
+		self.get_eig_group = Pmw.Group(self.gi_mv_group.interior(), tag_text='Get Eigenvectors (6)')
+		self.get_eig_group.pack(expand=1, fill='x', side=TOP)
 		
 		# read VT file
 		self.nma_vtfile_location = Pmw.EntryField(self.get_eig_group.interior(),
@@ -1008,7 +1265,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_nma_vtfile_location,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'VT value file:',
 												)
-		self.nma_vtfile_location.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.nma_vtfile_location.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		# mode index 
 		
@@ -1016,7 +1273,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 												labelpos = 'w',
 												label_text = 'Mode index:',
 												command = self.get_pc_selection)
-		self.nma_mode_idx.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.nma_mode_idx.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		# Direction
 		
@@ -1034,7 +1291,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 												label_pyclass = DirDialogButtonClassFactory.get(self.set_gi_out_location),
 												label_text = 'Output Directory:',
 												value = os.getcwd())
-		self.gi_out_dir_location.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.gi_out_dir_location.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		# Get eigenvectors
 		self.nma_get_eigev = Pmw.ButtonBox(self.get_eig_group.interior(),
@@ -1044,74 +1301,11 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)
 		self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
-		## Mean square fluctuation
-		
-		self.nma_msf = Pmw.Group(self.nma_second_group.interior(), tag_text='Mean square fluctuation (5)')
-		self.nma_msf.pack(expand=1, fill='both', side=LEFT)
-		
-		# read PDB
-		self.msf_pdb = Pmw.EntryField(self.nma_msf.interior(),
-												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'PDB file:',
-												)
-		self.msf_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
-		
-		# read Comparable PDB
-		self.msf_conf_pdb = Pmw.EntryField(self.nma_msf.interior(),
-												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'Comparable PDB file:',
-												)
-		self.msf_conf_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
-		
-		# first mode
-		
-		self.nma_first_mode = Pmw.EntryField(self.nma_msf.interior(),
-                                                labelpos = 'w',
-                                                label_text = 'First mode:',
-												command = self.get_pc_selection)
-		self.nma_first_mode.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
-		
-		# Last mode
-		
-		self.nma_second_mode = Pmw.EntryField(self.nma_msf.interior(),
-                                                labelpos = 'w',
-                                                label_text = 'Last mode:',
-												command = self.get_pc_selection)
-		self.nma_second_mode.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
-		
-		#W matrix file
-		self.msf_WMatrixFile = Pmw.EntryField(self.nma_msf.interior(),
-												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'W Matrix File:',
-												)
-		self.msf_WMatrixFile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
-		
-		#VT matrix file
-		self.msf_VTMatrixFile = Pmw.EntryField(self.nma_msf.interior(),
-												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'VT Matrix File:',
-												)
-		self.msf_VTMatrixFile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
-		
-		# Run MSF
-		self.run_msf_button = Pmw.ButtonBox(self.nma_msf.interior(),
-			orient='horizontal',
-			padx=0,
-			pady=0)
-		self.run_msf_button.add('Run MSF',fg='blue', command = self.run_ipca)
-		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
-		
-		
-		
 		##====================================
 		# mode visualization
 		
-		self.nma_mode_vis = Pmw.Group(self.nma_second_group.interior(), tag_text='Mode visualization (6)')
-		self.nma_mode_vis.pack(expand=1, fill='both', side=LEFT)
+		self.nma_mode_vis = Pmw.Group(self.gi_mv_group.interior(), tag_text='Mode visualization (7)')
+		self.nma_mode_vis.pack(expand=1, fill='x', side=BOTTOM)
 		
 		## CG PDB file
 		self.conf_mode_Unalgn_pdb = Pmw.EntryField(self.nma_mode_vis.interior(),
@@ -1119,7 +1313,19 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'CG PDB file:',
 												)
-		self.conf_mode_Unalgn_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.conf_mode_Unalgn_pdb.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+		
+		# Atom Type
+		self.mv_at_var = StringVar()
+		self.mv_at_var.set('CB')
+		self.mv_atm_type = Pmw.OptionMenu(self.nma_mode_vis.interior(),
+				labelpos = 'w',
+				label_text = 'Atom Type:',
+				menubutton_textvariable = self.mv_at_var,
+				items = ['CB', 'CA'],
+				menubutton_width = 5,
+		)
+		self.mv_atm_type.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		## mode index value
 		self.mode_indx_value = Pmw.EntryField(self.nma_mode_vis.interior(),
@@ -1127,7 +1333,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 												command = self.get_pc_selection,                                                
 												label_text = 'Mode index value:',
 												)
-		self.mode_indx_value.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.mode_indx_value.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		## Vector file
 		self.conf_mode_Unalgn_pdb = Pmw.EntryField(self.nma_mode_vis.interior(),
@@ -1135,7 +1341,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'Vector file:',
 												)
-		self.conf_mode_Unalgn_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.conf_mode_Unalgn_pdb.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		# Get mode visualization
 		self.run_msf_button = Pmw.ButtonBox(self.nma_mode_vis.interior(),
