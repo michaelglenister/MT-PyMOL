@@ -4,8 +4,9 @@
 #--------------------------------------------------
 # TO DO
 #===================================================
-# 1. Add astrik over required input feild
+# 1. Add astrik over required input field --- done
 # 2. check to look for mode-task files within conf setting ----	done
+# 3. Resize/adjust NMA tab. 
 
 # pyMODE-TASK  Copyright Notice
 # ============================
@@ -217,13 +218,13 @@ within pyMODE-TASK/src directory."""
 		self.conf_top_group = Pmw.Group(self.configuration_page,tag_text='About')
 		self.conf_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 2)
         
-		myfont = Pmw.logicalfont(name='Courier',size=12)
+		myfont = Pmw.logicalfont(name='Courier',size=14)
 		self.text_field = Pmw.ScrolledText(self.conf_top_group.interior(),
 			borderframe=5,
 			vscrollmode='dynamic',
 			hscrollmode='dynamic',
 			labelpos='n',
-			text_width=150, text_height=7,
+			text_width=150, text_height=4,
 			text_wrap='word',
 			text_background='black',
 			text_foreground='white',
@@ -1300,12 +1301,14 @@ within pyMODE-TASK/src directory."""
 		self.gi_out_dir_location.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		# Get eigenvectors
-		self.nma_get_eigev = Pmw.ButtonBox(self.get_eig_group.interior(),
-			orient='horizontal',
-			padx=0,
-			pady=0)
-		self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)
-		self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		#self.nma_get_eigev = Pmw.ButtonBox(self.nma_mode_vis.interior(),
+		#	orient='horizontal',
+		#	padx=0,
+		#	pady=0)
+		#self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)
+		
+		#self.nma_get_eigev.pack is in next section
+		#self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
 		##====================================
 		# mode visualization
@@ -1356,6 +1359,15 @@ within pyMODE-TASK/src directory."""
 			pady=0)
 		self.run_msf_button.add('Get modes Vis',fg='blue', command = self.run_ipca)
 		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		
+		# Get eigenvectors
+		self.nma_get_eigev = Pmw.ButtonBox(self.nma_mode_vis.interior(),
+			orient='horizontal',
+			padx=0,
+			pady=0)
+		self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)
+		self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+
 		
 		## Exit button
 		#
@@ -1545,20 +1557,20 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		path = self.mode_task_location1.getvalue()
 		if path != '':
 			result = 1
-			pca_file_chk = path+'/pca.py'
-			intPca_file_chk = path+'/internal_pca.py'
-			mds_file_chk = path+'/mds.py'
-			tsne_file_chk = path+'/tsne.py'
-			pca_file_chk = path+'/pca.py'
-			ac_file_chk = path+'/assemblyCovariance.py'
-			cg_file_chk = path+'/coarseGrain.py'
-			com_mod_file_chk = path+'/combinationMode.py'
-			conf_mod_file_chk = path+'/conformationMode.py'
-			msf_file_chk = path+'/meanSquareFluctuations.py'
-			visualiseVector_file_chk = path+'/visualiseVector.py'
-			getEigenVectors_file_chk = path+'/getEigenVectors'
-			ANM_file_chk = path+'/ANM'
-			
+			pca_file_chk = path+'/src/pca.py'
+			intPca_file_chk = path+'/src/internal_pca.py'
+			mds_file_chk = path+'/src/mds.py'
+			tsne_file_chk = path+'/src/tsne.py'
+			pca_file_chk = path+'/src/pca.py'
+			ac_file_chk = path+'/src/assemblyCovariance.py'
+			cg_file_chk = path+'/src/coarseGrain.py'
+			com_mod_file_chk = path+'/src/combinationMode.py'
+			conf_mod_file_chk = path+'/src/conformationMode.py'
+			msf_file_chk = path+'/src/meanSquareFluctuations.py'
+			visualiseVector_file_chk = path+'/src/visualiseVector.py'
+			getEigenVectors_file_chk = path+'/src/getEigenVectors'
+			ANM_file_chk = path+'/src/ANM'
+			print ANM_file_chk
 			file_name_list = [pca_file_chk, intPca_file_chk, mds_file_chk, tsne_file_chk, pca_file_chk,\
 								ac_file_chk, cg_file_chk, com_mod_file_chk, conf_mod_file_chk, msf_file_chk,\
 								visualiseVector_file_chk, getEigenVectors_file_chk, ANM_file_chk]
