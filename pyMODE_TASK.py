@@ -212,10 +212,8 @@ class PyMODETASK:
         # 							configuration PAGE
 		#---------------------------------------------------------------
 		self.balloon = Pmw.Balloon(self.master)
-		about_pca = """MODE-TASK- is Copyright (C) 2017 by Bilal Nizami, RUBi, Rhodes University. 
-
-MODE-TASK is a collection of tools for analysing normal modes and performing principal component analysis.		
-pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MODE-TASK can be found at https://github.com/RUBi-ZA/MODE-TASK."""		
+		about_pca = """Give the location of MODE-TASK core scripts. Normally the core scripts are contained
+within pyMODE-TASK/src directory."""		
 		self.conf_top_group = Pmw.Group(self.configuration_page,tag_text='About')
 		self.conf_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 2)
         
@@ -237,7 +235,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		
 		# MODE-TASK location tab
 		
-		self.mode_task_location = Pmw.Group(self.configuration_page, tag_text='Locate MODE-TASK directory')
+		self.mode_task_location = Pmw.Group(self.configuration_page, tag_text='Locate MODE-TASK directory:')
 		self.mode_task_location.pack(side = TOP,expand=0, fill='x', padx = 4, pady = 4)
 		
 		# MODE-TASK location files
@@ -245,7 +243,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.mode_task_location1 = Pmw.EntryField(self.mode_task_location.interior(),
 												labelpos = 'w',
 												label_pyclass = DirDialogButtonClassFactory.get(self.set_mode_task_dir),                                                
-												label_text = 'pyMODE-TASK directory:',
+												label_text = 'pyMODE-TASK directory *:',
 												value=home)
 		self.balloon.bind(self.mode_task_location1, 'Kindly give the path of pyMODE-TASK directory.\nAll the MODE-TASK core script must be placed\n inside the src directory within the pyMODE-TASK directory.',
                 'Locate pyMODE-TASK directory')
@@ -271,7 +269,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.pca_trj_location = Pmw.EntryField(self.pca_trj_file_io.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.pca_set_trj_filename,mode='r',filter=[("Gromacs",".xtc"), ("DCD",".dcd"), ("Amber",".mdcrd"), ("All","*.*")]),                                                
-												label_text = 'Trajectory File:',
+												label_text = 'Trajectory File *:',
 												)
 		self.balloon.bind(self.pca_trj_location, 'Read MD Trajectory file',
                 'Read MD Trajectory file')
@@ -279,7 +277,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.pca_top_location = Pmw.EntryField(self.pca_trj_file_io.interior(),
                                                 labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_top_filename,mode='r',filter=[("PDB",".pdb"), ("GRO",".gro"), ("All","*.*")]),                                                
-                                                label_text = 'Topology File:')
+                                                label_text = 'Topology File *:')
 		self.balloon.bind(self.pca_top_location, 'Read Topology file',
                 'Read Topology file')
 		# RMSD Reference Structure
@@ -438,7 +436,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.ipca_trj_location = Pmw.EntryField(self.icpca_trj_file_io.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.ipca_set_trj_filename,mode='r',filter=[("Gromacs",".xtc"), ("DCD",".dcd"), ("Amber",".mdcrd"), ("All","*.*")]),                                                
-												label_text = 'Trajectory File:',
+												label_text = 'Trajectory File *:',
 												)
 		self.balloon.bind(self.ipca_trj_location, 'Read MD Trajectory file',
 			'Read MD Trajectory file')
@@ -446,7 +444,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.ipca_top_location = Pmw.EntryField(self.icpca_trj_file_io.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.ipca_set_top_filename,mode='r',filter=[("PDB",".pdb"), ("GRO",".gro"), ("All","*.*")]),                                                
-												label_text = 'Topology File:')
+												label_text = 'Topology File *:')
 		self.balloon.bind(self.ipca_top_location, 'Read topology file',
 			'Read topology file')
 		# output directory
@@ -562,7 +560,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.mds_trj_location = Pmw.EntryField(self.mds_trj_file_io.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.mds_set_trj_filename,mode='r',filter=[("Gromacs",".xtc"), ("DCD",".dcd"), ("Amber",".mdcrd"), ("All","*.*")]),                                                
-												label_text = 'Trajectory File:',
+												label_text = 'Trajectory File *:',
 												)
 		self.balloon.bind(self.mds_trj_location, 'Read MD trajectory file',
 			'Read MD trajectory file')
@@ -571,7 +569,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.mds_top_location = Pmw.EntryField(self.mds_trj_file_io.interior(),
                                                 labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.mds_set_top_filename,mode='r',filter=[("PDB",".pdb"), ("GRO",".gro"), ("All","*.*")]),                                                
-                                                label_text = 'Topology File:')
+                                                label_text = 'Topology File *:')
 		self.balloon.bind(self.mds_top_location, 'Read topology file',
 			'Read topology file')
 
@@ -843,7 +841,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.cg_pdb_location = Pmw.EntryField(self.nma_trj_file_io.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_cg_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'PDB File:',
+												label_text = 'PDB File *:',
 												)
 		# coarse grain level
 		#self.var = StringVar()
@@ -919,7 +917,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.nma_pdb_location = Pmw.EntryField(self.nma_group.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_nma_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'PDB File:',
+												label_text = 'PDB File *:',
 												)
 		self.nma_pdb_location.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
@@ -979,7 +977,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.conf_mode_Unalgn_pdb1 = Pmw.EntryField(self.nma_conf_mode.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_conf_mode_Unalgn_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'PDB File:',
+												label_text = 'PDB File *:',
 												)
 		self.conf_mode_Unalgn_pdb1.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
@@ -987,7 +985,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.conf_mode_pdb = Pmw.EntryField(self.nma_conf_mode.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_conf_mode_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'PDB(Conf. change):',
+												label_text = 'PDB(Conf. change)*:',
 												)
 		self.balloon.bind(self.conf_mode_pdb, 'PDB file of conformation change',
                 'PDB file of conformation change')
@@ -1009,7 +1007,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.conf_mode_vtfile = Pmw.EntryField(self.nma_conf_mode.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_conf_mode_vtfile_location,mode='r',filter=[("TXT",".txt")]),                                                
-												label_text = 'VT Matrix file:',
+												label_text = 'VT Matrix file *:',
 												)
 		self.conf_mode_vtfile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
@@ -1056,7 +1054,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.msf_pdb = Pmw.EntryField(self.nma_msf.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_msf_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'PDB file:',
+												label_text = 'PDB file *:',
 												)
 		self.balloon.bind(self.msf_pdb, 'First PDB file to compare',
                 'First PDB file to compare')
@@ -1066,7 +1064,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.msf_WMatrixFile = Pmw.EntryField(self.nma_msf.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_msf_WMatrixFile,mode='r',filter=[("TXT",".txt")]),                                                
-												label_text = 'W Matrix File:',
+												label_text = 'W Matrix File *:',
 												)
 		self.balloon.bind(self.msf_WMatrixFile, 'W matrix file for first PDB',
                 'W matrix file for first PDB')
@@ -1076,7 +1074,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.msf_VTMatrixFile = Pmw.EntryField(self.nma_msf.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_msf_VTMatrixFile,mode='r',filter=[("TXT",".txt")]),                                                
-												label_text = 'VT Matrix File:',
+												label_text = 'VT Matrix File *:',
 												)
 		self.balloon.bind(self.msf_VTMatrixFile, 'VT matrix file for first PDB',
                 'VT matrix file for first PDB')
@@ -1156,7 +1154,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.ac_pdb = Pmw.EntryField(self.assem_cov.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_ac_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'PDB file*:',
+												label_text = 'PDB file *:',
 												)
 		self.balloon.bind(self.ac_pdb, 'Give a PDB file',
                 'Give a PDB file')
@@ -1166,7 +1164,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.ac_WMatrixFile = Pmw.EntryField(self.assem_cov.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_ac_WMatrixFile,mode='r',filter=[("TXT",".txt")]),                                                
-												label_text = 'W Matrix File*:',
+												label_text = 'W Matrix File *:',
 												)
 		self.balloon.bind(self.ac_WMatrixFile, 'W matrix file',
                 'W matrix file')
@@ -1176,7 +1174,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.ac_VTMatrixFile = Pmw.EntryField(self.assem_cov.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_ac_VTMatrixFile,mode='r',filter=[("TXT",".txt")]),                                                
-												label_text = 'VT Matrix File*:',
+												label_text = 'VT Matrix File *:',
 												)
 		self.balloon.bind(self.ac_VTMatrixFile, 'VT matrix file',
                 'VT matrix file')
@@ -1271,7 +1269,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.nma_vtfile_location = Pmw.EntryField(self.get_eig_group.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_nma_vtfile_location,mode='r',filter=[("TXT",".txt")]),                                                
-												label_text = 'VT value file:',
+												label_text = 'VT value file *:',
 												)
 		self.nma_vtfile_location.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
@@ -1279,7 +1277,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		
 		self.nma_mode_idx = Pmw.EntryField(self.get_eig_group.interior(),
 												labelpos = 'w',
-												label_text = 'Mode index:',
+												label_text = 'Mode index *:',
 												command = self.get_pc_selection)
 		self.nma_mode_idx.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
@@ -1319,7 +1317,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.conf_mode_Unalgn_pdb = Pmw.EntryField(self.nma_mode_vis.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'CG PDB file:',
+												label_text = 'CG PDB file *:',
 												)
 		self.conf_mode_Unalgn_pdb.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
@@ -1339,7 +1337,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.mode_indx_value = Pmw.EntryField(self.nma_mode_vis.interior(),
 												labelpos = 'w',
 												command = self.get_pc_selection,                                                
-												label_text = 'Mode index value:',
+												label_text = 'Mode index value *:',
 												)
 		self.mode_indx_value.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
@@ -1347,7 +1345,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.conf_mode_Unalgn_pdb = Pmw.EntryField(self.nma_mode_vis.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'Vector file:',
+												label_text = 'Vector file *:',
 												)
 		self.conf_mode_Unalgn_pdb.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
