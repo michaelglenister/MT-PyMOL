@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 #filename: pypca.py
 
+#--------------------------------------------------
+# TO DO
+#===================================================
+# 1. Add astrik over required input feild
+# 2. check to look for mode-task files within conf setting 
 
 # pyMODE-TASK  Copyright Notice
 # ============================
@@ -1149,8 +1154,8 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		# read PDB
 		self.ac_pdb = Pmw.EntryField(self.assem_cov.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'PDB file:',
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_ac_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_text = 'PDB file*:',
 												)
 		self.balloon.bind(self.ac_pdb, 'Give a PDB file',
                 'Give a PDB file')
@@ -1159,8 +1164,8 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		#W matrix file
 		self.ac_WMatrixFile = Pmw.EntryField(self.assem_cov.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'W Matrix File:',
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_ac_WMatrixFile,mode='r',filter=[("TXT",".txt")]),                                                
+												label_text = 'W Matrix File*:',
 												)
 		self.balloon.bind(self.ac_WMatrixFile, 'W matrix file',
                 'W matrix file')
@@ -1169,8 +1174,8 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		#VT matrix file
 		self.ac_VTMatrixFile = Pmw.EntryField(self.assem_cov.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'VT Matrix File:',
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_ac_VTMatrixFile,mode='r',filter=[("TXT",".txt")]),                                                
+												label_text = 'VT Matrix File*:',
 												)
 		self.balloon.bind(self.ac_VTMatrixFile, 'VT matrix file',
                 'VT matrix file')
@@ -1219,11 +1224,11 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 				
 		self.ac_Vmin.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
-		# Vmin
+		# Vmax
 		self.ac_Vmax = Pmw.EntryField(self.assem_cov.interior(),
 												labelpos = 'w',
 												label_text = 'Vmax:',
-												value=0.5
+												value='0.5'
 												)
 		self.balloon.bind(self.ac_Vmax, 'Maximum axes value for plot',
 				'Maximum axes value for plot')
@@ -1247,7 +1252,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 			orient='horizontal',
 			padx=0,
 			pady=0)
-		self.run_ac_button.add('Run',fg='blue', command = self.run_ipca)
+		self.run_ac_button.add('Run',fg='blue', command = self.run_ac)
 		self.run_ac_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
 		#=============================================
@@ -1818,10 +1823,10 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			else:
 				cmd = cmd_dir+'conformationMode.py --pdbConf ' + unal_pdb + ' --pdbANM ' + pdb + ' --vtMatrix ' +  vtfile + ' --outdir ' + out_loc + ' --atomType ' + atm_type
 				out = `os.system(cmd)`
-			if out == '0':
-					tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run successful!\nResults are written in \n" + out_loc)
-			else:
-				tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run failed. See terminal for details!")
+				if out == '0':
+						tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run successful!\nResults are written in \n" + out_loc)
+				else:
+					tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run failed. See terminal for details!")
 	
 	def run_msf(self):
 		status = self.check_conf_status()
@@ -1848,12 +1853,48 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			else:
 				cmd = cmd_dir+'meanSquareFluctuations.py --pdb ' + pdb + ' --pdbC ' + pdb_conf + ' --vtMatrix ' +  vtMatrix1  + ' --vtMatrixC ' +  vtMatrix2  + ' --atomType ' + at_type + ' --wMatrix ' + wMatrix1 + ' --wMatrixC ' + wMatrix2 + ' --modes ' + modes
 				out = `os.system(cmd)`
-			if out == '0':
-				tkMessageBox.showinfo("pyMODE-TASK!", "MSF run successful!\nResults are written in \n" + out_loc)
-			else:
-				tkMessageBox.showinfo("pyMODE-TASK!", "MSF run failed. See terminal for details!")
+				if out == '0':
+					tkMessageBox.showinfo("pyMODE-TASK!", "MSF run successful!\nResults are written in \n" + out_loc)
+				else:
+					tkMessageBox.showinfo("pyMODE-TASK!", "MSF run failed. See terminal for details!")
 		
-			
+	def run_ac(self):
+		status = self.check_conf_status()
+		ac_pdb = self.ac_pdb.getvalue()
+		ac_wmf = self.ac_WMatrixFile.getvalue()
+		ac_vtf = self.ac_VTMatrixFile.getvalue()
+		mode = self.ac_modes.getvalue()
+		assym_unit = self.ac_assym_unit.getvalue()
+		zoom = self.ac_zoom.getvalue()
+		vmin = self.ac_Vmin.getvalue()
+		vmax = self.ac_Vmax.getvalue()
+		atm_type = self.ac_atm_type.getvalue()
+		print type(vmin)
+		if status:
+			# core scripts are located at src directory under pyMODE-TASK directory
+			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
+			if ac_pdb == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No PDB given!")
+			if ac_wmf == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No WMatrix file given!")
+			if ac_vtf == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No VT Matrix file given!")
+			elif assym_unit == '': 
+				cmd = cmd_dir+'assemblyCovariance.py --pdb ' + ac_pdb + ' --vtMatrix ' +  ac_vtf  + ' --atomType ' + atm_type + ' --wMatrix ' + ac_wmf + ' --modes ' + mode + ' --zoom ' + zoom + ' --vmin ' + vmin + ' --vmax ' + vmax
+				out = `os.system(cmd)`
+				print cmd_dir
+				if out == '0':
+					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run successful!\nResults are written in \n" + out_loc)
+				else:
+					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run failed. See terminal for details!")
+			else:
+				cmd = cmd_dir+'assemblyCovariance.py --pdb ' + ac_pdb + ' --vtMatrix ' +  ac_vtf  + ' --atomType ' + atm_type + ' --wMatrix ' + ac_wmf + ' --modes ' + mode + ' --zoom ' + zoom + ' --vmin ' + vmin + ' --vmax ' + vmax + ' --aUnits ' + assym_unit
+				out = `os.system(cmd)`
+				if out == '0':
+					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run successful!\nResults are written in \n" + out_loc)
+				else:
+					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run failed. See terminal for details!")
+				
 	def run_get_eigen(self):
 		status = self.check_conf_status()
 		if status:
@@ -1912,6 +1953,8 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		n = self.conf_mode_out.setvalue(filename)
 		return n
 		
+	# MSF methods
+	#=====================================
 	def set_msf_pdb(self, filename):
 		n = self.msf_pdb.setvalue(filename)
 		return n
@@ -1936,6 +1979,23 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		n = self.msf_VTMatrixFile1.setvalue(filename)
 		return n
 		
+	#===========================================
+	# assembly Covariance methods
+	#============================================
+	
+	def set_ac_pdb(self, filename):
+		n = self.ac_pdb.setvalue(filename)
+		return n
+		
+	def set_ac_WMatrixFile(self, filename):
+		n = self.ac_WMatrixFile.setvalue(filename)
+		return n
+	
+	def set_ac_VTMatrixFile(self, filename):
+		n = self.ac_VTMatrixFile.setvalue(filename)
+		return n
+		
+	#===========================================
 	def get_pc_method_selection(self, sele_option):
 		n=self.pca_methods_buttons.getvalue()
 		return n
