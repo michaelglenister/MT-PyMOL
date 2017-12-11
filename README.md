@@ -38,7 +38,7 @@ OR
 
 Download zip from github page and extract to a directory.
 
-*Install with pymol:*
+*Install plugin in pymol:*
 1. Start pymol
 2. Go to Plugin --> Plugin Manager and clcik on install new plugin tab. Under install from local file click on choose file.. button.
 Browse the pyMODE-TASK.py and follow the on screen installation instructions. 
