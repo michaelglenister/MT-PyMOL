@@ -5,7 +5,7 @@
 # TO DO
 #===================================================
 # 1. Add astrik over required input feild
-# 2. check to look for mode-task files within conf setting 
+# 2. check to look for mode-task files within conf setting ----	done
 
 # pyMODE-TASK  Copyright Notice
 # ============================
@@ -41,6 +41,7 @@
 import matplotlib
 matplotlib.use('Agg')
 import os, sys
+import os.path
 if sys.version_info[0] < 3:
 	import Tkinter
 	from Tkinter import *
@@ -1085,7 +1086,7 @@ pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MO
 		self.msf_conf_pdb = Pmw.EntryField(self.nma_msf.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_msf_conf_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
-												label_text = 'comparison PDB:',
+												label_text = 'Comparison PDB:',
 												)
 		self.balloon.bind(self.msf_conf_pdb, 'VT matrix file for comparison PDB',
                 'VT matrix file for comparison PDB')
@@ -1542,20 +1543,46 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		print 'You clicked on OK'
 	
 	def check_conf_status(self):
-		#result=
-		value = self.mode_task_location1.getvalue()
-		if value != '':
+		'''Check if the configuration tab is set and core files exist'''
+		path = self.mode_task_location1.getvalue()
+		if path != '':
 			result = 1
+			pca_file_chk = path+'/pca.py'
+			intPca_file_chk = path+'/internal_pca.py'
+			mds_file_chk = path+'/mds.py'
+			tsne_file_chk = path+'/tsne.py'
+			pca_file_chk = path+'/pca.py'
+			ac_file_chk = path+'/assemblyCovariance.py'
+			cg_file_chk = path+'/coarseGrain.py'
+			com_mod_file_chk = path+'/combinationMode.py'
+			conf_mod_file_chk = path+'/conformationMode.py'
+			msf_file_chk = path+'/meanSquareFluctuations.py'
+			visualiseVector_file_chk = path+'/visualiseVector.py'
+			getEigenVectors_file_chk = path+'/getEigenVectors'
+			ANM_file_chk = path+'/ANM'
+			
+			file_name_list = [pca_file_chk, intPca_file_chk, mds_file_chk, tsne_file_chk, pca_file_chk,\
+								ac_file_chk, cg_file_chk, com_mod_file_chk, conf_mod_file_chk, msf_file_chk,\
+								visualiseVector_file_chk, getEigenVectors_file_chk, ANM_file_chk]
+			for i in file_name_list:
+				chk=1
+				if os.path.isfile(i):
+					chk=1
+				else:
+					chk = 0
+			if chk == 0:
+				tkMessageBox.showinfo("pyMODE-TASK Warning!", "Can not locate some core MODE-TASK scripts. Please insure that the path given in configuration tab is correct and contains MODE-TASK core scripts , otherwise it might give an error in the next steps")				
 		else:
 			result = 0
 			tkMessageBox.showinfo("pyMODE-TASK Error!", "Location of pyMODE-TASK directory not given. Please specify the location of pyMODE-TASK directory in configuration page of the plugin!")
 		return result
 		
 	def run_pca(self):
-		
+		'''run pca'''
 		# core scripts are located at src directory under pyMODE-TASK directory
 		#cmd_dir = './src'
 		status = self.check_conf_status()
+		#print status
 		if status:
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
 			trj_loc = self.pca_trj_location.getvalue()
@@ -1854,7 +1881,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				cmd = cmd_dir+'meanSquareFluctuations.py --pdb ' + pdb + ' --pdbC ' + pdb_conf + ' --vtMatrix ' +  vtMatrix1  + ' --vtMatrixC ' +  vtMatrix2  + ' --atomType ' + at_type + ' --wMatrix ' + wMatrix1 + ' --wMatrixC ' + wMatrix2 + ' --modes ' + modes
 				out = `os.system(cmd)`
 				if out == '0':
-					tkMessageBox.showinfo("pyMODE-TASK!", "MSF run successful!\nResults are written in \n" + out_loc)
+					tkMessageBox.showinfo("pyMODE-TASK!", "MSF run successful!\nResults are written in output directory")
 				else:
 					tkMessageBox.showinfo("pyMODE-TASK!", "MSF run failed. See terminal for details!")
 		
@@ -1869,7 +1896,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		vmin = self.ac_Vmin.getvalue()
 		vmax = self.ac_Vmax.getvalue()
 		atm_type = self.ac_atm_type.getvalue()
-		print type(vmin)
+		#print type(vmin)
 		if status:
 			# core scripts are located at src directory under pyMODE-TASK directory
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
@@ -1882,7 +1909,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			elif assym_unit == '': 
 				cmd = cmd_dir+'assemblyCovariance.py --pdb ' + ac_pdb + ' --vtMatrix ' +  ac_vtf  + ' --atomType ' + atm_type + ' --wMatrix ' + ac_wmf + ' --modes ' + mode + ' --zoom ' + zoom + ' --vmin ' + vmin + ' --vmax ' + vmax
 				out = `os.system(cmd)`
-				print cmd_dir
+				#print cmd_dir
 				if out == '0':
 					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run successful!\nResults are written in \n" + out_loc)
 				else:
@@ -1891,7 +1918,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				cmd = cmd_dir+'assemblyCovariance.py --pdb ' + ac_pdb + ' --vtMatrix ' +  ac_vtf  + ' --atomType ' + atm_type + ' --wMatrix ' + ac_wmf + ' --modes ' + mode + ' --zoom ' + zoom + ' --vmin ' + vmin + ' --vmax ' + vmax + ' --aUnits ' + assym_unit
 				out = `os.system(cmd)`
 				if out == '0':
-					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run successful!\nResults are written in \n" + out_loc)
+					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run successful!\nResults are written in \n output directory")
 				else:
 					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run failed. See terminal for details!")
 				
@@ -1952,7 +1979,8 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 	def set_conf_mode_out(self, filename):
 		n = self.conf_mode_out.setvalue(filename)
 		return n
-		
+	
+	#======================================
 	# MSF methods
 	#=====================================
 	def set_msf_pdb(self, filename):
