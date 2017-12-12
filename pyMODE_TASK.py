@@ -1271,7 +1271,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.ge_vtfile_location = Pmw.EntryField(self.get_eig_group.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_ge_vtfile_location,mode='r',filter=[("TXT",".txt")]),                                                
-												label_text = 'VT value file *:',
+												label_text = 'VT Matrix file *:',
 												)
 		self.ge_vtfile_location.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
@@ -1948,13 +1948,13 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No mode index given!")
 			else:	
 				#./getEigenVectors --vtMatrix Tutorial/VT_values.txt --mode 9 --direction 1 --outdir Tutorial/
-				cmd = cmd_dir+'getEigenVectors --vtMatrix ' + ge_vt_file + ' --mode ' + mode_idx + ' --direction ' + direction  
+				cmd = cmd_dir+'getEigenVectors --vt ' + ge_vt_file + ' --mode ' + mode_idx + ' --direction ' + direction  
 				out = `os.system(cmd)`
 				#print type(out)
 				if out == '0':
-					tkMessageBox.showinfo("pyMODE-TASK!", "NMA run successful!\nResults are written in \n" + out_loc)
+					tkMessageBox.showinfo("pyMODE-TASK!", "getEigenVectors run successful!\nResults are written in ouput directory\n")
 				else:
-					tkMessageBox.showinfo("pyMODE-TASK!", "NMA run failed. See terminal for details!")
+					tkMessageBox.showinfo("pyMODE-TASK!", "getEigenVectors run failed. See terminal for details!")
 	
 	
 	def set_mode_task_dir(self, dirname):
