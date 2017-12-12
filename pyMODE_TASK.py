@@ -213,8 +213,9 @@ class PyMODETASK:
         # 							configuration PAGE
 		#---------------------------------------------------------------
 		self.balloon = Pmw.Balloon(self.master)
-		about_pca = """Give the location of MODE-TASK core scripts. Normally the core scripts are contained
-within pyMODE-TASK/src directory."""		
+		about_pca = """Give the location of pyMODE-TASK directory.  For example- If the pyMODE-TASK
+directory is in user's home, then pyMODE-TASK directory field should read like /home/user/pyMODE-TASK.
+Normally the core scripts should be within pyMODE-TASK/src directory."""		
 		self.conf_top_group = Pmw.Group(self.configuration_page,tag_text='About')
 		self.conf_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 2)
         
@@ -224,7 +225,7 @@ within pyMODE-TASK/src directory."""
 			vscrollmode='dynamic',
 			hscrollmode='dynamic',
 			labelpos='n',
-			text_width=150, text_height=4,
+			text_width=150, text_height=6,
 			text_wrap='word',
 			text_background='black',
 			text_foreground='white',
@@ -1267,48 +1268,46 @@ within pyMODE-TASK/src directory."""
 		self.get_eig_group.pack(expand=1, fill='x', side=TOP)
 		
 		# read VT file
-		self.nma_vtfile_location = Pmw.EntryField(self.get_eig_group.interior(),
+		self.ge_vtfile_location = Pmw.EntryField(self.get_eig_group.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_nma_vtfile_location,mode='r',filter=[("TXT",".txt")]),                                                
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_ge_vtfile_location,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'VT value file *:',
 												)
-		self.nma_vtfile_location.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+		self.ge_vtfile_location.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		# mode index 
 		
-		self.nma_mode_idx = Pmw.EntryField(self.get_eig_group.interior(),
+		self.ge_mode_idx = Pmw.EntryField(self.get_eig_group.interior(),
 												labelpos = 'w',
-												label_text = 'Mode index *:',
-												command = self.get_pc_selection)
-		self.nma_mode_idx.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+												label_text = 'Mode index *:'
+												)
+		self.ge_mode_idx.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		# Direction
 		
-		self.nma_direction = Pmw.OptionMenu(self.get_eig_group.interior(),
+		self.ge_direction = Pmw.OptionMenu(self.get_eig_group.interior(),
 				labelpos = 'w',
 				label_text = 'Direction:',
 				items = ['1', '-1'],
 				menubutton_width = 10,
 		)
-		self.nma_direction.pack(anchor = 'w', padx = 10, pady = 10)
+		self.ge_direction.pack(anchor = 'w', padx = 10, pady = 10)
 		
 		# output directory
-		self.gi_out_dir_location = Pmw.EntryField(self.get_eig_group.interior(),
-												labelpos = 'w',
-												label_pyclass = DirDialogButtonClassFactory.get(self.set_gi_out_location),
-												label_text = 'Output Directory:',
-												value = os.getcwd())
-		self.gi_out_dir_location.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+		#self.gi_out_dir_location = Pmw.EntryField(self.get_eig_group.interior(),
+		#										labelpos = 'w',
+		#										label_pyclass = DirDialogButtonClassFactory.get(self.set_gi_out_location),
+		#										label_text = 'Output Directory:',
+		#										value = os.getcwd())
+		#self.gi_out_dir_location.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		# Get eigenvectors
-		#self.nma_get_eigev = Pmw.ButtonBox(self.nma_mode_vis.interior(),
-		#	orient='horizontal',
-		#	padx=0,
-		#	pady=0)
-		#self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)
-		
-		#self.nma_get_eigev.pack is in next section
-		#self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		self.nma_get_eigev = Pmw.ButtonBox(self.get_eig_group.interior(),
+			orient='horizontal',
+			padx=0,
+			pady=0)
+		self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)		
+		self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
 		##====================================
 		# mode visualization
@@ -1360,13 +1359,13 @@ within pyMODE-TASK/src directory."""
 		self.run_msf_button.add('Get modes Vis',fg='blue', command = self.run_ipca)
 		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
-		# Get eigenvectors
-		self.nma_get_eigev = Pmw.ButtonBox(self.nma_mode_vis.interior(),
-			orient='horizontal',
-			padx=0,
-			pady=0)
-		self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)
-		self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		## Get eigenvectors
+		#self.nma_get_eigev = Pmw.ButtonBox(self.nma_mode_vis.interior(),
+		#	orient='horizontal',
+		#	padx=0,
+		#	pady=0)
+		#self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)
+		#self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 
 		
 		## Exit button
@@ -1938,18 +1937,18 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			# core scripts are located at src directory under pyMODE-TASK directory
 			#cmd_dir = './src'
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
-			nma_vt_file=self.nma_vtfile_location.getvalue()
-			mode_idx = self.nma_mode_idx.getvalue()
-			direction = self.nma_direction.getvalue()
-			out_loc = self.gi_out_dir_location.getvalue()
-			print nma_vt_file
-			if nma_vt_file == '':
+			ge_vt_file=self.ge_vtfile_location.getvalue()
+			mode_idx = self.ge_mode_idx.getvalue()
+			direction = self.ge_direction.getvalue()
+			#out_loc = self.gi_out_dir_location.getvalue()
+			#print ge_vt_file
+			if ge_vt_file == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No VT Matrix file given!")
 			if mode_idx == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No mode index given!")
 			else:	
 				#./getEigenVectors --vtMatrix Tutorial/VT_values.txt --mode 9 --direction 1 --outdir Tutorial/
-				cmd = cmd_dir+'getEigenVectors --vtMatrix ' + nma_vt_file + ' --mode ' + mode_idx + ' --outdir ' + out_loc 
+				cmd = cmd_dir+'getEigenVectors --vtMatrix ' + ge_vt_file + ' --mode ' + mode_idx + ' --direction ' + direction  
 				out = `os.system(cmd)`
 				#print type(out)
 				if out == '0':
@@ -2121,6 +2120,14 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 	def set_gi_out_location(self, filename):
 		n=self.gi_out_dir_location.setvalue(filename)
 		return n
+		
+	#==================================================
+	# Get Eigenvectors methods
+	#=====================================================
+	
+	def set_ge_vtfile_location(self, filename):
+		n=self.ge_vtfile_location.setvalue(filename)
+		return n 
 		
 	def about(self):
 		print "pyMODE-TASK!\n pymol plugin of MODE-TASK\n MODE-TASK: a software tool to perform PCA and NMA of protein structure and MD trajectories"
