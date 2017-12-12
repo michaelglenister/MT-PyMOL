@@ -250,7 +250,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		# input files
 		
 		self.pca_trj_file_io = Pmw.Group(self.pca_page, tag_text='MODE-TASK Input/Output')
-		self.pca_trj_file_io.pack(side = TOP,expand=1, fill='both', padx = 4, pady = 4)
+		self.pca_trj_file_io.pack(side = TOP,expand=1, fill='both', padx = 2, pady = 2)
 		
 		
 		# Read Trajectory 
@@ -292,7 +292,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 					self.pca_out_dir_location)
 					
 		for x in entries:
-			x.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+			x.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 			
 		Pmw.alignlabels(entries)
 		
@@ -303,7 +303,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		# PCA Methods
 		
 		self.pca_page_main_group = Pmw.Group(self.pca_page, tag_text='PCA Options')
-		self.pca_page_main_group.pack(fill = 'both', expand = 1, padx=4, pady=4)
+		self.pca_page_main_group.pack(fill = 'both', expand = 1, padx=2, pady=2)
 		
 		self.pca_methods_buttons = Pmw.RadioSelect(self.pca_page_main_group.interior(),
 				buttontype = 'radiobutton',
@@ -317,7 +317,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.pca_methods_buttons, 'PCA Method',
                 'PCA Method')
 				
-		self.pca_methods_buttons.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.pca_methods_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.pca_methods_buttons.add('svd', command = self.ok, text='SVD')
 		self.pca_methods_buttons.add('evd', command = self.ok, text='EVD')
 		self.pca_methods_buttons.add('kpca', command = self.ok, text='KernelPCA')
@@ -337,7 +337,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				
 		self.balloon.bind(self.atm_grp_buttons, 'Select atoms for analysis',
                 'Select atoms for analysis')
-		self.atm_grp_buttons.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.atm_grp_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.atm_grp_buttons.add('all', command = self.ok, text='All')
 		self.atm_grp_buttons.add('CA', command = self.ok, text='C-Alpha')
 		self.atm_grp_buttons.add('backbone', command = self.ok, text='Backbone')
@@ -353,7 +353,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												command = self.get_pc_selection)
 		self.balloon.bind(self.pca_comp, 'No. of Principal Component to save',
                 'No. of Principal Component to save')
-		self.pca_comp.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.pca_comp.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Kernel Type
 		self.kernel_type = Pmw.RadioSelect(self.pca_page_main_group.interior(),
@@ -366,7 +366,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				command = self.get_kt_selection)
 		self.balloon.bind(self.kernel_type, 'Type of Kernel.\nUsed with kpca method',
                 'Type of Kernel')
-		self.kernel_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.kernel_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.kernel_type.add('linear', command = self.ok, text='Linear')
 		self.kernel_type.add('poly', command = self.ok, text='Poly')
 		self.kernel_type.add('rbf', command = self.ok, text='RBF')
@@ -387,7 +387,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				)
 		self.balloon.bind(self.svd_solver_type, 'Type of SVD solver.\nOnly useful with SVD method',
                 'Type of SVD solver')
-		self.svd_solver_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.svd_solver_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.svd_solver_type.add('auto', command = self.ok, text='Auto')
 		self.svd_solver_type.add('full', command = self.ok, text='Full')
 		self.svd_solver_type.add('arpack', command = self.ok, text='Arpack')
@@ -399,9 +399,9 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		
 		# Run button
 		
-		self.run_pca_button = Pmw.ButtonBox(self.pca_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
+		self.run_pca_button = Pmw.ButtonBox(self.pca_page_main_group.interior(),orient='horizontal', padx=2,pady=2)
 		self.run_pca_button.add('Run PCA',fg='blue', command = self.run_pca)
-		self.run_pca_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		self.run_pca_button.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 		
 		
 		##============================================================
@@ -446,7 +446,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 					self.ipca_out_dir_location)
 					
 		for x in entries:
-			x.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+			x.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 			
 		Pmw.alignlabels(entries)	
 		
@@ -466,7 +466,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				label_text = 'Cordinate type:',
 				frame_borderwidth = 2,
 				frame_relief = 'groove')
-		self.ct_buttons.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ct_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.ct_buttons.add('distance', command = self.ok)
 		self.ct_buttons.add('angle', command = self.ok)
 		self.ct_buttons.add('phi', command = self.ok)
@@ -485,7 +485,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				frame_borderwidth = 2,
 				frame_relief = 'groove')
 
-		self.ipca_atm_grp_buttons.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ipca_atm_grp_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.ipca_atm_grp_buttons.add('All', command = self.ok)
 		self.ipca_atm_grp_buttons.add('CA', command = self.ok)
 		self.ipca_atm_grp_buttons.add('Backbone', command = self.ok)
@@ -503,7 +503,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
                                                 label_text = 'PCA component:',
 												value='All',
 												command = self.get_pc_selection)
-		self.pca_comp.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.pca_comp.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		self.balloon.bind(self.pca_comp, 'No. of principal component to save',
 			'No. of principal component to save')
@@ -518,10 +518,9 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		
 		self.run_pca_button = Pmw.ButtonBox(self.ipca_page_main_group.interior(),
 			orient='horizontal',
-			padx=0,
-			pady=0)
+			padx=2,	pady=2)
 		self.run_pca_button.add('Run Internal PCA',fg='blue', command = self.run_ipca)
-		self.run_pca_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		self.run_pca_button.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 				
 		
 		##============================================================
@@ -533,7 +532,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		# input files
 		
 		self.mds_trj_file_io = Pmw.Group(self.mds_page, tag_text='MDS, t-SNE Input/Output')
-		self.mds_trj_file_io.pack(side = TOP,expand=1, fill='both', padx = 4, pady = 4)
+		self.mds_trj_file_io.pack(side = TOP,expand=1, fill='both', padx = 2, pady = 2)
 		
 		
 		# Read Trajectory 
@@ -568,7 +567,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 					self.mds_out_dir_location)
 					
 		for x in entries:
-			x.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+			x.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 			
 		Pmw.alignlabels(entries)	
 		
@@ -580,7 +579,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		radiogroups = []
 		
 		self.mds_page_main_group = Pmw.Group(self.radioframe, tag_text='MDS Options')
-		self.mds_page_main_group.pack(side=LEFT, fill = 'both', expand = 1, padx=4, pady=4)
+		self.mds_page_main_group.pack(side=LEFT, fill = 'both', expand = 1, padx=2, pady=2)
 		
 		radiogroups.append(self.mds_page_main_group)
 		self.mds_type_buttons = Pmw.RadioSelect(self.mds_page_main_group.interior(),
@@ -595,7 +594,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.mds_type_buttons, 'Type of MDS',
 			'Type of MDS')
 
-		self.mds_type_buttons.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.mds_type_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.mds_type_buttons.add('metric', command = self.ok, text='metric')
 		self.mds_type_buttons.add('nm', command = self.ok, text ='nonmetric')
 	
@@ -615,7 +614,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.atm_grp_buttons, 'Select atoms for analysis',
 			'Select atoms for analysis')
 
-		self.atm_grp_buttons.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.atm_grp_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.atm_grp_buttons.add('All', command = self.ok)
 		self.atm_grp_buttons.add('CA', command = self.ok)
 		self.atm_grp_buttons.add('Backbone', command = self.ok)
@@ -635,7 +634,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.mds_dissimilarity_type, 'Type of dissimilarity matrix',
 			'Type of dissimilarity matrix')
 
-		self.mds_dissimilarity_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.mds_dissimilarity_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.mds_dissimilarity_type.add('euc', command = self.ok, text='Euclidean distance')
 		self.mds_dissimilarity_type.add('rmsd', command = self.ok, text='RMSD')
 		self.mds_dissimilarity_type.invoke('rmsd')
@@ -653,7 +652,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.mds_cord_type, 'Internal coordinates type.Only used with euclidean distance',
 			'Internal coordinates type.Only used with euclidean distance')
 
-		self.mds_cord_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.mds_cord_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.mds_cord_type.add('distance', command = self.ok)
 		self.mds_cord_type.add('phi', command = self.ok)
 		self.mds_cord_type.add('psi', command = self.ok)
@@ -674,7 +673,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.mds_atm_ind_buttons, 'Group of atom for pairwise distance',
 			'Group of atom for pairwise distance')
 
-		self.mds_atm_ind_buttons.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.mds_atm_ind_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.mds_atm_ind_buttons.add('all', command = self.ok, text='All')
 		self.mds_atm_ind_buttons.add('alpha', command = self.ok, text='CA')
 		self.mds_atm_ind_buttons.add('backbone', command = self.ok, text='Backbone')
@@ -692,12 +691,12 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		
 		self.run_mds_button = Pmw.ButtonBox(self.mds_page_main_group.interior(),
 			orient='horizontal',
-			padx=0,
-			pady=0)
+			padx=2, pady=2)
+			
 		self.run_mds_button.add('Run MDS',
 			fg='blue', 
 			command = self.run_mds)
-		self.run_mds_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		self.run_mds_button.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 		
 		
 		##=========================================
@@ -707,12 +706,12 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		# t-SNE options
 		
 		self.tsne_page_main_group = Pmw.Group(self.radioframe, tag_text='t-SNE Options')
-		self.tsne_page_main_group.pack(side=LEFT, fill = 'both', expand = 1, padx=4, pady=4)
+		self.tsne_page_main_group.pack(side=LEFT, fill = 'both', expand = 1, padx=2, pady=2)
 		
 		radiogroups.append(self.tsne_page_main_group)
 
 		Pmw.aligngrouptags(radiogroups,)
-		self.radioframe.pack(padx = 6, pady = 6, expand='yes', fill='both')
+		self.radioframe.pack(padx = 2, pady = 2, expand='yes', fill='both')
 		
 		# Atom group 
 		self.atm_grp_buttons = Pmw.RadioSelect(self.tsne_page_main_group.interior(),
@@ -723,7 +722,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				frame_borderwidth = 2,
 				frame_relief = 'groove',
 				command = self.get_ag_selection)
-		self.atm_grp_buttons.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.atm_grp_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.atm_grp_buttons.add('All', command = self.ok)
 		self.atm_grp_buttons.add('CA', command = self.ok)
 		self.atm_grp_buttons.add('Backbone', command = self.ok)
@@ -739,7 +738,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				frame_borderwidth = 2,
 				frame_relief = 'groove',
 				command = self.get_mds_dissimilarity_type)
-		self.tsne_dissimilarity_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.tsne_dissimilarity_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.tsne_dissimilarity_type.add('Euclidean distance', command = self.ok)
 		self.tsne_dissimilarity_type.add('RSMD', command = self.ok)
 		self.tsne_dissimilarity_type.invoke('RSMD')
@@ -754,7 +753,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				frame_relief = 'groove',
 				command = self.get_mds_cord_type
 				)
-		self.tsne_cord_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.tsne_cord_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.tsne_cord_type.add('distance', command = self.ok)
 		self.tsne_cord_type.add('phi', command = self.ok)
 		self.tsne_cord_type.add('psi', command = self.ok)
@@ -771,7 +770,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				frame_borderwidth = 2,
 				frame_relief = 'groove',
 				command = self.get_ag_selection)
-		self.atm_ind_buttons.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.atm_ind_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		self.atm_ind_buttons.add('All', command = self.ok)
 		self.atm_ind_buttons.add('CA', command = self.ok)
 		self.atm_ind_buttons.add('Backbone', command = self.ok)
@@ -786,9 +785,9 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		
 		# Run t-SNE button
 		
-		self.run_mds_button = Pmw.ButtonBox(self.tsne_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
+		self.run_mds_button = Pmw.ButtonBox(self.tsne_page_main_group.interior(),orient='horizontal', padx=2,pady=2)
 		self.run_mds_button.add('Run t-SNE',fg='blue', command = self.run_tsne)
-		self.run_mds_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		self.run_mds_button.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 				
 		
 		
@@ -869,15 +868,15 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 					self.cg_out_pdb)
 					
 		for x in entries:
-			x.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+			x.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 			
 		# Run coarse garining
 		self.run_cg_button = Pmw.ButtonBox(self.nma_trj_file_io.interior(),
 			orient='horizontal',
-			padx=0,
-			pady=0)
+			padx=2,
+			pady=2)
 		self.run_cg_button.add('Run Coarse Graining',fg='blue', command = self.run_cg)
-		self.run_cg_button.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
+		self.run_cg_button.pack(side=RIGHT, expand = 1, padx = 2, pady = 2)
 			
 		Pmw.alignlabels(entries)
 		
@@ -892,7 +891,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_nma_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'PDB File *:',
 												)
-		self.nma_pdb_location.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.nma_pdb_location.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		
 
@@ -902,7 +901,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
                                                 label_text = 'Cutoff (Angstrom):',
 												value='15',
 												command = self.get_pc_selection)
-		self.nma_cut.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.nma_cut.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Atom Type
 		self.nma_at_var = StringVar()
@@ -914,7 +913,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				items = ['CB', 'CA'],
 				menubutton_width = 5,
 		)
-		self.nma_atm_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.nma_atm_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# output directory
 		
@@ -923,7 +922,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_pyclass = DirDialogButtonClassFactory.get(self.nma_set_out_location),
 												label_text = 'Output Directory:',
 												value = os.getcwd())
-		self.nma_out_dir_location.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.nma_out_dir_location.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 												
 		pca_options_buttons=(self.nma_pdb_location, 
 			self.nma_cut,
@@ -935,10 +934,10 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		
 		self.run_pca_button = Pmw.ButtonBox(self.nma_group.interior(),
 			orient='horizontal',
-			padx=0,
-			pady=0)
+			padx=2,
+			pady=2)
 		self.run_pca_button.add('Run NMA',fg='blue', command = self.run_nma)
-		self.run_pca_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		self.run_pca_button.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 		
 		##====================================
 		# conformation/ combination mode
@@ -954,7 +953,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_conf_mode_Unalgn_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'PDB File *:',
 												)
-		self.conf_mode_Unalgn_pdb1.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.conf_mode_Unalgn_pdb1.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		## PDB file (Conformational change)
 		self.conf_mode_pdb = Pmw.EntryField(self.nma_conf_mode.interior(),
@@ -964,7 +963,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												)
 		self.balloon.bind(self.conf_mode_pdb, 'PDB file of conformation change',
                 'PDB file of conformation change')
-		self.conf_mode_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.conf_mode_pdb.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Atom Type
 		self.conf_at_var = StringVar()
@@ -976,7 +975,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				items = ['CB', 'CA'],
 				menubutton_width = 5,
 		)
-		self.conf_atm_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.conf_atm_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		## VT Matrix file
 		self.conf_mode_vtfile = Pmw.EntryField(self.nma_conf_mode.interior(),
@@ -984,7 +983,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_conf_mode_vtfile_location,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'VT Matrix file *:',
 												)
-		self.conf_mode_vtfile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.conf_mode_vtfile.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		## Output file
 		self.conf_mode_out = Pmw.EntryField(self.nma_conf_mode.interior(),
@@ -992,23 +991,23 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_pyclass = DirDialogButtonClassFactory.get(self.set_conf_mode_out),                                                
 												label_text = 'Output file:',
 												value = os.getcwd())
-		self.conf_mode_out.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.conf_mode_out.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Get conformation mode
 		self.run_msf_button = Pmw.ButtonBox(self.nma_conf_mode.interior(),
 			orient='horizontal',
-			padx=0,
-			pady=0)
+			padx=2,
+			pady=2)
 		self.run_msf_button.add('Get conf. modes',fg='blue', command = self.run_conf_mode)
-		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 		
 		# Get combination mode
 		self.run_msf_button = Pmw.ButtonBox(self.nma_conf_mode.interior(),
 			orient='horizontal',
-			padx=0,
-			pady=0)
+			padx=2,
+			pady=2)
 		self.run_msf_button.add('Get comb. modes',fg='blue', command = self.run_comb_mode)
-		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 		
 		
 		#============================================
@@ -1033,7 +1032,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												)
 		self.balloon.bind(self.msf_pdb, 'First PDB file to compare',
                 'First PDB file to compare')
-		self.msf_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.msf_pdb.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		#W matrix file
 		self.msf_WMatrixFile = Pmw.EntryField(self.nma_msf.interior(),
@@ -1043,7 +1042,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												)
 		self.balloon.bind(self.msf_WMatrixFile, 'W matrix file for first PDB',
                 'W matrix file for first PDB')
-		self.msf_WMatrixFile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.msf_WMatrixFile.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		#VT matrix file
 		self.msf_VTMatrixFile = Pmw.EntryField(self.nma_msf.interior(),
@@ -1053,7 +1052,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												)
 		self.balloon.bind(self.msf_VTMatrixFile, 'VT matrix file for first PDB',
                 'VT matrix file for first PDB')
-		self.msf_VTMatrixFile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.msf_VTMatrixFile.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# read comparison PDB
 		self.msf_conf_pdb = Pmw.EntryField(self.nma_msf.interior(),
@@ -1064,7 +1063,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.msf_conf_pdb, 'VT matrix file for comparison PDB',
                 'VT matrix file for comparison PDB')
 				
-		self.msf_conf_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.msf_conf_pdb.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		#W matrix file
 		self.msf_WMatrixFile1 = Pmw.EntryField(self.nma_msf.interior(),
@@ -1074,7 +1073,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												)
 		self.balloon.bind(self.msf_WMatrixFile1, 'W matrix file for comparison PDB',
                 'W matrix file for comparison PDB')
-		self.msf_WMatrixFile1.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.msf_WMatrixFile1.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		#VT matrix file
 		self.msf_VTMatrixFile1 = Pmw.EntryField(self.nma_msf.interior(),
@@ -1084,7 +1083,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												)
 		self.balloon.bind(self.msf_VTMatrixFile1, 'VT matrix file for comparison PDB',
                 'VT matrix file for comparison PDB')
-		self.msf_VTMatrixFile1.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.msf_VTMatrixFile1.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 
 		# Atom Type
 		self.msf_at_var = StringVar()
@@ -1096,7 +1095,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				items = ['CB', 'CA'],
 				menubutton_width = 5,
 		)
-		self.msf_atm_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.msf_atm_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# modes
 		
@@ -1107,15 +1106,15 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												
 		self.balloon.bind(self.msf_mode, 'List of modes: string OR comma separated String OR colon separated string ',
                 'List of modes')
-		self.msf_mode.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.msf_mode.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Run MSF
 		self.run_msf_button = Pmw.ButtonBox(self.nma_msf.interior(),
 			orient='horizontal',
-			padx=0,
-			pady=0)
+			padx=2,
+			pady=2)
 		self.run_msf_button.add('Run MSF',fg='blue', command = self.run_msf)
-		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 		
 		
 		#==========================================
@@ -1133,7 +1132,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												)
 		self.balloon.bind(self.ac_pdb, 'Give a PDB file',
                 'Give a PDB file')
-		self.ac_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ac_pdb.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		#W matrix file
 		self.ac_WMatrixFile = Pmw.EntryField(self.assem_cov.interior(),
@@ -1143,7 +1142,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												)
 		self.balloon.bind(self.ac_WMatrixFile, 'W matrix file',
                 'W matrix file')
-		self.ac_WMatrixFile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ac_WMatrixFile.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		#VT matrix file
 		self.ac_VTMatrixFile = Pmw.EntryField(self.assem_cov.interior(),
@@ -1153,7 +1152,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												)
 		self.balloon.bind(self.ac_VTMatrixFile, 'VT matrix file',
                 'VT matrix file')
-		self.ac_VTMatrixFile.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ac_VTMatrixFile.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Modes
 		self.ac_modes = Pmw.EntryField(self.assem_cov.interior(),
@@ -1164,7 +1163,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.ac_modes, 'Modes: String OR Colon Separated String OR Comma Separated String',
                 'Modes')
 				
-		self.ac_modes.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ac_modes.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Assymetric Unit
 		self.ac_assym_unit = Pmw.EntryField(self.assem_cov.interior(),
@@ -1174,7 +1173,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.ac_assym_unit, 'Assymetric Unit: String OR Colon Separated String OR Comma Separated String',
 				'Assymetric Unit')
 				
-		self.ac_assym_unit.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ac_assym_unit.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Zoom
 		self.ac_zoom = Pmw.EntryField(self.assem_cov.interior(),
@@ -1185,7 +1184,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.ac_zoom, 'Zoom: Comma Separated String The format is: [Unit,Chain]',
 				'Zoom')
 				
-		self.ac_zoom.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ac_zoom.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Vmin
 		self.ac_Vmin = Pmw.EntryField(self.assem_cov.interior(),
@@ -1196,7 +1195,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.ac_Vmin, 'Minimum axes value for plot',
 				'Minimum axes value for plot')
 				
-		self.ac_Vmin.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ac_Vmin.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Vmax
 		self.ac_Vmax = Pmw.EntryField(self.assem_cov.interior(),
@@ -1207,7 +1206,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.ac_Vmax, 'Maximum axes value for plot',
 				'Maximum axes value for plot')
 				
-		self.ac_Vmax.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ac_Vmax.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Atom Type
 		self.ac_at_var = StringVar()
@@ -1219,15 +1218,15 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				items = ['CB', 'CA'],
 				menubutton_width = 5,
 		)
-		self.ac_atm_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ac_atm_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Run Assembly Covariance
 		self.run_ac_button = Pmw.ButtonBox(self.assem_cov.interior(),
 			orient='horizontal',
-			padx=0,
-			pady=0)
+			padx=2,
+			pady=2)
 		self.run_ac_button.add('Run',fg='blue', command = self.run_ac)
-		self.run_ac_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		self.run_ac_button.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 		
 		#=============================================
 		# Get eigenvectors and mode visualization
@@ -1246,7 +1245,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_ge_vtfile_location,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'VT Matrix file *:',
 												)
-		self.ge_vtfile_location.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ge_vtfile_location.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# mode index 
 		
@@ -1254,7 +1253,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												labelpos = 'w',
 												label_text = 'Mode index *:'
 												)
-		self.ge_mode_idx.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.ge_mode_idx.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Direction
 		
@@ -1264,16 +1263,16 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				items = ['1', '-1'],
 				menubutton_width = 10,
 		)
-		self.ge_direction.pack(anchor = 'w', padx = 10, pady = 10)
+		self.ge_direction.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		
 		# Get eigenvectors
 		self.nma_get_eigev = Pmw.ButtonBox(self.get_eig_group.interior(),
 			orient='horizontal',
-			padx=0,
-			pady=0)
+			padx=2,
+			pady=2)
 		self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)		
-		self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 		
 		##====================================
 		# mode visualization
@@ -1288,7 +1287,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_mv_mode_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'CG PDB file *:',
 												)
-		self.mv_mode_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.mv_mode_pdb.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Atom Type
 		self.mv_at_var = StringVar()
@@ -1300,14 +1299,14 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				items = ['CB', 'CA'],
 				menubutton_width = 5,
 		)
-		self.mv_atm_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.mv_atm_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		## mode index value
 		self.mv_indx_value = Pmw.EntryField(self.nma_mode_vis.interior(),
 												labelpos = 'w',                                                
 												label_text = 'Mode index value *:',
 												)
-		self.mv_indx_value.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.mv_indx_value.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		## Vector file
 		self.mv_vector_file = Pmw.EntryField(self.nma_mode_vis.interior(),
@@ -1318,15 +1317,15 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.mv_vector_file, 'File containing eigen vectors',
 			'File containing eigen vectors')
 
-		self.mv_vector_file.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		self.mv_vector_file.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Get mode visualization
 		self.run_msf_button = Pmw.ButtonBox(self.nma_mode_vis.interior(),
 			orient='horizontal',
-			padx=0,
-			pady=0)
+			padx=2,
+			pady=2)
 		self.run_msf_button.add('Get modes Vis',fg='blue', command = self.run_mode_vis)
-		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
+		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 		
 		
 		
