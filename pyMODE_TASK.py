@@ -845,20 +845,18 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_cg_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'PDB File *:',
 												)
-		# coarse grain level
-		#self.var = StringVar()
-		#self.var.set('4')
-		#self.cg_level = Pmw.OptionMenu(self.nma_trj_file_io.interior(),
-		#		labelpos = 'w',
-		#		label_text = 'CG Level:',
-		#		menubutton_textvariable = self.var,
-		#		items = ['1', '2', '3', '4', '5', '6'],
-		#		menubutton_width = 5,
-		#)
+		self.balloon.bind(self.cg_pdb_location, 'PDB for coarse graining',
+			'Read PDB for coarse graining')
+		
+		# coarse graining
 		self.cg_level = Pmw.EntryField(self.nma_trj_file_io.interior(),
                                                 labelpos = 'w',
                                                 label_text = 'CG Level:')
-		self.cg_level.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
+		self.balloon.bind(self.cg_level, 'level of coarse graining',
+			'coarse graining')
+		#self.cg_level.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
 		# Atom Type
 		self.cg_at_var = StringVar()
 		self.cg_at_var.set('CB')
@@ -869,12 +867,17 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				items = ['CB', 'CA'],
 				menubutton_width = 5,
 		)
+		self.balloon.bind(self.cg_atm_type, 'Atom type',
+			'Atom type')
 		
 		# Starting atom
 		self.cg_start_atm = Pmw.EntryField(self.nma_trj_file_io.interior(),
 			labelpos = 'w',
 			label_text = 'Starting atom:',
 			value='1')
+		
+		self.balloon.bind(self.cg_start_atm, 'Residue number of the starting atom',
+			'Residue number of the starting atom')
 		
 		# output directory
 		
@@ -889,7 +892,10 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 			labelpos = 'w',
 			label_text = 'Output PDB:',
 			value='ComplexCG.pdb')
-
+			
+		self.balloon.bind(self.cg_out_pdb, 'Output PDB name',
+			'Output PDB name')
+			
 		entries=(self.cg_pdb_location,
 					self.cg_level,
 					self.cg_start_atm,
@@ -1261,11 +1267,11 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		#=============================================
 		
 		self.gi_mv_group = Pmw.Group(self.nma_second_group.interior(), tag_pyclass = None)
-		self.gi_mv_group.pack(expand=1, fill='x', side=LEFT)
+		self.gi_mv_group.pack(expand=1, fill='both', side=LEFT)
 		
 		##Sub window
 		self.get_eig_group = Pmw.Group(self.gi_mv_group.interior(), tag_text='Get Eigenvectors (6)')
-		self.get_eig_group.pack(expand=1, fill='x', side=TOP)
+		self.get_eig_group.pack(expand=1, fill='both', side=TOP)
 		
 		# read VT file
 		self.ge_vtfile_location = Pmw.EntryField(self.get_eig_group.interior(),
@@ -1273,7 +1279,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_ge_vtfile_location,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'VT Matrix file *:',
 												)
-		self.ge_vtfile_location.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+		self.ge_vtfile_location.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		# mode index 
 		
@@ -1281,7 +1287,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												labelpos = 'w',
 												label_text = 'Mode index *:'
 												)
-		self.ge_mode_idx.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+		self.ge_mode_idx.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		# Direction
 		
@@ -1313,7 +1319,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		# mode visualization
 		
 		self.nma_mode_vis = Pmw.Group(self.gi_mv_group.interior(), tag_text='Mode visualization (7)')
-		self.nma_mode_vis.pack(expand=1, fill='x', side=BOTTOM)
+		self.nma_mode_vis.pack(expand=1, fill='both', side=BOTTOM)
 		
 		## CG PDB file
 		self.mv_mode_pdb = Pmw.EntryField(self.nma_mode_vis.interior(),
@@ -1321,7 +1327,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_mv_mode_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'CG PDB file *:',
 												)
-		self.mv_mode_pdb.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+		self.mv_mode_pdb.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		# Atom Type
 		self.mv_at_var = StringVar()
@@ -1333,14 +1339,14 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				items = ['CB', 'CA'],
 				menubutton_width = 5,
 		)
-		self.mv_atm_type.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+		self.mv_atm_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		## mode index value
 		self.mv_indx_value = Pmw.EntryField(self.nma_mode_vis.interior(),
 												labelpos = 'w',                                                
 												label_text = 'Mode index value *:',
 												)
-		self.mv_indx_value.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+		self.mv_indx_value.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		## Vector file
 		self.mv_vector_file = Pmw.EntryField(self.nma_mode_vis.interior(),
@@ -1348,7 +1354,10 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_mv_vector_file,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'Vector file *:',
 												)
-		self.mv_vector_file.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+		self.balloon.bind(self.mv_vector_file, 'File containing eigen vectors',
+			'File containing eigen vectors')
+
+		self.mv_vector_file.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		# Get mode visualization
 		self.run_msf_button = Pmw.ButtonBox(self.nma_mode_vis.interior(),
