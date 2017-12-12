@@ -6,7 +6,7 @@
 #===================================================
 # 1. Add astrik over required input field --- done
 # 2. check to look for mode-task files within conf setting ----	done
-# 3. Resize/adjust NMA tab. 
+# 3. Resize/adjust NMA tab. -------- done
 
 # pyMODE-TASK  Copyright Notice
 # ============================
@@ -72,15 +72,6 @@ __version__ = "1.0.0"
 pyMODE-TASK
 
 """
-#=============================================================================
-#
-#     INITIALISE PLUGIN
-#
-
-
-# define variables
-#mode_task_dir = StringVar(Tk())
-#mode_task_dir.set("")
 
 def __init__(self):
 	self.menuBar.addmenuitem('Plugin', 'command',
@@ -89,7 +80,7 @@ def __init__(self):
 		command = lambda s=self: PyMODETASK(s))
 		
 class PyMODETASK:
-	'Main class of pyMODE-TASK.'
+	'''Main class of pyMODE-TASK.'''
 	def __init__(self, app):
 		
 		self.master = app.root
@@ -180,7 +171,7 @@ class PyMODETASK:
 			command=page.openpage)
 		
 		
-		# the title
+		# The title
 	
 		self.title_label = Label(self.dialog.interior(), text = 'pyMODE-TASK: A MODE-TASK Plugin for pymol -- Copyright (C) 2017, Bilal Nizami, RUBi, Rhodes University',
 				background = 'brown4',
@@ -212,11 +203,12 @@ class PyMODETASK:
 		#---------------------------------------------------------------
         # 							configuration PAGE
 		#---------------------------------------------------------------
+		
 		self.balloon = Pmw.Balloon(self.master)
 		about_pca = """Give the location of pyMODE-TASK directory.  For example- If the pyMODE-TASK
 directory is in user's home, then pyMODE-TASK directory field should read like /home/user/pyMODE-TASK.
 Normally the core scripts should be within pyMODE-TASK/src directory."""		
-		self.conf_top_group = Pmw.Group(self.configuration_page,tag_text='About')
+		self.conf_top_group = Pmw.Group(self.configuration_page,tag_text='Configuration instructions')
 		self.conf_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 2)
         
 		myfont = Pmw.logicalfont(name='Courier',size=14)
@@ -225,9 +217,9 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 			vscrollmode='dynamic',
 			hscrollmode='dynamic',
 			labelpos='n',
-			text_width=150, text_height=6,
+			text_width=150, text_height=5,
 			text_wrap='word',
-			text_background='black',
+			text_background='navy',
 			text_foreground='white',
 			text_font = myfont)
 			
@@ -238,10 +230,9 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		# MODE-TASK location tab
 		
 		self.mode_task_location = Pmw.Group(self.configuration_page, tag_text='Locate MODE-TASK directory:')
-		self.mode_task_location.pack(side = TOP,expand=0, fill='x', padx = 4, pady = 4)
+		self.mode_task_location.pack(side = TOP,expand=0, fill='x', padx = 4, pady = 25)
 		
 		# MODE-TASK location files
-		#home = expanduser("~")
 		self.mode_task_location1 = Pmw.EntryField(self.mode_task_location.interior(),
 												labelpos = 'w',
 												label_pyclass = DirDialogButtonClassFactory.get(self.set_mode_task_dir),                                                
@@ -250,16 +241,11 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.mode_task_location1, 'Kindly give the path of pyMODE-TASK directory.\nAll the MODE-TASK core script must be placed\n inside the src directory within the pyMODE-TASK directory.',
                 'Locate pyMODE-TASK directory')
 				
-		self.mode_task_location1.pack(side=TOP, fill = 'x', expand = 0, padx = 2, pady = 2)
+		self.mode_task_location1.pack(side=TOP, fill = 'x', expand = 0, padx = 2, pady = 25)
 		
-		## Exit button
-		#
-		#self.exit_pca = Pmw.ButtonBox(self.mode_task_location.interior(),orient='horizontal', padx=0,pady=0)
-		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
-		#---------------------------------------------------------------
+		#===================================================================
         # 							PCA PAGE
-		#---------------------------------------------------------------
+		#===================================================================
 		
 		# input files
 		
@@ -417,11 +403,6 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.run_pca_button.add('Run PCA',fg='blue', command = self.run_pca)
 		self.run_pca_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
-		## Exit button
-		#
-		#self.exit_pca = Pmw.ButtonBox(self.pca_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
-		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		
 		##============================================================
 		#
@@ -442,6 +423,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												)
 		self.balloon.bind(self.ipca_trj_location, 'Read MD Trajectory file',
 			'Read MD Trajectory file')
+		
 		# Read Topology 						
 		self.ipca_top_location = Pmw.EntryField(self.icpca_trj_file_io.interior(),
 												labelpos = 'w',
@@ -449,6 +431,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_text = 'Topology File *:')
 		self.balloon.bind(self.ipca_top_location, 'Read topology file',
 			'Read topology file')
+		
 		# output directory
 		
 		self.ipca_out_dir_location = Pmw.EntryField(self.icpca_trj_file_io.interior(),
@@ -467,6 +450,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 			
 		Pmw.alignlabels(entries)	
 		
+		#==========================================
 		# internal PCA options
 		#------------------------------------------
 		
@@ -500,7 +484,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				label_text = 'Atom group:',
 				frame_borderwidth = 2,
 				frame_relief = 'groove')
-				#command = self.get_ipca_ag_selection)
+
 		self.ipca_atm_grp_buttons.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		self.ipca_atm_grp_buttons.add('All', command = self.ok)
 		self.ipca_atm_grp_buttons.add('CA', command = self.ok)
@@ -538,13 +522,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 			pady=0)
 		self.run_pca_button.add('Run Internal PCA',fg='blue', command = self.run_ipca)
 		self.run_pca_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
-		
-		## Exit button
-		#
-		#self.exit_pca = Pmw.ButtonBox(self.ipca_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
-		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
-		
+				
 		
 		##============================================================
 		# MDS/ t-SNE page
@@ -721,11 +699,6 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 			command = self.run_mds)
 		self.run_mds_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
-		## Exit button
-		#
-		#self.exit_mds = Pmw.ButtonBox(self.mds_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
-		#self.exit_mds.add('EXIT', fg='red', command = self.frame.quit)
-		#self.exit_mds.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		
 		##=========================================
 		# t-SNE options
@@ -788,7 +761,6 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.tsne_cord_type.add('angle', command = self.ok)
 		
 		self.tsne_cord_type.invoke('distance')
-		#print self.svd_solver_type.getvalue()
 		
 		# Atom Indices 
 		self.atm_ind_buttons = Pmw.RadioSelect(self.tsne_page_main_group.interior(),
@@ -817,13 +789,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.run_mds_button = Pmw.ButtonBox(self.tsne_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
 		self.run_mds_button.add('Run t-SNE',fg='blue', command = self.run_tsne)
 		self.run_mds_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
-		
-		## Exit button
-		#
-		#self.exit_mds = Pmw.ButtonBox(self.tsne_page_main_group.interior(),orient='horizontal', padx=0,pady=0)
-		#self.exit_mds.add('EXIT', fg='red', command = self.frame.quit)
-		#self.exit_mds.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
-		
+				
 		
 		
 		#==============================================================
@@ -855,7 +821,6 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		
 		self.balloon.bind(self.cg_level, 'level of coarse graining',
 			'coarse graining')
-		#self.cg_level.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
 		
 		# Atom Type
 		self.cg_at_var = StringVar()
@@ -950,6 +915,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				menubutton_width = 5,
 		)
 		self.nma_atm_type.pack(fill = 'both', expand = 1, padx = 10, pady = 2)
+		
 		# output directory
 		
 		self.nma_out_dir_location = Pmw.EntryField(self.nma_group.interior(),
@@ -976,6 +942,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		
 		##====================================
 		# conformation/ combination mode
+		#======================================
 		
 		self.nma_conf_mode = Pmw.Group(self.nma_top_group1.interior(),
 			tag_text='Conformation/Combination mode (3)')
@@ -1044,7 +1011,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
 		
-		
+		#============================================
 		## second group
 		#===============================================
 		self.nma_second_group = Pmw.Group(self.nma_page,  tag_pyclass = None)
@@ -1299,13 +1266,6 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		)
 		self.ge_direction.pack(anchor = 'w', padx = 10, pady = 10)
 		
-		# output directory
-		#self.gi_out_dir_location = Pmw.EntryField(self.get_eig_group.interior(),
-		#										labelpos = 'w',
-		#										label_pyclass = DirDialogButtonClassFactory.get(self.set_gi_out_location),
-		#										label_text = 'Output Directory:',
-		#										value = os.getcwd())
-		#self.gi_out_dir_location.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		# Get eigenvectors
 		self.nma_get_eigev = Pmw.ButtonBox(self.get_eig_group.interior(),
@@ -1317,6 +1277,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		
 		##====================================
 		# mode visualization
+		#=========================================
 		
 		self.nma_mode_vis = Pmw.Group(self.gi_mv_group.interior(), tag_text='Mode visualization (7)')
 		self.nma_mode_vis.pack(expand=1, fill='both', side=BOTTOM)
@@ -1367,21 +1328,6 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.run_msf_button.add('Get modes Vis',fg='blue', command = self.run_mode_vis)
 		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
-		## Get eigenvectors
-		#self.nma_get_eigev = Pmw.ButtonBox(self.nma_mode_vis.interior(),
-		#	orient='horizontal',
-		#	padx=0,
-		#	pady=0)
-		#self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)
-		#self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
-
-		
-		## Exit button
-		#
-		#self.exit_pca = Pmw.ButtonBox(self.nma_page,orient='horizontal', padx=0,pady=0)
-		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
-		
 		
 		
 		#=====================================================
@@ -1427,12 +1373,6 @@ email: nizamibilal1064@gmail.com"""
 		self.text_field.pack(expand = 0, fill = 'both', padx = 4, pady = 4)
 		self.text_field.insert('end',about_pca)
 		self.text_field.configure(text_state=DISABLED)
-		
-		## Exit button
-		#
-		#self.exit_pca = Pmw.ButtonBox(self.about_top_group.interior(),orient='horizontal', padx=0,pady=0)
-		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		
 		#---------------------------------------------------------------
         # CITATION PAGE
@@ -1480,12 +1420,6 @@ email: nizamibilal1064@gmail.com"""
 		self.text_field.pack(expand = 0, fill = 'both', padx = 4, pady = 4)
 		self.text_field.insert('end',citation)
 		self.text_field.configure(text_state=DISABLED)
-		
-		## Exit button
-		#
-		#self.exit_pca = Pmw.ButtonBox(self.citation_top_group.interior(),orient='horizontal', padx=0,pady=0)
-		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
 		
 		#---------------------------------------------------------------
         # HELP PAGE
@@ -1544,12 +1478,6 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		w.pack(padx = 8, pady = 8)
 		
 		
-		## Exit button
-		#
-		#self.exit_pca = Pmw.ButtonBox(self.help_top_group.interior(),orient='horizontal', padx=0,pady=0)
-		#self.exit_pca.add('EXIT', fg='red', command = self.frame.quit)
-		#self.exit_pca.pack(side=RIGHT, expand = 1, padx = 10, pady = 2)
-	
 		self.notebook.setnaturalsize()
 		self.dialog.show()
 		
@@ -1599,7 +1527,6 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		# core scripts are located at src directory under pyMODE-TASK directory
 		#cmd_dir = './src'
 		status = self.check_conf_status()
-		#print status
 		if status:
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
 			trj_loc = self.pca_trj_location.getvalue()
@@ -1650,6 +1577,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 						tkMessageBox.showinfo("pyMODE-TASK!", "PCA (EVD) run successful!\nResults are written in \n" + out_loc)
 					else:
 						tkMessageBox.showinfo("pyMODE-TASK!", "PCA (EVD) run failed. See terminal for details!")
+			
 			# run kernel PCA
 			elif pc_sele == 'kpca':
 				if trj_loc == '':
@@ -1780,7 +1708,6 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			pdb_loc = self.cg_pdb_location.getvalue()
 			cg_level = self.cg_level.getvalue()
 			out_loc = self.cg_out_dir_location.getvalue()
-			#out_loc = out_loc + '/ComplexCG.pdb'
 			out_pdb = self.cg_out_pdb.getvalue()
 			print out_loc
 			start_atm = self.cg_start_atm.getvalue()
@@ -1790,7 +1717,6 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			else:	
 				cmd = cmd_dir+'coarseGrain.py --pdb ' + pdb_loc + ' --cg ' + cg_level + ' --atomType ' + atm_type + ' --startingAtom ' + start_atm + ' --outdir ' + out_loc + ' --output ' + out_pdb
 				out = `os.system(cmd)`
-				#print type(out)
 				if out == '0':
 					tkMessageBox.showinfo("pyMODE-TASK!", "Coarse graining run successful!\nResults are written in \n" + out_loc)
 				else:
@@ -1805,12 +1731,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			pdb_loc = self.nma_pdb_location.getvalue()
 			cutoff = self.nma_cut.getvalue()
 			out_loc = self.nma_out_dir_location.getvalue()
-			#out_loc = out_loc + '/ComplexCG.pdb'
-			#out_pdb = self.cg_out_pdb.getvalue()
-			#print out_loc
-			#start_atm = self.cg_start_atm.getvalue()
-			atm_type = 'CB'
-			#/ANM --pdb Tutorial/EV71_CG4.pdb  --outdir Tutorial --atomType CB --cutoff 24
+			atm_type = self.nma_atm_type.getvalue()
 			if pdb_loc == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No PDB location given!")
 			else:	
@@ -1913,7 +1834,6 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		vmin = self.ac_Vmin.getvalue()
 		vmax = self.ac_Vmax.getvalue()
 		atm_type = self.ac_atm_type.getvalue()
-		#print type(vmin)
 		if status:
 			# core scripts are located at src directory under pyMODE-TASK directory
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
@@ -1926,7 +1846,6 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			elif assym_unit == '': 
 				cmd = cmd_dir+'assemblyCovariance.py --pdb ' + ac_pdb + ' --vtMatrix ' +  ac_vtf  + ' --atomType ' + atm_type + ' --wMatrix ' + ac_wmf + ' --modes ' + mode + ' --zoom ' + zoom + ' --vmin ' + vmin + ' --vmax ' + vmax
 				out = `os.system(cmd)`
-				#print cmd_dir
 				if out == '0':
 					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run successful!\nResults are written in \n" + out_loc)
 				else:
@@ -1948,17 +1867,13 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			ge_vt_file=self.ge_vtfile_location.getvalue()
 			mode_idx = self.ge_mode_idx.getvalue()
 			direction = self.ge_direction.getvalue()
-			#out_loc = self.gi_out_dir_location.getvalue()
-			#print ge_vt_file
 			if ge_vt_file == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No VT Matrix file given!")
 			if mode_idx == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No mode index given!")
 			else:	
-				#./getEigenVectors --vtMatrix Tutorial/VT_values.txt --mode 9 --direction 1 --outdir Tutorial/
 				cmd = cmd_dir+'getEigenVectors --vt ' + ge_vt_file + ' --mode ' + mode_idx + ' --direction ' + direction  
 				out = `os.system(cmd)`
-				#print type(out)
 				if out == '0':
 					tkMessageBox.showinfo("pyMODE-TASK!", "getEigenVectors run successful!\nResults are written in ouput directory\n")
 				else:
@@ -1973,8 +1888,6 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			mv_at=self.mv_atm_type.getvalue()
 			mv_mode_idx = self.mv_indx_value.getvalue()
 			mv_vector_file = self.mv_vector_file.getvalue()
-			#out_loc = self.gi_out_dir_location.getvalue()
-			#print ge_vt_file
 			if mv_pdb == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No PDB file given!")
 			if mv_mode_idx == '':
@@ -1985,17 +1898,20 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			else:	
 				cmd = cmd_dir+'visualiseVector.py --pdb ' + mv_pdb + ' --vectorFile ' + mv_vector_file + ' --mode ' + mv_mode_idx + ' --atomType  ' + mv_at 
 				out = `os.system(cmd)`
-				#print out
-				#print type(out)
 				if out == '0':
 					tkMessageBox.showinfo("pyMODE-TASK!", "Mode Visualisation run successful!\nResults are written in ouput directory\n")
 				else:
 					tkMessageBox.showinfo("pyMODE-TASK!", "Mode Visualisation run failed. See terminal for details!")
 	
+	#=====================================
+	# Configuration tab methods
+	#=====================================
 	
 	def set_mode_task_dir(self, dirname):
 		n = self.mode_task_location1.setvalue(dirname)
 		return n
+	
+	#=========================================
 	
 	def pca_set_trj_filename(self, filename):
 		n = self.pca_trj_location.setvalue(filename)
@@ -2198,13 +2114,8 @@ class FileDialogButtonClassFactory:
 					n = MyFileDialog(types = filter).getopenfile()
 				elif mode == 'w':
 					n = MyFileDialog(types = filter).getsavefile()
-#                n = MyFileDialog().get()
-#                fd = PmwFileDialog(self.master,filter=filter)
-#                fd.title('Please choose a file')
-#                n=fd.askfilename()
 				if n is not None:
 					self.fn(n)
-			#print fn
 		return FileDialogButton
 	get = staticmethod(get)
 	
@@ -2679,7 +2590,6 @@ class MyHelpPage:
 		self.url=url
 		
 	def openpage(self):
-		#print self.url
 		webbrowser.open_new(self.url)
 		
 #root = Tk()
