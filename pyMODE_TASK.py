@@ -1316,12 +1316,12 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.nma_mode_vis.pack(expand=1, fill='x', side=BOTTOM)
 		
 		## CG PDB file
-		self.conf_mode_Unalgn_pdb = Pmw.EntryField(self.nma_mode_vis.interior(),
+		self.mv_mode_pdb = Pmw.EntryField(self.nma_mode_vis.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_mv_mode_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'CG PDB file *:',
 												)
-		self.conf_mode_Unalgn_pdb.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+		self.mv_mode_pdb.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		# Atom Type
 		self.mv_at_var = StringVar()
@@ -1336,27 +1336,26 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.mv_atm_type.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		## mode index value
-		self.mode_indx_value = Pmw.EntryField(self.nma_mode_vis.interior(),
-												labelpos = 'w',
-												command = self.get_pc_selection,                                                
+		self.mv_indx_value = Pmw.EntryField(self.nma_mode_vis.interior(),
+												labelpos = 'w',                                                
 												label_text = 'Mode index value *:',
 												)
-		self.mode_indx_value.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+		self.mv_indx_value.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		## Vector file
-		self.conf_mode_Unalgn_pdb = Pmw.EntryField(self.nma_mode_vis.interior(),
+		self.mv_vector_file = Pmw.EntryField(self.nma_mode_vis.interior(),
 												labelpos = 'w',
-												label_pyclass = FileDialogButtonClassFactory.get(self.set_pdb_filename,mode='r',filter=[("PDB",".pdb")]),                                                
+												label_pyclass = FileDialogButtonClassFactory.get(self.set_mv_vector_file,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'Vector file *:',
 												)
-		self.conf_mode_Unalgn_pdb.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
+		self.mv_vector_file.pack(fill = 'x', expand = 1, padx = 10, pady = 2)
 		
 		# Get mode visualization
 		self.run_msf_button = Pmw.ButtonBox(self.nma_mode_vis.interior(),
 			orient='horizontal',
 			padx=0,
 			pady=0)
-		self.run_msf_button.add('Get modes Vis',fg='blue', command = self.run_ipca)
+		self.run_msf_button.add('Get modes Vis',fg='blue', command = self.run_mode_vis)
 		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 10, pady = 2)
 		
 		## Get eigenvectors
@@ -1956,6 +1955,34 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				else:
 					tkMessageBox.showinfo("pyMODE-TASK!", "getEigenVectors run failed. See terminal for details!")
 	
+	def run_mode_vis(self):
+		status = self.check_conf_status()
+		if status:
+			# core scripts are located at src directory under pyMODE-TASK directory
+			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
+			mv_pdb=self.mv_mode_pdb.getvalue()
+			mv_at=self.mv_atm_type.getvalue()
+			mv_mode_idx = self.mv_indx_value.getvalue()
+			mv_vector_file = self.mv_vector_file.getvalue()
+			#out_loc = self.gi_out_dir_location.getvalue()
+			#print ge_vt_file
+			if mv_pdb == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No PDB file given!")
+			if mv_mode_idx == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No mode index given!")
+			if mv_vector_file == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No Vector given!")
+
+			else:	
+				cmd = cmd_dir+'visualiseVector.py --pdb ' + mv_pdb + ' --vectorFile ' + mv_vector_file + ' --mode ' + mv_mode_idx + ' --atomType  ' + mv_at 
+				out = `os.system(cmd)`
+				#print out
+				#print type(out)
+				if out == '0':
+					tkMessageBox.showinfo("pyMODE-TASK!", "Mode Visualisation run successful!\nResults are written in ouput directory\n")
+				else:
+					tkMessageBox.showinfo("pyMODE-TASK!", "Mode Visualisation run failed. See terminal for details!")
+	
 	
 	def set_mode_task_dir(self, dirname):
 		n = self.mode_task_location1.setvalue(dirname)
@@ -2128,6 +2155,17 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 	def set_ge_vtfile_location(self, filename):
 		n=self.ge_vtfile_location.setvalue(filename)
 		return n 
+		
+	#===================================================
+	# Mode visualisation methods
+	#============================================
+	def set_mv_mode_pdb(self, filename):
+		n=self.mv_mode_pdb.setvalue(filename)
+		return n 
+	
+	def set_mv_vector_file(self, filename):
+		n=self.mv_vector_file.setvalue(filename)
+		return n
 		
 	def about(self):
 		print "pyMODE-TASK!\n pymol plugin of MODE-TASK\n MODE-TASK: a software tool to perform PCA and NMA of protein structure and MD trajectories"
