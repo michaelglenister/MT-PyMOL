@@ -18,16 +18,6 @@ sklearn==0.0
 matplotlib==2.0.2
 mdtraj==1.8.0
 ```
-*Install dependencies:*
-
-run the following command
-```
-sudo pip install -r requirements.txt
-```
-
-pyMODE-TASK requires Tkinter and Pmw.1.3. Tkinter comes prepackaged with most standard python. Pmw could be installed by following the instruction from:
-
-http://pmw.sourceforge.net/doc/starting.html
 
 *Download the project:*
 ```bash
@@ -37,6 +27,17 @@ git clone https://github.com/RUBi-ZA/pyMODE-TASK.git
 OR
 
 Download zip from github page and extract to a directory.
+
+*Install dependencies:*
+
+run the following command from within pyMODE-TASK
+```
+sudo pip install -r requirements.txt
+```
+
+pyMODE-TASK requires Tkinter and Pmw.1.3. Tkinter comes prepackaged with most standard python. Pmw could be installed by following the instruction from:
+
+http://pmw.sourceforge.net/doc/starting.html
 
 *Install plugin in pymol:*
 1. Start pymol
