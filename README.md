@@ -1,5 +1,5 @@
 <img src="https://travis-ci.org/nizamibilal/pyMODE-TASK.svg?branch=master" align="right">
-<img src='https://readthedocs.org/projects/pymode-task/badge/?version=latest' alt='Documentation Status' />
+<img src='https://readthedocs.org/projects/pymode-task/badge/?version=latest' align="right" />
 
 # MT-PyMOL
 MODE-TASK plugin for PyMOL
