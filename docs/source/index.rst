@@ -16,23 +16,12 @@ Welcome to pyMODE-TASK's documentation!
 .. toctree::
    :caption: Theory
 
-   pca_theory
-   nma_theory
-   tsne_theory
-   mds_theory
+   theory
 
 
 .. toctree::
    :maxdepth: 2
    :caption: Usage
    
-   nma_use
-   pca_use
-   tsne_use
-   mds_use
+   pyMODE-TASK_usage
 
-
-.. toctree::   
-   :caption: Tutorials
-
-   tutorial
