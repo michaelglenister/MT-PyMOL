@@ -143,6 +143,12 @@ class PyMODETASK:
 		self.menuBar.addmenuitem('Help', 'command', label='Help Page',
 			command=page.openpage)
 		
+		page=MyHelpPage("file:///home/bilal/work/MT-PyMOL/docs/build/html/index.html")
+		#self.menuBar.addmenu('Help', 'pyMODE-TASK help')
+		self.menuBar.addmenuitem('Help', 'command', label='pyMODE-TASK help',
+			command=page.openpage)
+			
+		
 		page=MyHelpPage("file:///home/bilal/work/pyMODE-TASK/src/docs/build/html/theory.html")		
 		self.menuBar.addmenuitem('Help', 'separator')
 		self.menuBar.addmenuitem('Help', 'command', label='PCA Theory',
@@ -173,7 +179,7 @@ class PyMODETASK:
 		
 		# The title
 	
-		self.title_label = Label(self.dialog.interior(), text = 'pyMODE-TASK: A MODE-TASK Plugin for pymol -- Copyright (C) 2017, Bilal Nizami, RUBi, Rhodes University',
+		self.title_label = Label(self.dialog.interior(), text = 'pyMODE-TASK: A pymol plugin of MODE-TASK -- Copyright (C) 2017, Bilal Nizami, RUBi, Rhodes University',
 				background = 'brown4',
 				foreground = 'white', 
 				height=1, 
