@@ -1386,7 +1386,6 @@ email: nizamibilal1064@gmail.com"""
 		# citation section
 		
 		citation = """
-
 pyMODE-TASK- is Copyright (C) 2017 by Bilal Nizami, RUBi, Rhodes University.
 		
 pyMODE-TASK is a pymol plugin for MODE-TASK. If you use MODE-TASK and/or pyMODE-TASK, kindly cite the 
