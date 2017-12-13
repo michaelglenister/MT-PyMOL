@@ -621,10 +621,10 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 			'Select atoms for analysis')
 
 		self.atm_grp_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
-		self.atm_grp_buttons.add('All', command = self.ok)
-		self.atm_grp_buttons.add('CA', command = self.ok)
-		self.atm_grp_buttons.add('Backbone', command = self.ok)
-		self.atm_grp_buttons.add('Protein', command = self.ok)
+		self.atm_grp_buttons.add('all', command = self.ok, text='All')
+		self.atm_grp_buttons.add('CA', command = self.ok, text='CA')
+		self.atm_grp_buttons.add('backbone', command = self.ok, text='Backbone')
+		self.atm_grp_buttons.add('protein', command = self.ok, text='Protein')
 		self.atm_grp_buttons.invoke('CA')
 		
 		# Dissimilarity Type
@@ -729,10 +729,10 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				frame_relief = 'groove',
 				command = self.get_ag_selection)
 		self.atm_grp_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
-		self.atm_grp_buttons.add('All', command = self.ok)
-		self.atm_grp_buttons.add('CA', command = self.ok)
-		self.atm_grp_buttons.add('Backbone', command = self.ok)
-		self.atm_grp_buttons.add('Protein', command = self.ok)
+		self.atm_grp_buttons.add('all', command = self.ok, text='All')
+		self.atm_grp_buttons.add('CA', command = self.ok, text='CA')
+		self.atm_grp_buttons.add('backbone', command = self.ok, text='Backbone')
+		self.atm_grp_buttons.add('protein', command = self.ok, text='Protein')
 		self.atm_grp_buttons.invoke('CA')
 		
 		# Dissimilarity Type
@@ -777,10 +777,10 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				frame_relief = 'groove',
 				command = self.get_ag_selection)
 		self.atm_ind_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
-		self.atm_ind_buttons.add('All', command = self.ok)
-		self.atm_ind_buttons.add('CA', command = self.ok)
-		self.atm_ind_buttons.add('Backbone', command = self.ok)
-		self.atm_ind_buttons.add('Protein', command = self.ok)
+		self.atm_ind_buttons.add('all', command = self.ok, text='All')
+		self.atm_ind_buttons.add('CA', command = self.ok, text='CA')
+		self.atm_ind_buttons.add('backbone', command = self.ok, text='Backbone')
+		self.atm_ind_buttons.add('protein', command = self.ok, text='Protein')
 		self.atm_ind_buttons.invoke('CA')
 		mds_options_buttons=(self.mds_type_buttons, 
 			self.atm_grp_buttons,  
