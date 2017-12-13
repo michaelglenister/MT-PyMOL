@@ -492,10 +492,10 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				frame_relief = 'groove')
 
 		self.ipca_atm_grp_buttons.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
-		self.ipca_atm_grp_buttons.add('All', command = self.ok)
-		self.ipca_atm_grp_buttons.add('CA', command = self.ok)
-		self.ipca_atm_grp_buttons.add('Backbone', command = self.ok)
-		self.ipca_atm_grp_buttons.add('Protein', command = self.ok)
+		self.ipca_atm_grp_buttons.add('all', command = self.ok, text='All')
+		self.ipca_atm_grp_buttons.add('CA', command = self.ok, text='CA')
+		self.ipca_atm_grp_buttons.add('backbone', command = self.ok, text='Backbone')
+		self.ipca_atm_grp_buttons.add('protein', command = self.ok, text='Protein')
 		self.ipca_atm_grp_buttons.invoke('CA')
 		
 		self.balloon.bind(self.ipca_atm_grp_buttons, 'Select atoms for analysis',
@@ -745,9 +745,9 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				frame_relief = 'groove',
 				command = self.get_mds_dissimilarity_type)
 		self.tsne_dissimilarity_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
-		self.tsne_dissimilarity_type.add('Euclidean distance', command = self.ok)
-		self.tsne_dissimilarity_type.add('RSMD', command = self.ok)
-		self.tsne_dissimilarity_type.invoke('RSMD')
+		self.tsne_dissimilarity_type.add('euc', command = self.ok, text='Euclidean distance')
+		self.tsne_dissimilarity_type.add('rmsd', command = self.ok, text='RMSD')
+		self.tsne_dissimilarity_type.invoke('rmsd')
 		
 		# Cordinate Type
 		self.tsne_cord_type = Pmw.RadioSelect(self.tsne_page_main_group.interior(),
