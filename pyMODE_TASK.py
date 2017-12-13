@@ -1644,7 +1644,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				out = `os.system(cmd)`
 				#print type(out)
 				if out == '0':
-					tkMessageBox.showinfo("pyMODE-TASK!", "\tInternal PCA run successful!\nResults are written in Output Directory!")
+					tkMessageBox.showinfo("pyMODE-TASK!", "Internal PCA run successful!\nResults are written in Output Directory!")
 				else:
 					tkMessageBox.showinfo("pyMODE-TASK!", "Internal PCA run failed. See terminal for details!")
 	
