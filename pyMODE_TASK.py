@@ -1347,7 +1347,7 @@ pyMODE-TASK- is Copyright (C) 2017 by Bilal Nizami, RUBi, Rhodes University.
 MODE-TASK is a collection of tools for analysing normal modes and performing principal component analysis.		
 pyMODE-TASK is the pymol plugin of MODE-TASK. Orignal command line version of MODE-TASK can be found at https://github.com/RUBi-ZA/MODE-TASK. 
 
-Authours. (1)- MODE-TASK, B Nizami, CJ Ross, M Glenister, OS Amamuddy, AR Atilgan, C Atilgan and O Tastan Bishop.
+Authours. (1)- MODE-TASK, B Nizami, CJ Ross, M Glenister, O. Sheik Amamuddy, AR Atilgan, C Atilgan and O Tastan Bishop.
 
 (2)- pyMODE-TASK is written by:
 
@@ -1391,7 +1391,7 @@ pyMODE-TASK- is Copyright (C) 2017 by Bilal Nizami, RUBi, Rhodes University.
 pyMODE-TASK is a pymol plugin for MODE-TASK. If you use MODE-TASK and/or pyMODE-TASK, kindly cite the 
 following papers.
 
-(1)- MODE-TASK, B Nizami, CJ Ross, M Glenister, OS Amamuddy, AR Atilgan, C Atilgan and O Tastan Bishop.
+(1)- MODE-TASK, B Nizami, CJ Ross, M Glenister, O. Sheik Amamuddy, AR Atilgan, C Atilgan and O Tastan Bishop.
 
 (2)- pyMODE-TASK is written by:
 
