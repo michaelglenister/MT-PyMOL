@@ -1713,8 +1713,9 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			cg_level = self.cg_level.getvalue()
 			out_loc = self.cg_out_dir_location.getvalue()
 			out_pdb = self.cg_out_pdb.getvalue()
-			print out_loc
+			#print out_loc
 			start_atm = self.cg_start_atm.getvalue()
+			print type(start_atm)
 			atm_type = 'CB'
 			if pdb_loc == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No PDB location given!")
@@ -1838,6 +1839,8 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		vmin = self.ac_Vmin.getvalue()
 		vmax = self.ac_Vmax.getvalue()
 		atm_type = self.ac_atm_type.getvalue()
+		#print type(vmin)
+		#print type(vmax)
 		if status:
 			# core scripts are located at src directory under pyMODE-TASK directory
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
@@ -1851,7 +1854,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				cmd = cmd_dir+'assemblyCovariance.py --pdb ' + ac_pdb + ' --vtMatrix ' +  ac_vtf  + ' --atomType ' + atm_type + ' --wMatrix ' + ac_wmf + ' --modes ' + mode + ' --zoom ' + zoom + ' --vmin ' + vmin + ' --vmax ' + vmax
 				out = `os.system(cmd)`
 				if out == '0':
-					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run successful!\nResults are written in \n" + out_loc)
+					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run successful!\nResults are written in \n ouput directory")
 				else:
 					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run failed. See terminal for details!")
 			else:
