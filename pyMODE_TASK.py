@@ -215,7 +215,7 @@ class PyMODETASK:
 directory is in user's home, then pyMODE-TASK directory field should read like /home/user/pyMODE-TASK.
 Normally the core scripts should be within pyMODE-TASK/src directory."""		
 		self.conf_top_group = Pmw.Group(self.configuration_page,tag_text='Configuration instructions')
-		self.conf_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 2)
+		self.conf_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 25)
         
 		myfont = Pmw.logicalfont(name='Courier',size=14)
 		self.text_field = Pmw.ScrolledText(self.conf_top_group.interior(),
