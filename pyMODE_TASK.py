@@ -1001,7 +1001,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.conf_mode_out = Pmw.EntryField(self.nma_conf_mode.interior(),
 												labelpos = 'w',
 												label_pyclass = DirDialogButtonClassFactory.get(self.set_conf_mode_out),                                                
-												label_text = 'Output file:',
+												label_text = 'Output directory:',
 												value = os.getcwd())
 		self.conf_mode_out.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
@@ -1861,8 +1861,9 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			elif assym_unit == '': 
 				cmd = cmd_dir+'assemblyCovariance.py --pdb ' + ac_pdb + ' --vtMatrix ' +  ac_vtf  + ' --atomType ' + atm_type + ' --wMatrix ' + ac_wmf + ' --modes ' + mode + ' --zoom ' + zoom + ' --vmin ' + vmin + ' --vmax ' + vmax
 				out = `os.system(cmd)`
+				#print out
 				if out == '0':
-					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run successful!\nResults are written in \n ouput directory")
+					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run successful!\nResults are written in \n output directory")
 				else:
 					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run failed. See terminal for details!")
 			else:
@@ -1890,7 +1891,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				cmd = cmd_dir+'getEigenVectors --vt ' + ge_vt_file + ' --mode ' + mode_idx + ' --direction ' + direction  
 				out = `os.system(cmd)`
 				if out == '0':
-					tkMessageBox.showinfo("pyMODE-TASK!", "getEigenVectors run successful!\nResults are written in ouput directory\n")
+					tkMessageBox.showinfo("pyMODE-TASK!", "getEigenVectors run successful!\nResults are written in output directory\n")
 				else:
 					tkMessageBox.showinfo("pyMODE-TASK!", "getEigenVectors run failed. See terminal for details!")
 	
@@ -1914,9 +1915,9 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				cmd = cmd_dir+'visualiseVector.py --pdb ' + mv_pdb + ' --vectorFile ' + mv_vector_file + ' --mode ' + mv_mode_idx + ' --atomType  ' + mv_at 
 				out = `os.system(cmd)`
 				if out == '0':
-					tkMessageBox.showinfo("pyMODE-TASK!", "Mode Visualisation run successful!\nResults are written in ouput directory\n")
+					tkMessageBox.showinfo("pyMODE-TASK!", "Mode visualization run successful!\nResults are written in output directory\n")
 				else:
-					tkMessageBox.showinfo("pyMODE-TASK!", "Mode Visualisation run failed. See terminal for details!")
+					tkMessageBox.showinfo("pyMODE-TASK!", "Mode visualization run failed. See terminal for details!")
 	
 	#=====================================
 	# Configuration tab methods
