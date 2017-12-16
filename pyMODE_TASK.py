@@ -1799,12 +1799,12 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			if vtfile == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No VT File location given!")
 			else:
-				cmd = cmd_dir+'conformationMode.py --pdbConf ' + unal_pdb + ' --pdbANM ' + pdb + ' --vtMatrix ' +  vtfile + ' --outdir ' + out_loc + ' --atomType ' + atm_type
+				cmd = cmd_dir+'combinationMode.py --pdbConf ' + unal_pdb + ' --pdbANM ' + pdb + ' --vtMatrix ' +  vtfile + ' --outdir ' + out_loc + ' --atomType ' + atm_type
 				out = `os.system(cmd)`
 				if out == '0':
-						tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run successful!\nResults are written in \n" + out_loc)
+						tkMessageBox.showinfo("pyMODE-TASK!", "combinationMode run successful!\nResults are written in \n" + out_loc)
 				else:
-					tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run failed. See terminal for details!")
+					tkMessageBox.showinfo("pyMODE-TASK!", "combinationMode run failed. See terminal for details!")
 	
 	def run_msf(self):
 		status = self.check_conf_status()
