@@ -63,3 +63,76 @@ under MDS options widget and click on Run MDS.
    
 Normal mode analysis (NMA)
 -------------------------------
+
+1. Set the configuration page to locate the pyMODE-TASK directory.
+
+.. figure:: ../img/nma1.png
+   :align: center
+
+   Fig: NMA set configuration
+
+2. Perform the coarse graining for large protein molecules.
+
+.. figure:: ../img/nma2.png
+   :align: center
+
+   Fig: Coarse graining
+   
+.. figure:: ../img/nma3.png
+   :align: center
+
+   Fig: Coarse graining results
+   
+3. Perform the coarse graining for second conformation of the protein. 
+This is useful in case if you want to perform "Conformation/ Combination tool analysis" and 
+"Mean square fluctuation". 
+
+.. figure:: ../img/nma4.png
+   :align: center
+
+   Fig: Coarse graining 2
+   
+4. Run NMA on each coarse grained PDB using a suitable cutoff. 
+ 
+.. figure:: ../img/nma5.png
+   :align: center
+
+   Fig: NMA for first PDB
+
+.. figure:: ../img/nma6.png
+   :align: center
+
+   Fig: NMA for second PDB
+   
+5. Run conformation / combination mode analysis. This require two PDB of different conformation.
+
+.. figure:: ../img/nma7.png
+   :align: center
+
+   Fig: conformation/combination mode analysis
+   
+6. Run MSF. This requires decomposed ANM matrices for comparing the mean square fluctuation between 2 proteins. 
+
+.. figure:: ../img/nma8.png
+   :align: center
+
+   Fig: MSF
+   
+7. Get eigen vector before mode visualization.
+
+.. figure:: ../img/nma9.png
+   :align: center
+
+   Fig: Get Eigenvectors
+   
+8. Generate mode animation for visualization.
+
+.. figure:: ../img/nma10.png
+   :align: center
+
+   Fig: Mode animation
+
+
+
+ 
+    
