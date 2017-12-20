@@ -8,6 +8,7 @@
 # 2. check to look for mode-task files within conf setting ----	done
 # 3. Resize/adjust NMA tab. -------- done
 # 4. Add progress bar
+# 5. Add better handling of exceptions in NMA
 
 # pyMODE-TASK  Copyright Notice
 # ============================
@@ -977,6 +978,16 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
                 'PDB file of conformation change')
 		self.conf_mode_pdb.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
+		# Modes
+		self.comb_modes = Pmw.EntryField(self.nma_conf_mode.interior(),
+												labelpos = 'w',
+												label_text = 'Modes *:',
+												value='1,5,7'
+												)
+		self.balloon.bind(self.comb_modes, 'Calculate the overlap for a combination of specific modes.\nNumbers are separated by commas: 1,5,7.\nOnly used for combination mode.',
+                'Modes')	
+		self.comb_modes.pack(fill='both',expand = 1, padx = 2, pady = 2)
+		
 		# Atom Type
 		self.conf_at_var = StringVar()
 		self.conf_at_var.set('CB')
@@ -987,7 +998,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				items = ['CB', 'CA'],
 				menubutton_width = 5,
 		)
-		self.conf_atm_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
+		self.conf_atm_type.pack(fill='both',expand = 1, padx = 2, pady = 2)
 		
 		## VT Matrix file
 		self.conf_mode_vtfile = Pmw.EntryField(self.nma_conf_mode.interior(),
@@ -1776,6 +1787,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			else:
 				cmd = cmd_dir+'conformationMode.py --pdbConf ' + unal_pdb + ' --pdbANM ' + pdb + ' --vtMatrix ' +  vtfile + ' --outdir ' + out_loc + ' --atomType ' + atm_type
 				out = `os.system(cmd)`
+				#print out
 				if out == '0':
 						tkMessageBox.showinfo("pyMODE-TASK!", "conformationMode run successful!\nResults are written in \n" + out_loc)
 				else:
@@ -1788,6 +1800,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		vtfile = self.conf_mode_vtfile.getvalue()
 		out_loc = self.conf_mode_out.getvalue()
 		atm_type = self.conf_atm_type.getvalue()
+		modes = self.comb_modes.getvalue()
 		if status:
 			# core scripts are located at src directory under pyMODE-TASK directory
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
@@ -1799,7 +1812,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			if vtfile == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No VT File location given!")
 			else:
-				cmd = cmd_dir+'combinationMode.py --pdbConf ' + unal_pdb + ' --pdbANM ' + pdb + ' --vtMatrix ' +  vtfile + ' --outdir ' + out_loc + ' --atomType ' + atm_type
+				cmd = cmd_dir+'combinationMode.py --pdbConf ' + unal_pdb + ' --pdbANM ' + pdb + ' --vtMatrix ' +  vtfile + ' --outdir ' + out_loc + ' --atomType ' + atm_type + ' --modes ' + modes
 				out = `os.system(cmd)`
 				if out == '0':
 						tkMessageBox.showinfo("pyMODE-TASK!", "combinationMode run successful!\nResults are written in \n" + out_loc)
