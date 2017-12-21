@@ -222,7 +222,7 @@ def calcMSF(pdb,common_residues,protein_name,wMatrix,vtMatrix,mode_range,sr,atom
             w.close()
 
     except IndexError:
-        print ('\n**************************************\nERORR!! PDB FILE AND ANM MATRICES ARE IMCOMPATABLE\nCHECK INPUT PARAMETERS FOR:\n1) INCORRECT PDB FILE \n2) INCORRECT MATRICES \n3) INCORRECT SPECIFIED MODES\n**************************************\n')
+        print ('\n**************************************\nERORR!! PDB FILE AND ANM MATRICES ARE IMCOMPATIBLE\nCHECK INPUT PARAMETERS FOR:\n1) INCORRECT PDB FILE \n2) INCORRECT MATRICES \n3) INCORRECT SPECIFIED MODES\n**************************************\n')
         sys.exit()
 
 
