@@ -405,11 +405,6 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		pca_options_buttons=(self.pca_methods_buttons, self.atm_grp_buttons, self.pca_comp, self.kernel_type, self.svd_solver_type)
 		Pmw.alignlabels(pca_options_buttons)
 		
-		self.pb = ttk.Progressbar(self.pca_page_main_group.interior(), 
-			orient="horizontal", 
-			length=200, mode="indeterminate")
-		self.pb.pack()
-		
 		# Run button
 		
 		self.run_pca_button = Pmw.ButtonBox(self.pca_page_main_group.interior(),orient='horizontal', padx=2,pady=2)
@@ -1549,7 +1544,6 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		
 		status = self.check_conf_status()
 		if status:
-			self.pb.start()
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
 			trj_loc = self.pca_trj_location.getvalue()
 			top_loc = self.pca_top_location.getvalue()
@@ -1639,7 +1633,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 						tkMessageBox.showinfo("pyMODE-TASK!", "Incremental PCA run successful!\nResults are written in \n" + out_loc)
 					else:
 						tkMessageBox.showinfo("pyMODE-TASK!", "Incremental PCA run failed. See terminal for details!")	
-		self.pb.stop()		
+
 	def run_ipca(self):
 	
 		# core scripts are located at src directory under pyMODE-TASK directory
