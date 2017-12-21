@@ -252,7 +252,7 @@ int main(int argc, char *argv[])
 	cout<< "\tResearch Unit in Bioinformatics (RUBi)\t\t"<<endl;
 	cout<< "\tRhodes University, 2017\t\t\t\t"<<endl;
 	cout<< "\tDistributed under GNU GPL 3.0\t\t\t\n"<<endl;
-	cout<< "\thttps://github.com/michaelglenister/NMA-TASK\t\n"<<endl;
+	cout<< "\thttps://github.com/RUBi-ZA/MODE-TASK\t\n"<<endl;
 
 	cout<< "============================================================"<<endl;
 
@@ -263,14 +263,7 @@ int main(int argc, char *argv[])
     {
 		if (strcmp(argv[i], "-h") == 0)
 		{
-			cout<<"usage: ANM [-h] [--pdb PDB] [--cutoff INTEGER]"<<endl;
-			cout<<"		[--outdir DIRECTORY] [--atomType (CA/CB)]"<<endl;
-			cout<<"arguments:"<<endl;
-			cout<<" -h, --help		Show this help message and exit"<<endl;
-			cout<<" --pdb			PDB input file"<<endl;
-			cout<<" --cutoff		Cuttoff radius in Angstroms. Default: 15"<<endl;
-			cout<<" --outdir		Directory to generate output to"<<endl;
-			cout<<" --atomType		Select 'CA' or 'CB' atoms"<<endl;
+			cout<<"Help"<<endl;
 			return -1;
 		}
 		else if(strcmp(argv[i], "--pdb") == 0)

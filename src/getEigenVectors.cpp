@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 	cout<< "\tResearch Unit in Bioinformatics (RUBi)\t\t"<<endl;
 	cout<< "\tRhodes University, 2017\t\t\t\t"<<endl;
 	cout<< "\tDistributed under GNU GPL 3.0\t\t\t\n"<<endl;
-	cout<< "\thttps://github.com/michaelglenister/NMA-TASK\t\n"<<endl;
+	cout<< "\thttps://github.com/RUBi-ZA/MODE-TASK\t\n"<<endl;
 
 	cout<< "============================================================"<<endl;
 
@@ -59,17 +59,17 @@ int main(int argc, char *argv[])
     {
 		if (strcmp(argv[i], "-h") == 0)
 		{
-			cout<<"usage: getEigenVectors [-h] [--vt VTMATRIX] [--mode MODEVALUE]"<<endl;
+			cout<<"usage: getEigenVectors [-h] [--vtMatrix VTMATRIX] [--mode MODEVALUE]"<<endl;
 			cout<<"		[--outdir DIRECTORY] [--direction INTEGER]"<<endl;
 			cout<<"arguments:"<<endl;
 			cout<<" -h, --help		Show this help message and exit"<<endl;
-			cout<<" --vt			VT matrix file"<<endl;
-			cout<<" --mode			Specify the index of the mode you wish to target"<<endl;
+			cout<<" --vtMatrix       	VT matrix file"<<endl;
+			cout<<" --mode			Mode value"<<endl;
 			cout<<" --outdir		Directory to generate output to"<<endl;
 			cout<<" --direction		Direction of overlap correction (Default -1)"<<endl;
 			return -1;
 		}
-		else if(strcmp(argv[i], "--vt") == 0)
+		else if(strcmp(argv[i], "--vtMatrix") == 0)
 		{
 			protomerVT = argv[i+1];
 			hasVt = true;
