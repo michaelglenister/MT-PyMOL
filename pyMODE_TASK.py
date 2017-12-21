@@ -1188,15 +1188,15 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				
 		self.ac_modes.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
-		# Assymetric Unit
-		self.ac_assym_unit = Pmw.EntryField(self.assem_cov.interior(),
+		# Asymmetric Unit
+		self.ac_asymm_unit = Pmw.EntryField(self.assem_cov.interior(),
 												labelpos = 'w',
-												label_text = 'Assymetric Unit:'
+												label_text = 'Asymmetric Unit:'
 												)
-		self.balloon.bind(self.ac_assym_unit, 'Assymetric Unit: String OR Colon Separated String OR Comma Separated String',
-				'Assymetric Unit')
+		self.balloon.bind(self.ac_asymm_unit, 'Asymmetric Unit: String OR Colon Separated String OR Comma Separated String',
+				'Asymmetric Unit')
 				
-		self.ac_assym_unit.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
+		self.ac_asymm_unit.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Zoom
 		self.ac_zoom = Pmw.EntryField(self.assem_cov.interior(),
@@ -1855,7 +1855,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		ac_wmf = self.ac_WMatrixFile.getvalue()
 		ac_vtf = self.ac_VTMatrixFile.getvalue()
 		mode = self.ac_modes.getvalue()
-		assym_unit = self.ac_assym_unit.getvalue()
+		asymm_unit = self.ac_asymm_unit.getvalue()
 		zoom = self.ac_zoom.getvalue()
 		vmin = self.ac_Vmin.getvalue()
 		vmax = self.ac_Vmax.getvalue()
@@ -1871,7 +1871,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No WMatrix file given!")
 			if ac_vtf == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No VT Matrix file given!")
-			elif assym_unit == '': 
+			elif asymm_unit == '': 
 				cmd = cmd_dir+'assemblyCovariance.py --pdb ' + ac_pdb + ' --vtMatrix ' +  ac_vtf  + ' --atomType ' + atm_type + ' --wMatrix ' + ac_wmf + ' --modes ' + mode + ' --zoom ' + zoom + ' --vmin ' + vmin + ' --vmax ' + vmax
 				out = `os.system(cmd)`
 				#print out
@@ -1880,7 +1880,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				else:
 					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run failed. See terminal for details!")
 			else:
-				cmd = cmd_dir+'assemblyCovariance.py --pdb ' + ac_pdb + ' --vtMatrix ' +  ac_vtf  + ' --atomType ' + atm_type + ' --wMatrix ' + ac_wmf + ' --modes ' + mode + ' --zoom ' + zoom + ' --vmin ' + vmin + ' --vmax ' + vmax + ' --aUnits ' + assym_unit
+				cmd = cmd_dir+'assemblyCovariance.py --pdb ' + ac_pdb + ' --vtMatrix ' +  ac_vtf  + ' --atomType ' + atm_type + ' --wMatrix ' + ac_wmf + ' --modes ' + mode + ' --zoom ' + zoom + ' --vmin ' + vmin + ' --vmax ' + vmax + ' --aUnits ' + asymm_unit
 				out = `os.system(cmd)`
 				if out == '0':
 					tkMessageBox.showinfo("pyMODE-TASK!", "assembly Covariance run successful!\nResults are written in \n output directory")
