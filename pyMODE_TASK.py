@@ -405,11 +405,19 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		pca_options_buttons=(self.pca_methods_buttons, self.atm_grp_buttons, self.pca_comp, self.kernel_type, self.svd_solver_type)
 		Pmw.alignlabels(pca_options_buttons)
 		
+		# progress bar
+		#self.pb = ttk.Progressbar(self.pca_page_main_group.interior(), 
+		#	orient="horizontal",
+		#	length=500, 
+		#	mode="indeterminate")
+		#self.pb.pack()
+		
 		# Run button
 		
 		self.run_pca_button = Pmw.ButtonBox(self.pca_page_main_group.interior(),orient='horizontal', padx=2,pady=2)
 		self.run_pca_button.add('Run PCA',fg='blue', command = self.run_pca)
 		self.run_pca_button.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
+		
 		
 		
 		##============================================================
@@ -1285,12 +1293,12 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		
 		
 		# Get eigenvectors
-		self.nma_get_eigev = Pmw.ButtonBox(self.get_eig_group.interior(),
-			orient='horizontal',
-			padx=2,
-			pady=2)
-		self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)		
-		self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
+		#self.nma_get_eigev = Pmw.ButtonBox(self.get_eig_group.interior(),
+		#	orient='horizontal',
+		#	padx=2,
+		#	pady=2)
+		#self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)		
+		#self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 		
 		##====================================
 		# mode visualization
@@ -1336,6 +1344,14 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 			'File containing eigen vectors')
 
 		self.mv_vector_file.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
+		
+		# Get eigenvectors button
+		self.nma_get_eigev = Pmw.ButtonBox(self.nma_mode_vis.interior(),
+			orient='horizontal',
+			padx=2,
+			pady=2)
+		self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)		
+		self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 		
 		# Get mode visualization
 		self.run_msf_button = Pmw.ButtonBox(self.nma_mode_vis.interior(),
@@ -1541,8 +1557,8 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 		'''run pca'''
 		# core scripts are located at src directory under pyMODE-TASK directory
 		#cmd_dir = './src'
-		
 		status = self.check_conf_status()
+		#self.pb.start(100)
 		if status:
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
 			trj_loc = self.pca_trj_location.getvalue()
@@ -1556,7 +1572,9 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			ref_loc = self.pca_ref_file.getvalue()
 	
 			# run SVD
+			
 			if pc_sele == 'svd':
+			
 				if trj_loc == '':
 					tkMessageBox.showinfo("pyMODE-TASK Error!", "No trajectory location given!")
 				if top_loc == '':
@@ -1564,16 +1582,23 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				
 				else:
 					if ref_loc != '':
+						
 						cmd = cmd_dir+'pca.py -t '+ trj_loc + ' -p ' + top_loc + ' -ag '+ ag_sele + ' -pt '+ pc_sele + ' -out ' + out_loc + ' -r ' + ref_loc + ' -st ' + st_sele
+						
 					else:				
 						tkMessageBox.showinfo("pyMODE-TASK warning!", "No Ref structure given, using deafult first frame!")
 						cmd = cmd_dir+'pca.py -t '+ trj_loc + ' -p ' + top_loc + ' -ag '+ ag_sele + ' -pt '+ pc_sele + ' -out ' + out_loc + ' -st ' + st_sele
-					
+					out=subprocess.Popen(os.system(cmd), shell=False)
+					#self.pb.start(100)
 					out = `os.system(cmd)`
+					#while out.poll() is None:
+					#	self.update()
+					#self.pb.stop()
 					if out == '0':
 						tkMessageBox.showinfo("pyMODE-TASK!", "PCA (SVD) run successful!\nResults are written in\n" + out_loc)
 					else:
 						tkMessageBox.showinfo("pyMODE-TASK!", "PCA (SVD) run failed. See terminal for details!")			
+			
 			# run EVD
 			elif pc_sele == 'evd':
 				if trj_loc == '':
@@ -1633,7 +1658,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 						tkMessageBox.showinfo("pyMODE-TASK!", "Incremental PCA run successful!\nResults are written in \n" + out_loc)
 					else:
 						tkMessageBox.showinfo("pyMODE-TASK!", "Incremental PCA run failed. See terminal for details!")	
-
+		#self.pb.stop()
 	def run_ipca(self):
 	
 		# core scripts are located at src directory under pyMODE-TASK directory
@@ -1890,6 +1915,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			ge_vt_file=self.ge_vtfile_location.getvalue()
 			mode_idx = self.ge_mode_idx.getvalue()
 			direction = self.ge_direction.getvalue()
+			print ge_vt_file
 			if ge_vt_file == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No VT Matrix file given!")
 			if mode_idx == '':
