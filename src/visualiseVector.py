@@ -186,7 +186,7 @@ def visualise(pdb_lines,atomT,mode,vectorFile,outdir):
         w.writelines(arrows)
         w.close()
     except IndexError:
-        print ('\n**************************************\nERROR!!\nVECTOR FILE and PDB FILE ARE NOT COMPATABLE\n**************************************\n')
+        print ('\n**************************************\nERROR!!\nVECTOR FILE and PDB FILE ARE NOT COMPATIBLE\n**************************************\n')
         sys.exit()
 def main(args):
 
