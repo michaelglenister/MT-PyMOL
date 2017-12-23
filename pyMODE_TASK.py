@@ -1258,12 +1258,12 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		# Get eigenvectors and mode visualization
 		#=============================================
 		
-		self.gi_mv_group = Pmw.Group(self.nma_second_group.interior(), tag_pyclass = None)
-		self.gi_mv_group.pack(expand=1, fill='both', side=LEFT)
+		#self.gi_mv_group = Pmw.Group(self.nma_second_group.interior(), tag_pyclass = None)
+		#self.gi_mv_group.pack(expand=1, fill='both', side=LEFT)
 		
 		##Sub window
-		self.get_eig_group = Pmw.Group(self.gi_mv_group.interior(), tag_text='Get Eigenvectors (6)')
-		self.get_eig_group.pack(expand=1, fill='both', side=TOP)
+		self.get_eig_group = Pmw.Group(self.nma_second_group.interior(), tag_text='Mode Visualisation (6)')
+		self.get_eig_group.pack(expand=1, fill='both', side=LEFT)
 		
 		# read VT file
 		self.ge_vtfile_location = Pmw.EntryField(self.get_eig_group.interior(),
@@ -1272,14 +1272,13 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												label_text = 'VT Matrix file *:',
 												)
 		self.ge_vtfile_location.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
-		
+		#self.ge_vtfile_location.grid(row=0, column=0, columnspan=2, sticky=W)
 		# mode index 
 		
 		self.ge_mode_idx = Pmw.EntryField(self.get_eig_group.interior(),
 												labelpos = 'w',
 												label_text = 'Mode index *:'
 												)
-		self.ge_mode_idx.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Direction
 		
@@ -1287,28 +1286,32 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 				labelpos = 'w',
 				label_text = 'Direction:',
 				items = ['1', '-1'],
-				menubutton_width = 10,
+				menubutton_width = 5,
 		)
-		self.ge_direction.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
+		#self.ge_mode_idx.grid(row=1, column=0, columnspan=2, sticky=W)
+		self.ge_mode_idx.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
+		self.ge_direction.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
+		#self.ge_direction.grid(row=2, column=0, columnspan=2, sticky=W)
 		
 		# Get eigenvectors
-		#self.nma_get_eigev = Pmw.ButtonBox(self.get_eig_group.interior(),
-		#	orient='horizontal',
-		#	padx=2,
-		#	pady=2)
-		#self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)		
-		#self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
-		
+		self.nma_get_eigev = Pmw.ButtonBox(self.get_eig_group.interior(),
+			orient='horizontal',
+			padx=2,
+			pady=2)
+		self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)		
+		#self.nma_get_eigev.pack(side=BOTTOM, expand = 1, padx = 2, pady = 2, fill='x')
+		#self.nma_get_eigev.grid(row=3, column=0, sticky=W)
+
 		##====================================
 		# mode visualization
 		#=========================================
 		
-		self.nma_mode_vis = Pmw.Group(self.gi_mv_group.interior(), tag_text='Mode visualization (7)')
-		self.nma_mode_vis.pack(expand=1, fill='both', side=BOTTOM)
+		#self.nma_mode_vis = Pmw.Group(self.gi_mv_group.interior(), tag_text='Mode visualization (7)')
+		#self.nma_mode_vis.pack(expand=1, fill='both', side=BOTTOM)
 		
 		## CG PDB file
-		self.mv_mode_pdb = Pmw.EntryField(self.nma_mode_vis.interior(),
+		self.mv_mode_pdb = Pmw.EntryField(self.get_eig_group.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_mv_mode_pdb,mode='r',filter=[("PDB",".pdb")]),                                                
 												label_text = 'CG PDB file *:',
@@ -1318,7 +1321,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		# Atom Type
 		self.mv_at_var = StringVar()
 		self.mv_at_var.set('CB')
-		self.mv_atm_type = Pmw.OptionMenu(self.nma_mode_vis.interior(),
+		self.mv_atm_type = Pmw.OptionMenu(self.get_eig_group.interior(),
 				labelpos = 'w',
 				label_text = 'Atom Type:',
 				menubutton_textvariable = self.mv_at_var,
@@ -1328,14 +1331,14 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.mv_atm_type.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		## mode index value
-		self.mv_indx_value = Pmw.EntryField(self.nma_mode_vis.interior(),
+		self.mv_indx_value = Pmw.EntryField(self.get_eig_group.interior(),
 												labelpos = 'w',                                                
 												label_text = 'Mode index value *:',
 												)
-		self.mv_indx_value.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
+		#self.mv_indx_value.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		## Vector file
-		self.mv_vector_file = Pmw.EntryField(self.nma_mode_vis.interior(),
+		self.mv_vector_file = Pmw.EntryField(self.get_eig_group.interior(),
 												labelpos = 'w',
 												label_pyclass = FileDialogButtonClassFactory.get(self.set_mv_vector_file,mode='r',filter=[("TXT",".txt")]),                                                
 												label_text = 'Vector file *:',
@@ -1343,23 +1346,23 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		self.balloon.bind(self.mv_vector_file, 'File containing eigen vectors',
 			'File containing eigen vectors')
 
-		self.mv_vector_file.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
+		#self.mv_vector_file.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		
 		# Get eigenvectors button
-		self.nma_get_eigev = Pmw.ButtonBox(self.nma_mode_vis.interior(),
-			orient='horizontal',
-			padx=2,
-			pady=2)
-		self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)		
-		self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
+		#self.nma_get_eigev = Pmw.ButtonBox(self.nma_mode_vis.interior(),
+		#	orient='horizontal',
+		#	padx=2,
+		#	pady=2)
+		#self.nma_get_eigev.add('Get eigenvectors',fg='blue', command = self.run_get_eigen)		
+		#self.nma_get_eigev.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
 		
 		# Get mode visualization
-		self.run_msf_button = Pmw.ButtonBox(self.nma_mode_vis.interior(),
+		self.run_msf_button = Pmw.ButtonBox(self.get_eig_group.interior(),
 			orient='horizontal',
 			padx=2,
 			pady=2)
 		self.run_msf_button.add('Get modes Vis',fg='blue', command = self.run_mode_vis)
-		self.run_msf_button.pack(side=LEFT, expand = 1, padx = 2, pady = 2)
+		self.run_msf_button.pack(expand = 1, padx = 2, pady = 2)
 		
 		
 		
@@ -1935,17 +1938,20 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			cmd_dir = self.mode_task_location1.getvalue() + '/src/'
 			mv_pdb=self.mv_mode_pdb.getvalue()
 			mv_at=self.mv_atm_type.getvalue()
-			mv_mode_idx = self.mv_indx_value.getvalue()
-			mv_vector_file = self.mv_vector_file.getvalue()
+			#mv_mode_idx = self.mv_indx_value.getvalue()
+			#mv_vector_file = self.mv_vector_file.getvalue()
+			ge_vt_file=self.ge_vtfile_location.getvalue()
+			mode_idx = self.ge_mode_idx.getvalue()
+			direction = self.ge_direction.getvalue()
 			if mv_pdb == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No PDB file given!")
-			if mv_mode_idx == '':
+			if mode_idx == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No mode index given!")
-			if mv_vector_file == '':
-				tkMessageBox.showinfo("pyMODE-TASK Error!", "No Vector given!")
+			if ge_vt_file == '':
+				tkMessageBox.showinfo("pyMODE-TASK Error!", "No vtMatrix file given!")
 
 			else:	
-				cmd = cmd_dir+'visualiseVector.py --pdb ' + mv_pdb + ' --vectorFile ' + mv_vector_file + ' --mode ' + mv_mode_idx + ' --atomType  ' + mv_at 
+				cmd = cmd_dir+'visualiseVector2.py --pdb ' + mv_pdb + ' --vtMatrix ' + ge_vt_file + ' --mode ' + mode_idx + ' --atomType  ' + mv_at + ' --direction ' + direction
 				out = `os.system(cmd)`
 				if out == '0':
 					tkMessageBox.showinfo("pyMODE-TASK!", "Mode visualization run successful!\nResults are written in output directory\n")
