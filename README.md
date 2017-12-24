@@ -6,8 +6,6 @@
 
 *Requirements:*
 
-::
-
 	python
 	Tkinter
 	Pmw
@@ -21,7 +19,6 @@
 
 
 **1. Download the project:**
-::
 	
 	git clone https://github.com/RUBi-ZA/pyMODE-TASK.git
 
@@ -33,7 +30,6 @@ Download zip from github page and extract to a directory.
 **2. Install dependencies:**
 
 Run the following command from within pyMODE-TASK directory
-::
 
 	sudo pip install -r requirements.txt
 
