@@ -49,5 +49,12 @@ Browse the pyMODE-TASK.py and follow the on screen installation instructions.
 
 For more detailed documentation on installation and usage of the tool suite please see our [ReadTheDocs](http://pymode-task.readthedocs.io/en/latest/index.html) site
 
+### TODO list:
+- [X] Fully functional and ready to install plugin.
+- [X] Resize/adjust NMA tab.
+- [ ] Add progress bar.
+- [ ] Update link in MODE-TASK documentation.
+- [ ] Add better handling of exceptions in NMA tab.
+- [ ] Add feature to identify the MD frame in the PCA projection plot. 
 
 
