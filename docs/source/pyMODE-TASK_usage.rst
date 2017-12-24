@@ -117,15 +117,19 @@ This is useful in case if you want to perform "Conformation/ Combination tool an
    :align: center
 
    Fig: MSF
-   
-7. Get eigen vector before mode visualization.
+
+8. Get an assembly covariance for a specified chain of an asymmetric unit
 
 .. figure:: ../img/nma9.png
    :align: center
 
    Fig: Get Eigenvectors
    
-8. Generate mode animation for visualization.
+9. Generate mode animation for visualization. Afterward use the following command in VMD for visualization
+
+::
+	
+   vmd VISUALISE/VISUAL_1.pdb -e VISUALISE/VISUAL_ARROWS_1.txt
 
 .. figure:: ../img/nma10.png
    :align: center
