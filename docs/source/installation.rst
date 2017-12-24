@@ -48,7 +48,7 @@ http://pmw.sourceforge.net/doc/starting.html
 3.2. Go to Plugin -> Plugin Manager, and clcik on install new plugin tab. Under install from local file click on 'choose file...' button.
 Browse the pyMODE-TASK.py and follow the on screen installation instructions.
  
-3.3. If everything is goes well, you can start the plugin from pymol plugin menu. 
+3.3. If everything goes well, you can start the plugin from pymol plugin menu. 
 
 **Usage**
 
