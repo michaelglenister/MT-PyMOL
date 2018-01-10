@@ -315,7 +315,7 @@ def main(args):
     if pdb_1==pdb_Conf:
         print ('\n**************************************\nWARNING!!!\nConformational change PDB files are the same:\n--pdbANM: ' + pdb_1 + '\n--pdbConf: ' + pdb_Conf+ '\n**************************************\n')
 
-    # determine the number of asymmetric units and check compatability
+    # determine the number of asymmetric units and check compatibility
     pdb1Info = parsePDB(pdb_1,atomT)
     pdbCInfo = parsePDB(pdb_Conf,atomT)
     

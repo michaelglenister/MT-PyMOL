@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # assemblyCovariance.py
-# Calcualtes covariance matrices for the following:
+# Calculates covariance matrices for the following:
 # 1) over all modes
 # OR
 # 2) specified modes
@@ -353,7 +353,7 @@ if __name__ == "__main__":
     parser.add_argument("--modes", help="1) Calculate the covariance matrix over all modes by using the option all:\n  E.g --modes all\nOR\n2) Enter a select range of modes in format M1:M2\n  E.g To calculate the covariance matrix over the first 20 non-zero modes enter --modes 7:27\nOR\n3) Calculate the covariance matrix for a combination of specific modes\nEnter mode numbers separated by a comma\n  E.g: --modes 1,5,7", default="all") 
     parser.add_argument("--wMatrix", help="Text file of Eigevalues of pdb, in format output from ANM.cpp")
     parser.add_argument("--vtMatrix", help="Text file of Eigevectors of pdb, in row (VT) format output from ANM.cpp")
-    parser.add_argument("--aUnits", help="1) Specify a single unit.\n  E.g --asymmetricUnit 1 \nOR\n 2) Provide a list of asymmetric units.\n  E.g --aUnitsText 1,4,5", default = '1')
+    parser.add_argument("--aUnits", help="1) Specify a single unit.\n  E.g --aUnits 1 \nOR\n 2) Provide a list of asymmetric units.\n  E.g --aUnits 1,4,5", default = '1')
     parser.add_argument("--zoom", help="1) Zoom into a single chain within a specified asymmetric unit.\nSpecify the unit and then the chain in a comma separted list single unit.\n  E.g --zoom 1,2 will zoom into chain 2 in asymmetric unit 1",default = '0,0')
     parser.add_argument("--atomType", help="Enter CA to select alpha carbons or CB to select beta carbons", default='X')
     parser.add_argument("--vmin", help="[float] minimum axes value", type=float, default = -0.1)
