@@ -1924,7 +1924,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 			if mode_idx == '':
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No mode index given!")
 			else:	
-				cmd = cmd_dir+'getEigenVectors --vt ' + ge_vt_file + ' --mode ' + mode_idx + ' --direction ' + direction  
+				cmd = cmd_dir+'getEigenVectors --vtMatrix ' + ge_vt_file + ' --mode ' + mode_idx + ' --direction ' + direction
 				out = `os.system(cmd)`
 				if out == '0':
 					tkMessageBox.showinfo("pyMODE-TASK!", "getEigenVectors run successful!\nResults are written in output directory\n")
