@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-# coformationalMode.py
-# Identifies normal modes that act in the direction of a conformational change
+# combinationalMode.py
+# Identifies normal modes that act in the direction of a conformational change, for a particular mode, with break down per chain per asymmetric unit
 # Author: Caroline Ross: caroross299@gmail.com
 # August 2017
 
@@ -36,7 +36,7 @@ def calcConformation(delta_r,vtMatrix,nma_index,mode_range):
             correlationDR.append(csum)
             csum=0
     mag_d_r = sqrt(mag_d_r)
-
+    
 
     try:   
         f = open(vtMatrix, 'r')
@@ -55,6 +55,7 @@ def calcConformation(delta_r,vtMatrix,nma_index,mode_range):
             overlap = 0
             common_vector = []
             vector = vectors[mode].split()
+            
             for res in nma_index:
                 csum = 0
                 for i in range(3):
@@ -63,7 +64,8 @@ def calcConformation(delta_r,vtMatrix,nma_index,mode_range):
                     common_vector.append(ele)
                 csum = sqrt(csum)
                 correlationMode.append(csum)
-
+                
+            
 
             # Calculate the magnitude
             mag_mode = 0
@@ -71,10 +73,13 @@ def calcConformation(delta_r,vtMatrix,nma_index,mode_range):
                 mag_mode += r * r
 
             mag_mode = sqrt(mag_mode)
+           
             # Calculate Dot Product
             if len(common_vector) == len(delta_r):
                 # print "Vectors Match"
                 C = abs(np.corrcoef(correlationMode,correlationDR)[0,1])
+                if len(correlationDR)==1 and len(correlationMode)==1:
+                    print("\nERROR: ONLY ONE COMMON ATOM SELECTED IN CURRENT CHAIN\n...NO CORRELATION CALCULATED FOR A SINGLE DATA POINT...C = NAN\n")
                 for i in range(len(common_vector)):
                     overlap += common_vector[i] * delta_r[i]
 
@@ -258,7 +263,7 @@ def parsePDB(pdb_file, atomT):
         print ('\n**************************************\nFILE ' + pdb_file + ' NOT FOUND:\n**************************************\n')
         sys.exit()
   
-    # determine the number of asymmetric units
+    # determine the number of assymetric units
     number_of_protomers = 0
     currentResidue = 0
     currentChain = ''
@@ -315,7 +320,7 @@ def main(args):
     if pdb_1==pdb_Conf:
         print ('\n**************************************\nWARNING!!!\nConformational change PDB files are the same:\n--pdbANM: ' + pdb_1 + '\n--pdbConf: ' + pdb_Conf+ '\n**************************************\n')
 
-    # determine the number of asymmetric units and check compatibility
+    # determine the number of assymetric units and check compatability
     pdb1Info = parsePDB(pdb_1,atomT)
     pdbCInfo = parsePDB(pdb_Conf,atomT)
     
@@ -335,6 +340,7 @@ def main(args):
 
 
     common_residues = getCommonResidues(full_residues, empty_residues)
+    
 
     commonK = sorted(common_residues.keys())
     totalC = 0
@@ -401,18 +407,19 @@ def main(args):
     output = conformation[1]
     OverlapC = conformation[2]
     correlationC = conformation[3]
+    
      
     w = open(outdir + "/" + outfile, 'w')
     w.write('MODE           Overlap              Correlation\n\n')
     for out in overlap_list:
         for o in output[out]:
             w.write(o)
-    w.write('\n********************************************************************************************************\nCombined Overlap = '+str(OverlapC)+'\nCombined Correlation = '+str(correlationC)+'\n********************************************************************************************************\n')
+    w.write('\n********************************************************************************************************\nCombinded Overlap = '+str(OverlapC)+'\nCombinded Correlation = '+str(correlationC)+'\n********************************************************************************************************\n')
 
     w.close()
 
 
-#Calculating overlap/correlation per asymmetric unit, with chain breakdown
+#Calculating overlap/correlation per assymetric unit, with chain breakdown
 
  #getIndexesPerChainPerUnit
     IndexesPerChainPerUnit = {}
@@ -448,7 +455,7 @@ def main(args):
             for out in overlap_list:
                 for o in output[out]:
                     outputPerChainPerUnit.append(o)
-            outputPerChainPerUnit.append('\nCombined Overlap = '+str(OverlapC)+'\nCombined Correlation = '+str(correlationC)+'\n--------------------------------------------------------------------------------------------------------\n')
+            outputPerChainPerUnit.append('\nCombinded Overlap = '+str(OverlapC)+'\nCombinded Correlation = '+str(correlationC)+'\n--------------------------------------------------------------------------------------------------------\n')
     
     w = open(outdir + "/BreakDownPerUnit.txt", 'w')
     for o in outputPerChainPerUnit:
@@ -479,7 +486,7 @@ if __name__ == "__main__":
     parser.add_argument("--outdir", help="Output directory", default="output")
 
     # custom arguments
-    parser.add_argument("--pdbConf", help="")
+    parser.add_argument("--pdbConf", help="Most accurately performed when the full (not coarse grainined) protein complex of the conformational change is used")
     parser.add_argument("--pdbANM", help="")
     parser.add_argument("--vtMatrix", help="")  # note: change this from vtProtomer
     parser.add_argument("--output", help="Output file", default="ModeSpecificConformationalChange.txt")
@@ -489,7 +496,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.welcome == "true":
-        welcome_msg("Conformation mode", "Caroline Ross (caroross299@gmail.com)")
+        welcome_msg("Combination mode", "Caroline Ross (caroross299@gmail.com)")
 
     print ('!=====================================================================================!')
     print ('! Please check the following:                                                         !')
