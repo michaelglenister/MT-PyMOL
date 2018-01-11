@@ -1955,7 +1955,7 @@ Research Unit in Bioinformatics (RUBi), Rhodes University, Grahamstown, South Af
 				tkMessageBox.showinfo("pyMODE-TASK Error!", "No vtMatrix file given!")
 
 			else:	
-				cmd = cmd_dir+'visualiseVector2.py --pdb ' + mv_pdb + ' --vtMatrix ' + ge_vt_file + ' --mode ' + mode_idx + ' --atomType  ' + mv_at + ' --direction ' + direction
+				cmd = cmd_dir+'visualiseVector.py --pdb ' + mv_pdb + ' --vtMatrix ' + ge_vt_file + ' --mode ' + mode_idx + ' --atomType  ' + mv_at + ' --direction ' + direction
 				out = `os.system(cmd)`
 				if out == '0':
 					tkMessageBox.showinfo("pyMODE-TASK!", "Mode visualization run successful!\nResults are written in output directory\n")
