@@ -95,7 +95,7 @@ class PyMODETASK:
 		self.dialog = Pmw.Dialog(self.master,title = 'pyMODE-TASK',
 									buttons = ('Exit pyMODE-TASK',))
 		self.dialog.withdraw()
-		self.dialog.geometry('1000x800')
+		self.dialog.geometry('1000x730')
 		#================================================
 		#
 		# Menu bar
@@ -214,8 +214,9 @@ class PyMODETASK:
 		
 		self.balloon = Pmw.Balloon(self.master)
 		about_pca = """Give the location of pyMODE-TASK directory.  For example- If the pyMODE-TASK
-directory is in user's home, then pyMODE-TASK directory field should read like /home/user/pyMODE-TASK.
-Normally the core scripts should be within pyMODE-TASK/src directory."""		
+directory is in user's home, then pyMODE-TASK directory field should read like /home/user/pyMODE-TASK. 
+Normally the core scripts should be within pyMODE-TASK/src directory."""
+		
 		self.conf_top_group = Pmw.Group(self.configuration_page,tag_text='Configuration instructions')
 		self.conf_top_group.pack(fill = 'both', expand = 0, padx = 2, pady = 25)
         
@@ -815,7 +816,7 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 		# input files
 		self.nma_top_group1 = Pmw.Group(self.nma_page, tag_pyclass = None)
 		self.nma_top_group1.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
-
+		
 		self.nma_trj_file_io = Pmw.Group(self.nma_top_group1.interior(), tag_text='Coarse Graining (1)')
 		self.nma_trj_file_io.pack(expand=1, fill='both', side=LEFT)
 		
@@ -1273,13 +1274,16 @@ Normally the core scripts should be within pyMODE-TASK/src directory."""
 												)
 		self.ge_vtfile_location.pack(fill = 'both', expand = 1, padx = 2, pady = 2)
 		#self.ge_vtfile_location.grid(row=0, column=0, columnspan=2, sticky=W)
+		
 		# mode index 
 		
 		self.ge_mode_idx = Pmw.EntryField(self.get_eig_group.interior(),
 												labelpos = 'w',
-												label_text = 'Mode index *:'
+												label_text = 'Mode index *:',
+												value=1
 												)
-		
+		self.balloon.bind(self.ge_mode_idx, 'Mode index for visualisation',
+			'Index of mode for visualisation')
 		# Direction
 		
 		self.ge_direction = Pmw.OptionMenu(self.get_eig_group.interior(),
